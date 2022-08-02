@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import { ModalProvider } from './context/ModalProvider';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import Home from './pages/home/Home';
+import LoginPage from './pages/login/LoginPage';
+import Signup from './pages/signup/Signup';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="">
+      <ModalProvider>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/admin/*' element={<AdminDashboard />} />
+      </Routes>
+      </ModalProvider>
     </div>
   );
 }

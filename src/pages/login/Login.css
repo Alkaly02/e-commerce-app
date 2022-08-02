@@ -1,0 +1,103 @@
+.auth-container {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: rgb(243, 244, 247);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth__form__container {
+    max-width: 600px;
+    margin: auto;
+    background-color: white;
+    padding: 4rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+}
+
+.auth__form__head {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth__form__head > h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 1rem;
+}
+
+.auth__form__head > p {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.auth-logo {
+    display: inline-block;
+    width: 50%;
+    margin: auto;
+}
+
+.form-label {
+    font-size: 0.8rem !important;
+    font-weight: 500;
+}
+
+.form__input {
+    width: 100%;
+    padding: 0.5rem;
+    outline: none;
+    color: rgb(125, 135, 156);
+    border: 1px solid rgb(125, 135, 156);
+    border-radius: 3px;
+    box-sizing: border-box !important;
+}
+
+.form__input::placeholder{
+    color: rgb(125, 135, 156);
+}
+
+
+.form__input:hover {
+    border: 1px solid black;
+}
+
+.form__input:focus {
+    border: 2px solid rgb(75, 180, 180);
+}
+
+.submit {
+    padding: 0.7rem !important;
+    background-color: rgb(75, 180, 180) !important;
+    color: white !important;
+    transition: background-color 300ms ease-out 10ms !important;
+    font-weight: 700;
+}
+
+.submit:hover {
+    background-color: rgb(24, 104, 104) !important;
+}
+
+.login-signup {
+    display: inline-block;
+    font-weight: 700;
+    color: #2B3445;
+    padding: 0.5rem;
+    transition: color 200ms ease 10ms;
+}
+
+.login-signup:hover{
+    color: rgb(75, 180, 180) !important;
+}
+
+form + p {
+    font-size: 0.95rem;
+}
+
+@media (max-width: 500px) {
+    .auth__form__container {
+        padding: 4rem 2rem;
+    }
+}

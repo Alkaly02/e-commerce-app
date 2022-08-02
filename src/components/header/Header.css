@@ -1,0 +1,79 @@
+.container-site{
+    max-width: 1200px;
+    margin: auto;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.header-brand {
+    max-width: 130px;
+}
+
+.form--container {
+    max-width: 600px;
+    display: flex;
+    flex: 1;
+    margin: auto;
+}
+
+.header__form {
+    width: 100%;
+    position: relative;
+}
+
+.header__form__input{
+    width: 100%;
+    padding: 0.5rem 0.5rem 0.5rem 2.5rem;
+    border: 1px solid rgb(125, 135, 156);
+    border-radius: 50px;
+    color: rgb(125, 135, 156);
+    outline: none;
+}
+
+.header__form__input:hover{
+    border: 1px solid rgb(75, 180, 180);
+}
+
+.header__form__input:focus{
+    border: 2px solid rgb(75, 180, 180);
+}
+
+.search-icon{
+    position: absolute;
+    top: 30%;
+    left: 2.5%;
+    font-size: 1.2rem;
+    color: rgb(125, 135, 156);
+}
+
+.buttons {
+    display: flex;
+}
+
+.buttons button {
+    border: none;
+    border-radius: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    padding: 10px;
+    margin-right: 1rem;
+}
+
+.button__icon {
+    font-size: 1.5rem;
+    color: rgb(125, 135, 156);
+}

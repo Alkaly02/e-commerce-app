@@ -1,0 +1,15 @@
+.home-grid{
+    padding-top: 8rem;
+    display: flex;
+}
+
+.logo-loading{
+    width: 40%;
+    animation: logo-loading 1000ms ease-in-out 10ms infinite;
+}
+
+@keyframes logo-loading {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.1);}
+    100% {transform: scale(1);}
+  }

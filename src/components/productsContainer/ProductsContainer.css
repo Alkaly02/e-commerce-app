@@ -1,0 +1,9 @@
+.section__h2{
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.section__p{
+    font-size: 0.9rem;
+    color: rgb(125, 135, 156);
+}

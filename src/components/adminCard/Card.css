@@ -1,0 +1,27 @@
+.card-info{
+    max-width: 300px;
+    display: flex;
+    flex: 1;
+    margin-right: 1.5rem;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    padding: 0.9rem;
+    background-color: #2B3445;
+    color: white;
+}
+
+.icon-container {
+    font-size: 1.5rem;
+}
+
+.card-stats{
+    display: flex;
+    flex-direction: column;
+}
+.card-stats p {
+    align-self: flex-end;
+}
+.card-stats p, .card-stats h3{
+    margin: 0;
+}
