@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
-// import { useCurrentUser } from "../../hooks/useCurrentUser";
+import toast from "react-hot-toast";
 import { useAuth } from "../../hooks/useAuth";
 
 const AddCategory = ({ setSuccess, setOpenCategory }) => {
@@ -12,17 +12,22 @@ const AddCategory = ({ setSuccess, setOpenCategory }) => {
   const addCategory = async (e) => {
     e.preventDefault();
     setLoading(true);
+    toast.success("Catégorie ajoutée !", {
+      style: {
+        backgroundColor: '#2B3445',
+        color: 'white'
+      },
+      iconTheme: {
+        primary: 'green',
+      },
+    });
     await addDoc(collection(db, "categories"), {
       name,
       description: desc,
       userEmail: currentUser.email,
     });
     setLoading(false);
-    setSuccess("Category added !");
     setOpenCategory(false);
-    setTimeout(() => {
-      setSuccess("");
-    }, 1500);
   };
   return (
     <div className="my-3">
@@ -38,7 +43,7 @@ const AddCategory = ({ setSuccess, setOpenCategory }) => {
             className="form__input"
             id="name"
             aria-describedby="text"
-            placeholder="Category Name"
+            placeholder="Nom de la catégorie"
           />
         </div>
         <div className="mb-3 mx-4">
@@ -60,7 +65,7 @@ const AddCategory = ({ setSuccess, setOpenCategory }) => {
                 </div>
               </div>
             ) : (
-              "Add"
+              "Ajouter"
             )}
           </button>
         </div>

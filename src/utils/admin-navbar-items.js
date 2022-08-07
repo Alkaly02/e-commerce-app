@@ -9,12 +9,12 @@ export const adminData = [
     },
     {
         to: 'add-category',
-        label: 'Ajouter Categorie',
+        label: 'Catégories',
         icon: <AiOutlineAppstoreAdd />
     },
     {
         to: 'add-products',
-        label: 'Ajouter Produis',
+        label: 'Produits',
         icon: <GiShoppingCart />
     }
 ]

@@ -8,11 +8,11 @@ const AdminHome = () => {
     <div className="mx-4 pt-3 w-100">
       <div className="welcome">
         <h1 style={{ fontWeight: "700" }} className="text-left mb-4 home-title">
-          Gerer Votre Boutique Avec Faciliter
+          Gérer votre boutique avec faciliter
         </h1>
       </div>
       <div className="d-flex justify-content-start">
-        <Card title="Categories" number="15" icon={<AiOutlineInfoCircle />} />
+        <Card title="Catégories" number="15" icon={<AiOutlineInfoCircle />} />
         <Card title="Produits" number="20" icon={<RiStore2Line />} />
       </div>
     </div>

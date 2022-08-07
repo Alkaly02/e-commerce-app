@@ -7,9 +7,9 @@ import logo from "../../assets/img/logo-ecommerce.png";
 const Header = ({children}) => {
   
   return (
-    <header className="p-3">
+    <header>
       <div className="container-site header">
-        <img src={logo} alt="E-commerce Logo" className="header-brand inline-block" />
+        <img style={{width: '70px'}} src={logo} alt="E-commerce Logo" className="header-brand inline-block" />
         <div className="form--container d-md-block d-none">
           <form action="" className="header__form">
             <input

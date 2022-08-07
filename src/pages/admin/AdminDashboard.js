@@ -30,7 +30,7 @@ const AdminDashboard = () => {
         </button>
       </Header>
       <div className="home-grid container-site">
-        <Sidebar title={"Gerer Votre Boutique"} className="sidebar-containt" links={adminData} />
+        <Sidebar title={"Gérer votre boutique"} className="sidebar-containt" links={adminData} />
         <Routes>
           <Route path="" element={<AdminHome />} />
           <Route path="add-category" element={<CategoryList />} />

@@ -1,58 +1,42 @@
 import {
-  collection,
   deleteDoc,
-  doc,
-  onSnapshot,
-  query,
-  where,
+  doc
 } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { MdDelete } from "react-icons/md";
 import EditCategory from "../../editCategory/EditCategory";
 import { db } from "../../firebase/config";
-import { useAuth } from "../../hooks/useAuth";
 import AddCategory from "../addCategory/AddCategory";
 import "./CategoryList.css";
+import toast from "react-hot-toast";
+import { useModal } from "../../hooks/useModal";
+import MyModal from "../modal/Modal";
+import useCategories from "../../hooks/useCategories";
 
 const CategoryList = () => {
   const [openCategory, setOpenCategory] = useState(false);
-  const [success, setSuccess] = useState("");
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { currentUser } = useAuth();
   const [selectedCategory, setSelectedCategory] = useState([]);
-  const [openEdit, setOpenEdit] = useState(false);
+  const { modalIsOpen, setIsOpen } = useModal();
 
-  useEffect(() => {
-    const getCategories = async () => {
-      const q = query(
-        collection(db, "categories"),
-        where("userEmail", "==", currentUser?.email)
-      );
-      onSnapshot(q, (querySnapshot) => {
-        const usersInfo = [];
-        querySnapshot.forEach((doc) => {
-          usersInfo.push({ ...doc.data(), id: doc.id });
-          setCategories([...usersInfo]);
-        });
-        setLoading(false);
-      });
-    };
-    getCategories();
-  }, []);
+  const { categories, categoriesLoading } = useCategories()
 
   const handleDelete = async (id) => {
-    setSuccess("Category deleted !");
+    toast.error("Catégorie supprimée !", {
+      style: {
+        backgroundColor: "#2B3445",
+        color: "white",
+      },
+      iconTheme: {
+        primary: "red",
+      },
+    });
     await deleteDoc(doc(db, "categories", id));
-    setTimeout(() => {
-      setSuccess("");
-    }, 1500);
   };
 
   const handleUpdate = (id) => {
-    setOpenEdit(true);
+    setIsOpen(true);
     let selected = categories.filter((cat) => cat.id === id);
     setSelectedCategory(selected);
   };
@@ -65,23 +49,13 @@ const CategoryList = () => {
         className="btn btn-outline-secondary"
       >
         {" "}
-        <HiOutlinePlusSm size={35} /> Add Category
+        <HiOutlinePlusSm size={35} />
       </button>
-      {success && (
-        <div className="bg-success text-light text-center px-4 py-2 w-25 mt-2 rounded">
-          {success}
-        </div>
-      )}
-      {openCategory && (
-        <AddCategory
-          setSuccess={setSuccess}
-          setOpenCategory={setOpenCategory}
-        />
-      )}
-      {!loading ? (
+      {openCategory && <AddCategory setOpenCategory={setOpenCategory} />}
+      {!categoriesLoading ? (
         categories.length !== 0 ? (
           <div className="table-responsive">
-            <table style={{minWidth: '400px'}} className="table mt-3">
+            <table style={{ minWidth: "400px" }} className="table mt-3">
               <thead>
                 <tr>
                   <th className="th-head">Name</th>
@@ -95,11 +69,11 @@ const CategoryList = () => {
                     <td>{cate.name}</td>
                     <td>{cate.description}</td>
                     <td>
-                      <span className="action-icon">
-                        <AiFillEdit onClick={() => handleUpdate(cate.id)} />
+                      <span onClick={() => handleUpdate(cate.id)} className="action-icon">
+                        <AiFillEdit />
                       </span>
-                      <span className="action-icon ms-3 d-inline-block">
-                        <MdDelete onClick={() => handleDelete(cate.id)} />
+                      <span onClick={() => handleDelete(cate.id)} className="action-icon ms-3 d-inline-block">
+                        <MdDelete />
                       </span>
                     </td>
                   </tr>
@@ -108,7 +82,7 @@ const CategoryList = () => {
             </table>
           </div>
         ) : (
-          <p className="mt-5 text-center">Pas de categories</p>
+          <p className="mt-5 text-center">Pas de catégories</p>
         )
       ) : (
         <div className="text-center pt-5">
@@ -119,12 +93,13 @@ const CategoryList = () => {
           </div>
         </div>
       )}
-      {openEdit && (
-        <EditCategory
-          setOpenEdit={setOpenEdit}
-          selectedCategory={selectedCategory}
-          setSuccess={setSuccess}
-        />
+      {modalIsOpen && (
+        <MyModal>
+          <EditCategory
+            setIsOpen={setIsOpen}
+            selectedCategory={selectedCategory}
+          />
+        </MyModal>
       )}
     </div>
   );

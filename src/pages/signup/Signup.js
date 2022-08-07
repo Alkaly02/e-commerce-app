@@ -73,8 +73,8 @@ const Signup = () => {
       <div className="auth__form__container">
         <div className="auth__form__head">
           <img src={logo} alt="E-commerce Logo" className="auth-logo" />
-          <h1 className="text-center">Create Your Account</h1>
-          <p>Please fill all fields to continue</p>
+          <h1 className="text-center">Créer un compte</h1>
+          <p>Remplissez tous les champs pour continuer</p>
         </div>
         <form onSubmit={handleSignup} className="mt-5 position-relative">
           {error && (
@@ -96,7 +96,7 @@ const Signup = () => {
           <div className="d-sm-flex justify-content-between">
             <div className="mb-3 form__input--flex">
               <label htmlFor="firstname" className="form-label">
-                Firstname
+                Prénom
               </label>
               <input
                 value={firstname}
@@ -109,7 +109,7 @@ const Signup = () => {
             </div>
             <div className="mb-3 form__input--flex ps-sm-3 p-0">
               <label htmlFor="lastname" className="form-label">
-                Lastname
+                Nom
               </label>
               <input
                 value={lastname}
@@ -137,7 +137,7 @@ const Signup = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="password" className="form-label">
-              Password
+              Mot de passe
             </label>
             <input
               value={password}
@@ -150,7 +150,7 @@ const Signup = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="confirmpassword" className="form-label">
-              Confirm Password
+              Confirmer mot de passe
             </label>
             <input
               value={confirmpassword}
@@ -169,14 +169,14 @@ const Signup = () => {
                 </div>
               </div>
             ) : (
-              "Create Account"
+              "Inscription"
             )}
           </button>
         </form>
         <p className="text-center mt-4">
-          Already have an account ?{" "}
+          Vous avez déjà un compte ?{" "}
           <Link className="login-signup" to="/login">
-            Log in
+            Connectez-vous 
           </Link>
         </p>
       </div>

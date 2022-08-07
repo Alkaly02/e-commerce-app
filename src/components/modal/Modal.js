@@ -1,38 +1,40 @@
 import React from "react";
 import Modal from "react-modal";
 import { useModal } from "../../hooks/useModal";
+import "./modal.css";
 
 const customStyles = {
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+  },
   content: {
-    maxWidth: "600px",
-    padding: '0',
-    margin: "auto",
-    left: "0",
-    right: '0',
+    maxWidth: '600px',
+    border: 'none',
+    backgroundColor: 'transparent',
+    padding: "0",
+    margin: "auto"
   },
 };
 
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement("#root");
-Modal.defaultStyles.overlay.backgroundColor = 'rgba(0, 0, 0, 0.5)'
 
 const MyModal = ({ children }) => {
-  const {modalIsOpen, setIsOpen} = useModal()
+  const { modalIsOpen, setIsOpen } = useModal();
 
   function closeModal() {
-    setIsOpen(false);
+    setIsOpen(true);
   }
 
   return (
     <>
-      
-      <div
-      >
+      <div>
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
           style={customStyles}
-          contentLabel="Example Modal"
+          contentLabel="Modal"
+          closeTimeoutMS={1000}
         >
           {children}
         </Modal>

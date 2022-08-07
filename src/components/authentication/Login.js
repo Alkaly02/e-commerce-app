@@ -52,9 +52,9 @@ const Login = () => {
   return (
     <div className="auth__form__container">
       <div className="auth__form__head">
-        <img src={logo} alt="E-commerce Logo" className="auth-logo" />
-        <h1 className="text-center">Welcome to Ecommerce</h1>
-        <p>Login with email & password</p>
+        <img style={{width: '100px'}} src={logo} alt="E-commerce Logo" className="auth-logo" />
+        <h1 className="text-center">Bienvenue sur Ecommerce</h1>
+        <p>Connexion avec email & mot de passe</p>
       </div>
       <form onSubmit={handleLogin} className="mt-5 position-relative">
         {error && (
@@ -81,7 +81,7 @@ const Login = () => {
         </div>
         <div className="mb-3">
           <label htmlFor="password" className="form-label">
-            Password
+            Mot de passe
           </label>
           <input
             value={password}
@@ -100,16 +100,16 @@ const Login = () => {
               </div>
             </div>
           ) : (
-            "Login"
+            "Connexion"
           )}
         </button>
       </form>
-      <p className="text-center mt-4">
-        Don't have an account ?{" "}
+      {/* <p className="text-center mt-4">
+        Nous n'avez pas de compte ?{" "}
         <Link className="login-signup" to="/signup">
-          Sign up
+          Inscrivez-vous
         </Link>
-      </p>
+      </p> */}
     </div>
   );
 };
