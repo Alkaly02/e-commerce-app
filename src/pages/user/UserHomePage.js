@@ -11,6 +11,7 @@ import UserHome from "./UserHome";
 import ShowByCategoryUser from "../../components/showByCategory/ShowByCategoryUser";
 import { PanierProvider } from "../../context/PanierProvider";
 import { usePanierProvider } from "../../hooks/usePanierProvider";
+import Panier from "../../components/panier/Panier";
 
 const UserHomePage = () => {
   const { logout } = useAuth();
@@ -30,6 +31,7 @@ const UserHomePage = () => {
 
   return (
     <>
+      {/* <Panier /> */}
       <Header>
         <button>AB</button>
         <button onClick={Logout}>
@@ -45,8 +47,8 @@ const UserHomePage = () => {
                 right: "-25%",
                 backgroundColor: "rgb(75, 180, 180)",
                 color: "white",
-                borderRadius: '50%',
-                padding: '0.1rem 0.5rem'
+                borderRadius: "50%",
+                padding: "0.1rem 0.5rem",
               }}
             >
               {commandAmount}

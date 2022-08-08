@@ -1,0 +1,6 @@
+.panier{
+    position: absolute !important;
+    width: '30%' !important;
+    right: '0' !important;
+    background-color: 'white' !important;
+}
