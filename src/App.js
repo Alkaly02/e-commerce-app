@@ -6,19 +6,28 @@ import Home from "./pages/home/Home";
 import LoginPage from "./pages/login/LoginPage";
 import Signup from "./pages/signup/Signup";
 import { Toaster } from "react-hot-toast";
+import UserHomePage from "./pages/user/UserHomePage";
+import { PanierProvider } from "./context/PanierProvider";
 
 function App() {
   return (
     <div className="">
       <ModalProvider>
-        <Routes>
-          <Route path="/*" element={<Home />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/admin/*" element={<AdminDashboard />} />
-        </Routes>
+        <PanierProvider>
+          <Routes>
+            <Route path="/*" element={<Home />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/admin/*" element={<AdminDashboard />} />
+            <Route path="/user/*" element={<UserHomePage />} />
+          </Routes>
+        </PanierProvider>
       </ModalProvider>
-      <Toaster containerStyle={{bottom: '10%'}} position="bottom-center" reverseOrder={false} />
+      <Toaster
+        containerStyle={{ bottom: "10%" }}
+        position="bottom-center"
+        reverseOrder={false}
+      />
     </div>
   );
 }

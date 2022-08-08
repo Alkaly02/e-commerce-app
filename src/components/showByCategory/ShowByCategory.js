@@ -29,7 +29,6 @@ const ShowByCategory = () => {
             )) : 'Pas de produits !' : 'loading'
         }
       </ProductsContainer>
-      {id}
     </>
   );
 };
