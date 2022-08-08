@@ -32,7 +32,7 @@ const AddProducts = () => {
   const addProduct = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await AddDoc("products", { name, prix, quantity, desc, imgUrl, category });
+    await AddDoc("products", { name, prix, quantity, description: desc, imgUrl, category });
     toast.success("Produit ajoutée !", {
       style: {
         backgroundColor: "#2B3445",
@@ -119,7 +119,7 @@ const AddProducts = () => {
                     <>
                       <option value="">Sélectionner la catégorie</option>
                       {categories?.map((category) => (
-                        <option key={category.id}>{category.name}</option>
+                        <option value={category.id} key={category.id}>{category.name}</option>
                       ))}
                     </>
                   ) : (

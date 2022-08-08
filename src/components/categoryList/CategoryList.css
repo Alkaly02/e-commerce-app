@@ -15,7 +15,34 @@
     background-color: rgba(0, 0, 0, 0.1);
 }
 
+thead {
+    border-radius: 5px !important;
+    padding: 1rem !important;
+}
+
 .th-head {
     background-color: #2B3445 !important;
     color: white;
+    padding: 1rem !important;
+}
+
+td{
+    white-space: nowrap !important;
+    vertical-align: middle;
+    text-align: center;
+    font-weight: 600;
+}
+
+tr:nth-of-type(even){
+    background-color: #c8cbce !important;
+}
+
+
+th{
+    text-align: center !important;
+}
+
+th:nth-of-type(even){
+    text-align: center;
+    background-color: #888d96 !important;
 }

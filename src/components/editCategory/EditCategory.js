@@ -7,7 +7,6 @@ const EditCategory = ({ selectedCategory, setIsOpen }) => {
   const [name, setName] = useState(selectedCategory[0]?.name);
   const [desc, setDesc] = useState(selectedCategory[0]?.description);
   const [loading, setLoading] = useState(false);
-  console.log(selectedCategory[0]?.name);
 
   const editCategory = async (e) => {
     e.preventDefault();
@@ -70,7 +69,7 @@ const EditCategory = ({ selectedCategory, setIsOpen }) => {
           <button type="submit" className="btn submit px-5 w-100">
             {loading ? (
               <div className="text-center">
-                <div className="spinner-border" role="status">
+                <div style={{ width: "20px", height: "20px" }} className="spinner-border" role="status">
                   <span className="visually-hidden">Loading...</span>
                 </div>
               </div>

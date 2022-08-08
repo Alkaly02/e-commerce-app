@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { useModal } from "../../hooks/useModal";
 import MyModal from "../modal/Modal";
 import useCategories from "../../hooks/useCategories";
+import firstLetterUpperCase from "../../utils/functions/firstLetterUpperCase";
 
 const CategoryList = () => {
   const [openCategory, setOpenCategory] = useState(false);
@@ -55,7 +56,7 @@ const CategoryList = () => {
       {!categoriesLoading ? (
         categories.length !== 0 ? (
           <div className="table-responsive">
-            <table style={{ minWidth: "400px" }} className="table mt-3">
+            <table style={{ minWidth: "400px" }} className="table mt-3 table-hover">
               <thead>
                 <tr>
                   <th className="th-head">Name</th>
@@ -66,7 +67,7 @@ const CategoryList = () => {
               <tbody>
                 {categories?.map((cate) => (
                   <tr key={cate.id}>
-                    <td>{cate.name}</td>
+                    <td>{firstLetterUpperCase(cate.name)}</td>
                     <td>{cate.description}</td>
                     <td>
                       <span onClick={() => handleUpdate(cate.id)} className="action-icon">
