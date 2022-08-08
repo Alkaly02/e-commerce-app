@@ -1,6 +1,6 @@
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
-import { db } from "../firebase/config";
+import { db } from "../../firebase/config";
 import toast from "react-hot-toast";
 
 const EditCategory = ({ selectedCategory, setIsOpen }) => {
@@ -11,22 +11,22 @@ const EditCategory = ({ selectedCategory, setIsOpen }) => {
 
   const editCategory = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     // Set the "capital" field of the city 'DC'
     await updateDoc(doc(db, "categories", selectedCategory[0]?.id), {
       name,
-      description: desc
+      description: desc,
     });
     toast.success("Catégorie mise a jour !", {
       style: {
-        backgroundColor: '#2B3445',
-        color: 'white'
+        backgroundColor: "#2B3445",
+        color: "white",
       },
       iconTheme: {
-        primary: 'green',
+        primary: "green",
       },
     });
-    setLoading(false)
+    setLoading(false);
     setIsOpen(false);
   };
   return (
@@ -36,12 +36,15 @@ const EditCategory = ({ selectedCategory, setIsOpen }) => {
     >
       <div className="modal-header mb-4">
         <h5 className="modal-title fs-5">Mettre à jour la catégorie</h5>
-        <button onClick={() => setIsOpen(false)} type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          onClick={() => setIsOpen(false)}
+          type="button"
+          className="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
-      <form
-        onSubmit={editCategory}
-        className=""
-      >
+      <form onSubmit={editCategory} className="">
         <div className="mb-3">
           <input
             value={name}

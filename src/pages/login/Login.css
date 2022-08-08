@@ -1,6 +1,7 @@
 .auth-container {
-    width: 100vw;
-    min-height: 100vh;
+    /* width: 100vw;
+    min-height: 100vh; */
+    width: 100%;
     background-color: rgb(243, 244, 247);
     display: flex;
     justify-content: center;
@@ -53,7 +54,7 @@
     border: 1px solid rgb(125, 135, 156);
     border-radius: 3px;
     box-sizing: border-box !important;
-    font-weight: 600 !important;
+    font-weight: 500 !important;
 }
 
 .form__input::placeholder{
@@ -99,6 +100,6 @@ form + p {
 
 @media (max-width: 500px) {
     .auth__form__container {
-        padding: 4rem 2rem;
+        padding: 2rem 1rem;
     }
 }

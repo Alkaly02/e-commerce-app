@@ -24,6 +24,12 @@ li > a {
     width: 100%;
 }
 
+@media screen and (max-width: 767px) {
+    li:nth-of-type(even){
+        border: none;
+    }
+}
+
 li > a:hover{
     color: rgb(75, 180, 180) !important;
 }

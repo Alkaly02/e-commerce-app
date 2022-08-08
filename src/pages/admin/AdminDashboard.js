@@ -4,6 +4,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import AddProducts from "../../components/addProducts/AddProducts";
 import CategoryList from "../../components/categoryList/CategoryList";
 import Header from "../../components/header/Header";
+import ProductList from "../../components/ProductList/ProductList";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { useAuth } from "../../hooks/useAuth";
 import { adminData } from "../../utils/admin-navbar-items";
@@ -34,6 +35,7 @@ const AdminDashboard = () => {
         <Routes>
           <Route path="" element={<AdminHome />} />
           <Route path="add-category" element={<CategoryList />} />
+          <Route path="products" element={<ProductList />} />
           <Route path="add-products" element={<AddProducts />} />
         </Routes>
       </div>

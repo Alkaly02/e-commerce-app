@@ -9,6 +9,10 @@ import { useModal } from "../../hooks/useModal";
 import useCategories from "../../hooks/useCategories";
 import { AiOutlineAppstoreAdd, AiOutlineHome } from "react-icons/ai";
 import CategoryList from "../../components/categoryList/CategoryList";
+import firstLetterUpperCase from "../../utils/functions/firstLetterUpperCase";
+import { Route, Routes } from "react-router-dom";
+import ShowByCategory from "../../components/showByCategory/ShowByCategory";
+import SidebarMob from "../../components/sidebar/SidebarMob";
 
 const Home = () => {
   const { setIsOpen } = useModal();
@@ -27,7 +31,7 @@ const Home = () => {
     categories?.forEach((category) => {
       sidebarLinks.push({
         to: category.id,
-        label: category.name,
+        label: firstLetterUpperCase(category.name),
         icon: <AiOutlineAppstoreAdd />,
       });
     });
@@ -47,19 +51,30 @@ const Home = () => {
           </button>
         </div>
       </Header>
-      <div className="home-grid container">
+      <div className="home-grid container-site">
         <Sidebar
-          title={"Meilleures Catégories"}
+          title={"Meilleures catégories"}
           className="sidebar-containt"
           links={userData}
         />
-        <ProductsContainer
-          title="Produits tendences"
-          description="Meilleure collection de 2021 pour vous !"
-          className="main-content"
-        />
-        <LoginModal />
+        <SidebarMob links={userData} />
+        <div className="w-100">
+        <Routes>
+          <Route
+            path=""
+            element={
+              <ProductsContainer
+                title="Produits tendences"
+                description="Meilleure collection de 2021 pour vous !"
+                className="main-content"
+              />
+            }
+          />
+          <Route path="/:id" element={<ShowByCategory />} />
+        </Routes>
+        </div>
       </div>
+      <LoginModal />
     </>
   );
 };

@@ -1,8 +1,7 @@
-import { linkWithCredential } from "firebase/auth";
 import React from "react";
-import { Link } from "react-router-dom";
 import ListItem from "../listItem/ListItem";
 import "./Sidebar.css";
+import PropTypes from 'prop-types'
 
 const Sidebar = ({ title, links }) => {
   return (
@@ -23,3 +22,8 @@ const Sidebar = ({ title, links }) => {
 };
 
 export default Sidebar;
+
+Sidebar.propTypes = {
+  title: PropTypes.string.isRequired,
+  links: PropTypes.array.isRequired
+}

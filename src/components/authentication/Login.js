@@ -51,12 +51,14 @@ const Login = () => {
   };
   return (
     <div className="auth__form__container">
+      <div className="mb-4 d-flex justify-content-end">
+        <button onClick={() => setIsOpen(false)} type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
       <div className="auth__form__head">
         <img style={{width: '100px'}} src={logo} alt="E-commerce Logo" className="auth-logo" />
         <h1 className="text-center">Bienvenue sur Ecommerce</h1>
-        <p>Connexion avec email & mot de passe</p>
       </div>
-      <form onSubmit={handleLogin} className="mt-5 position-relative">
+      <form onSubmit={handleLogin} className="mt-3 position-relative">
         {error && (
           <div
             style={{ top: "-16%", fontSize: "0.9rem" }}

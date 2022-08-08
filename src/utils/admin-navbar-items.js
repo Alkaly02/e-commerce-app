@@ -13,7 +13,7 @@ export const adminData = [
         icon: <AiOutlineAppstoreAdd />
     },
     {
-        to: 'add-products',
+        to: 'products',
         label: 'Produits',
         icon: <GiShoppingCart />
     }

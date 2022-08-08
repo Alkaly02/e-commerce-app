@@ -13,3 +13,10 @@
     50% {transform: scale(1.1);}
     100% {transform: scale(1);}
   }
+
+  @media screen and (max-width: 767px) {
+    .home-grid{
+        padding-top: 1rem;
+    }
+    
+  }

@@ -12,7 +12,7 @@ function App() {
     <div className="">
       <ModalProvider>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/*" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/admin/*" element={<AdminDashboard />} />

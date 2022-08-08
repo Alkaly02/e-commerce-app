@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../firebase/config";
 import toast from "react-hot-toast";
 import { useAuth } from "../../hooks/useAuth";
+import AddDoc from "../../utils/functions/AddDoc";
 
 const AddCategory = ({ setSuccess, setOpenCategory }) => {
   const [loading, setLoading] = useState(false);
-  const {currentUser} = useAuth()
+  const { currentUser } = useAuth();
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const addCategory = async (e) => {
@@ -14,14 +13,14 @@ const AddCategory = ({ setSuccess, setOpenCategory }) => {
     setLoading(true);
     toast.success("Catégorie ajoutée !", {
       style: {
-        backgroundColor: '#2B3445',
-        color: 'white'
+        backgroundColor: "#2B3445",
+        color: "white",
       },
       iconTheme: {
-        primary: 'green',
+        primary: "green",
       },
     });
-    await addDoc(collection(db, "categories"), {
+    await AddDoc("categories", {
       name,
       description: desc,
       userEmail: currentUser.email,
@@ -60,7 +59,11 @@ const AddCategory = ({ setSuccess, setOpenCategory }) => {
           <button type="submit" className="btn submit px-5">
             {loading ? (
               <div className="text-center">
-                <div className="spinner-border" role="status">
+                <div
+                  style={{ width: "20px", height: "20px" }}
+                  className="spinner-border"
+                  role="status"
+                >
                   <span className="visually-hidden">Loading...</span>
                 </div>
               </div>

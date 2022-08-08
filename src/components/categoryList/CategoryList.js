@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { MdDelete } from "react-icons/md";
-import EditCategory from "../../editCategory/EditCategory";
+import EditCategory from "../editCategory/EditCategory";
 import { db } from "../../firebase/config";
 import AddCategory from "../addCategory/AddCategory";
 import "./CategoryList.css";
