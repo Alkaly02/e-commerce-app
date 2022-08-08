@@ -22,6 +22,7 @@ const AdminDashboard = () => {
       alert(err.code)
     }
   }
+
   return (
     <>
       <Header>
