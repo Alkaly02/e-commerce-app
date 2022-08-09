@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
           <div className="text-center d-flex flex-column align-items-center">
             <img src={logo} alt="Ecomerce Logo" className="logo-loading mb-2" />
             <div
-              style={{ width: "65px", height: "65px" }}
+              style={{ width: "60px", height: "60px", color: 'rgb(75, 180, 180)'}}
               className="spinner-border"
               role="status"
             >

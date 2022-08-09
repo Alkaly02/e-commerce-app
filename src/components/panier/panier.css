@@ -1,6 +1,59 @@
-.panier{
-    position: absolute !important;
-    width: '30%' !important;
-    right: '0' !important;
-    background-color: 'white' !important;
+.panier-container {
+  position: absolute !important;
+  width: 30% !important;
+  right: 0 !important;
+  background-color: white !important;
+  overflow-y: scroll;
+}
+
+.panier-items-details:nth-of-type(odd) {
+  border-top: 1px solid rgb(216, 219, 228);
+  border-bottom: 1px solid rgb(216, 219, 228);
+}
+
+.panier-details button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 1px solid rgb(75, 180, 180);
+  border-radius: 100px;
+  padding: 0.3rem;
+}
+
+.panier-details button .plus-icon {
+  color: rgb(75, 180, 180) !important;
+}
+
+.detail-title {
+  font-size: 0.9rem;
+  font-weight: 600 !important;
+  color: rgb(43, 52, 69);
+}
+
+.detail-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgb(125, 135, 156);
+}
+
+.detail-prix {
+  font-weight: 600;
+  font-size: 14px;
+  color: rgb(75, 180, 180);
+  letter-spacing: 1px;
+}
+
+.panier-details .disabled{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 1px solid rgb(125, 135, 156);
+  border-radius: 100px;
+  padding: 0.3rem;
+}
+
+.panier-details button .plus-icon-disabled {
+  color: rgb(125, 135, 156) !important;
 }

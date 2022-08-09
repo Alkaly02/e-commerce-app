@@ -1,3 +1,4 @@
+// cSpell:disabled
 import React, { useEffect, useState } from "react";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { useParams } from "react-router-dom";
@@ -13,7 +14,7 @@ import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
 
 const ShowByCategoryUser = () => {
-  const { id } = useParams();
+  const { idDomain } = useParams();
   const { categories } = useCategories();
   const { products, productsLoading } = useProducts();
   const [title, setTitle] = useState("");
@@ -21,41 +22,54 @@ const ShowByCategoryUser = () => {
   const { panier } = usePanier();
 
   useEffect(() => {
-    let titleContainer = categories.filter((category) => category.id === id);
+    let titleContainer = categories.filter(
+      (category) => category.id === idDomain
+    );
     setTitle(firstLetterUpperCase(titleContainer[0]?.name));
-  }, [categories, id]);
+  }, [categories, idDomain]);
 
   const increment = async (selectedCart) => {
-    let { id, quantity, productId } = selectedCart[0];
+    // get infos about the cart(panier)
+    let { id, quantities, productId } = selectedCart[0];
 
     await updateDoc(doc(db, "panier", id), {
-      quantity: ++quantity,
-      totalPrix: products.filter((p) => p.id === productId)[0]?.prix * quantity,
+      quantities: ++quantities,
+      totalPrix:
+        products.filter((p) => p.id === productId)[0]?.prix * quantities,
     });
   };
 
   const decrement = async (selectedCart) => {
-    let { id, quantity, productId } = selectedCart[0];
+    let { id, quantities, productId } = selectedCart[0];
 
-    if (quantity > 1) {
+    if (quantities > 1) {
       return await updateDoc(doc(db, "panier", id), {
-        quantity: --quantity,
-        totalPrix: products.filter((p) => p.id === productId)[0]?.prix * quantity,
+        quantities: --quantities,
+        totalPrix:
+          products.filter((p) => p.id === productId)[0]?.prix * quantities,
       });
     }
+    // updating the ui before deleting the last item
     await updateDoc(doc(db, "panier", id), {
-      quantity: --quantity,
+      quantities: --quantities,
       totalPrix: products.filter((p) => p.id === productId)[0]?.prix,
     });
-    await deleteDoc(doc(db, "panier", id))
+    await deleteDoc(doc(db, "panier", id));
   };
 
-  const firstTimeAddToCart = async (idProduct) => {
-      await AddDoc("panier", {
-        productId: idProduct,
-        quantity: 1,
-        totalPrix: products.filter((p) => p.id === idProduct)[0]?.prix,
-      });
+  const firstTimeAddToCart = async (product) => {
+    // get all the product data
+    const { category, description, id, imgUrl, name, prix } = product;
+    await AddDoc("panier", {
+      category,
+      description,
+      productId: id,
+      imgUrl,
+      name,
+      prix,
+      quantities: 1,
+      totalPrix: prix,
+    });
   };
 
   return (
@@ -66,57 +80,73 @@ const ShowByCategoryUser = () => {
         className="main-content"
         loading={productsLoading}
       >
-        {!productsLoading
-          ? products.filter((product) => product.category === id).length !== 0
-            ? products
-                .filter((product) => product.category === id)
-                .map((product) => (
-                  <ProductCard key={product.id} {...product}>
-                    {panier.filter((p) => p.productId === product.id)[0]
-                      ?.quantity > 0 ? (
-                      <div className="d-flex justify-content-between">
-                        <button
-                          onClick={() =>
-                            decrement(
-                              panier.filter((p) => p.productId === product.id)
-                            )
-                          }
-                          className="w-50 py-1"
-                        >
-                          {" "}
-                          <CgLoadbar className="plus-icon" />{" "}
-                        </button>
-                        <p className="m-0 align-self-center mx-3 fw-bold">
-                          {
-                            panier.filter((p) => p.productId === product.id)[0]
-                              ?.quantity
-                          }
-                        </p>
-                        <button
-                          onClick={() =>
-                            increment(
-                              panier.filter((p) => p.productId === product.id)
-                            )
-                          }
-                          className="w-50 py-1"
-                        >
-                          {" "}
-                          <HiOutlinePlusSm className="plus-icon" />{" "}
-                        </button>
-                      </div>
-                    ) : (
+        {!productsLoading ? (
+          products.filter((product) => product.category === idDomain).length !==
+          0 ? (
+            products
+              .filter((product) => product.category === idDomain)
+              .map((product) => (
+                <ProductCard key={product.id} {...product}>
+                  {/* children */}
+                  {panier.filter((p) => p.productId === product.id)[0]
+                    ?.quantities > 0 ? (
+                    <div className="d-flex justify-content-between">
                       <button
-                        onClick={() => firstTimeAddToCart(product.id)}
-                        className="w-100 py-1"
+                        onClick={() =>
+                          decrement(
+                            panier.filter((p) => p.productId === product.id)
+                          )
+                        }
+                        className="w-50 py-1"
+                      >
+                        {" "}
+                        <CgLoadbar className="plus-icon" />{" "}
+                      </button>
+                      <p className="m-0 align-self-center mx-3 fw-bold">
+                        {
+                          panier.filter((p) => p.productId === product.id)[0]
+                            ?.quantities
+                        }
+                      </p>
+                      <button
+                        onClick={() =>
+                          increment(
+                            panier.filter((p) => p.productId === product.id)
+                          )
+                        }
+                        className="w-50 py-1"
                       >
                         {" "}
                         <HiOutlinePlusSm className="plus-icon" />{" "}
                       </button>
-                    )}
-                  </ProductCard>
-                ))
-            : "Pas de produits !"
-          : "loading"}
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => firstTimeAddToCart(product)}
+                      className="w-100 py-1"
+                    >
+                      {" "}
+                      <HiOutlinePlusSm className="plus-icon" />{" "}
+                    </button>
+                  )}
+                </ProductCard>
+              ))
+          ) : (
+            "Pas de produits !"
+          )
+        ) : (
+          <div
+            style={{
+              width: "30px",
+              height: "30px",
+              color: "rgb(125, 135, 156)",
+            }}
+            className="spinner-border"
+            role="status"
+          >
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        )}
       </ProductsContainer>
     </>
   );
