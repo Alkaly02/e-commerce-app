@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { HiOutlinePlusSm } from "react-icons/hi";
 import { useParams } from "react-router-dom";
 import useCategories from "../../hooks/useCategories";
+import { useModal } from "../../hooks/useModal";
 import useProducts from "../../hooks/useProducts";
 import firstLetterUpperCase from "../../utils/functions/firstLetterUpperCase";
 import ProductCard from "../productCard/ProductCard";
@@ -11,6 +13,7 @@ const ShowByCategory = () => {
   const { categories } = useCategories();
   const {products, productsLoading} = useProducts()
   const [title, setTitle] = useState("");
+  const { setIsOpen } = useModal();
 
   useEffect(() => {
     let titleContainer = categories.filter((category) => category.id === id);
@@ -25,7 +28,12 @@ const ShowByCategory = () => {
       >
         {
             !productsLoading ? products.filter(product => product.category === id).length !== 0 ? products.filter(product => product.category === id).map(product => (
-                <ProductCard key={product.id} {...product} />
+                <ProductCard key={product.id} {...product} >
+                  <button onClick={() => setIsOpen(true)} className="w-100 py-1">
+                    {" "}
+                    <HiOutlinePlusSm className="plus-icon" />{" "}
+                  </button>
+                </ProductCard>
             )) : 'Pas de produits !' : 'loading'
         }
       </ProductsContainer>

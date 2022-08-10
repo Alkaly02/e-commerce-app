@@ -49,6 +49,7 @@ const Signup = () => {
         firstname,
         lastname,
         email,
+        role: 'user'
       });
       setSuccess('Inscription reussi !')
       setLoading(false);

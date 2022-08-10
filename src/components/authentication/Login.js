@@ -34,7 +34,7 @@ const Login = () => {
     }
     try {
       await login(email, password);
-      navigate('/admin')
+      navigate('/redirect')
       setIsOpen(false)
       setLoading(false);
     } catch(err)  {
