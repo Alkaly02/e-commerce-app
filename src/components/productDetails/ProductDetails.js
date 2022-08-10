@@ -17,7 +17,7 @@ import Panier from "../panier/Panier";
 import "./productDetails.css";
 import increment from "../../utils/functions/increment";
 import decrement from "../../utils/functions/decrement";
-import firstTimeAddToCartDetails from "../../utils/functions/firstAddToCartDetails";
+import firstAddToCartDetails from "../../utils/functions/firstAddToCartDetails";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -143,7 +143,7 @@ const ProductDetails = () => {
                     </div>
                   ) : (
                     <button
-                      onClick={() => firstTimeAddToCartDetails(selectedProduct, currentUser.email)}
+                      onClick={() => firstAddToCartDetails(selectedProduct, currentUser.email)}
                       className="w-100 py-1 first-btn"
                     >
                       {" "}

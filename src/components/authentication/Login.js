@@ -1,5 +1,6 @@
 import { addDoc, collection } from "firebase/firestore";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/img/logo-ecommerce.png";
 import { db } from "../../firebase/config";
@@ -8,65 +9,102 @@ import { useModal } from "../../hooks/useModal";
 
 const Login = () => {
   const { login } = useAuth();
-  const {setIsOpen} = useModal()
+  const { modalIsOpen, setIsOpen } = useModal();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [disabled, setDisabled] = useState('')
-  const [error, setError] = useState("");
+  const [disabled, setDisabled] = useState("");
 
   const handleLogin = async (e) => {
-    setDisabled(true)
-    setError("");
+    setDisabled(true);
     e.preventDefault();
     setLoading(true);
     if (email === "" || password === "") {
-      setDisabled(false)
+      setDisabled(false);
       setLoading(false);
-      return setError("Les champs ne doivent pas etre vides !");
+      return toast.error("Les champs ne doivent pas etre vides !", {
+        style: {
+          backgroundColor: "#2B3445",
+          color: "white",
+        },
+        iconTheme: {
+          primary: "red",
+        },
+      });
     }
     if (password.length < 6) {
-      setDisabled(false)
+      setDisabled(false);
       setLoading(false);
-      return setError("Le mot de passe doit avoir au moins 6 caracteres !");
+      return toast.error("Le mot de passe doit avoir au moins 6 caracteres !", {
+        style: {
+          backgroundColor: "#2B3445",
+          color: "white",
+        },
+        iconTheme: {
+          primary: "red",
+        },
+      });
     }
     try {
       await login(email, password);
-      navigate('/redirect')
-      setIsOpen(false)
+      navigate("/redirect");
+      setIsOpen(false);
       setLoading(false);
-    } catch(err)  {
+    } catch (err) {
       setLoading(false);
-      setDisabled(false)
-      if(err.code === 'auth/user-not-found'){
-        return setError('Utilisateur introuvable !')
+      setDisabled(false);
+      if (err.code === "auth/user-not-found") {
+        return toast.error("Utilisateur introuvable !", {
+          style: {
+            backgroundColor: "#2B3445",
+            color: "white",
+          },
+          iconTheme: {
+            primary: "red",
+          },
+        });
       }
-      if(err.code === 'auth/wrong-password'){
-        return setError('Email ou mot de passe incorrect !')
+      if (err.code === "auth/wrong-password") {
+        return toast.error("Email ou mot de passe incorrect !", {
+          style: {
+            backgroundColor: "#2B3445",
+            color: "white",
+          },
+          iconTheme: {
+            primary: "red",
+          },
+        });
       }
     }
-    setDisabled(false)
+    setDisabled(false);
   };
   return (
     <div className="auth__form__container">
-      <div className="mb-4 d-flex justify-content-end">
-        <button onClick={() => setIsOpen(false)} type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
+      {modalIsOpen && (
+        <div className="mb-4 d-flex justify-content-end">
+          {" "}
+          <button
+            onClick={() => setIsOpen(false)}
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+      )}
+
       <div className="auth__form__head">
-        <img style={{width: '100px'}} src={logo} alt="E-commerce Logo" className="auth-logo" />
+        <img
+          style={{ width: "100px" }}
+          src={logo}
+          alt="E-commerce Logo"
+          className="auth-logo"
+        />
         <h1 className="text-center fs-sm-5 fs-6">Bienvenue sur Ecommerce</h1>
       </div>
       <form onSubmit={handleLogin} className="mt-3 position-relative">
-        {error && (
-          <div
-            style={{ top: "-16%", fontSize: "0.9rem" }}
-            className="bg-danger p-2 text-center text-light mb-1 position-absolute w-100"
-          >
-            {error}
-          </div>
-        )}
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
             Email
@@ -94,10 +132,18 @@ const Login = () => {
             placeholder="******"
           />
         </div>
-        <button disabled={disabled} type="submit" className="btn submit w-100 mt-3">
+        <button
+          disabled={disabled}
+          type="submit"
+          className="btn submit w-100 mt-3"
+        >
           {loading ? (
             <div className="text-center">
-              <div style={{ width: "20px", height: "20px" }} className="spinner-border" role="status">
+              <div
+                style={{ width: "20px", height: "20px" }}
+                className="spinner-border"
+                role="status"
+              >
                 <span className="visually-hidden">Loading...</span>
               </div>
             </div>

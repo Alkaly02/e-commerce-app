@@ -61,3 +61,15 @@
 .middle{
   flex: 1 1 0px;
 }
+
+@media (max-width: 1000px){
+  .panier-container {
+    width: 50% !important;
+  }
+}
+
+@media (max-width: 650px){
+  .panier-container {
+    width: 90% !important;
+  }
+}

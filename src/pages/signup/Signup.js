@@ -5,6 +5,7 @@ import { useAuth } from "../../hooks/useAuth";
 import "./Signup.css";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
+import toast from "react-hot-toast";
 
 const Signup = () => {
   const { signup } = useAuth();
@@ -16,11 +17,8 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const handleSignup = async (e) => {
-    setError("");
     e.preventDefault();
     setLoading(true);
     if (
@@ -31,69 +29,91 @@ const Signup = () => {
       confirmpassword === ""
     ) {
       setLoading(false);
-      return setError("Les champs ne doivent pas etre vides !");
+
+      return toast.error("Les champs ne doivent pas etre vides !", {
+        style: {
+          backgroundColor: "#2B3445",
+          color: "white",
+        },
+        iconTheme: {
+          primary: "red",
+        },
+      });
     }
     if (password.length < 6) {
       setLoading(false);
-      return setError("Le mot de passe doit avoir au moins 6 caracteres !");
+
+      return toast.error("Le mot de passe doit avoir au moins 6 caracteres !", {
+        style: {
+          backgroundColor: "#2B3445",
+          color: "white",
+        },
+        iconTheme: {
+          primary: "red",
+        },
+      });
     }
     if (password !== confirmpassword) {
       setLoading(false);
-      return setError("Les mots de passe doivent correspondre !");
+
+      return toast.error("Les mots de passe doivent correspondre !", {
+        style: {
+          backgroundColor: "#2B3445",
+          color: "white",
+        },
+        iconTheme: {
+          primary: "red",
+        },
+      });
     }
     try {
-      console.log("avant signup");
       await signup(email, password);
-      console.log("apres signup");
       await addDoc(collection(db, "users"), {
         firstname,
         lastname,
         email,
-        role: 'user'
+        role: "user",
       });
-      setSuccess('Inscription reussi !')
+      toast.success("Inscription reussi !", {
+        style: {
+          backgroundColor: "#2B3445",
+          color: "white",
+        },
+        iconTheme: {
+          primary: "green",
+        },
+      });
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
       setLoading(false);
-      console.log("apres adddoc");
-    } catch(err) {
+    } catch (err) {
       setLoading(false);
-      if(err.code === 'auth/user-not-found'){
-        return setError('Utilisateur introuvable !')
-      }
-      if(err.code === 'auth/wrong-password'){
-        return setError('Email ou mot de passe incorrect !')
+      console.log(err.code);
+      if (err.code === "auth/email-already-in-use") {
+        return toast.error("L'utilisateur existe !", {
+          style: {
+            backgroundColor: "#2B3445",
+            color: "white",
+          },
+          iconTheme: {
+            primary: "red",
+          },
+        });
       }
     }
-    setTimeout(() => {
-      setSuccess('')
-      navigate('/login')
-    }, 2000)
+    
   };
 
   return (
     <div className="auth-container">
       <div className="auth__form__container">
         <div className="auth__form__head">
-          <img src={logo} alt="E-commerce Logo" className="auth-logo" />
+          <img style={{width: '100px'}} src={logo} alt="E-commerce Logo" className="auth-logo" />
           <h1 className="text-center">Créer un compte</h1>
-          <p>Remplissez tous les champs pour continuer</p>
+          <p className="text-center">Remplissez tous les champs pour continuer</p>
         </div>
         <form onSubmit={handleSignup} className="mt-5 position-relative">
-          {error && (
-            <div
-              style={{ top: "-10%", fontSize: "0.9rem" }}
-              className="bg-danger p-2 text-center text-light mb-1 position-absolute w-100"
-            >
-              {error}
-            </div>
-          )}
-          {success && (
-            <div
-              style={{ top: "-10%", fontSize: "0.9rem" }}
-              className="bg-success p-2 text-center text-light mb-1 position-absolute w-100"
-            >
-              {success}
-            </div>
-          )}
           <div className="d-sm-flex justify-content-between">
             <div className="mb-3 form__input--flex">
               <label htmlFor="firstname" className="form-label">
@@ -177,7 +197,7 @@ const Signup = () => {
         <p className="text-center mt-4">
           Vous avez déjà un compte ?{" "}
           <Link className="login-signup" to="/login">
-            Connectez-vous 
+            Connectez-vous
           </Link>
         </p>
       </div>

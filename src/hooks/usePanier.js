@@ -12,7 +12,7 @@ const usePanier = () => {
     const getPanier = async () => {
       const q = query(
         collection(db, "panier"),
-        where("addedBy", "==", currentUser.email)
+        where("addedBy", "==", currentUser?.email)
       );
   
       onSnapshot(q, (querySnapshot) => {
@@ -26,7 +26,7 @@ const usePanier = () => {
       });
     };
     getPanier();
-  }, []);
+  }, [currentUser?.email]);
 
   return { panier, panierLoading, numberOfPanier, setNumberOfPanier };
 };
