@@ -31,10 +31,10 @@ const EditCategory = ({ selectedCategory, setIsOpen }) => {
   return (
     <div
       // style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
-      className="w-100 bg-white p-5 rounded"
+      className="w-100 bg-white p-sm-5 p-2 rounded"
     >
       <div className="modal-header mb-4">
-        <h5 className="modal-title fs-5">Mettre à jour la catégorie</h5>
+        <h5 className="modal-title fs-sm-5 fs-6">Mettre à jour la catégorie</h5>
         <button
           onClick={() => setIsOpen(false)}
           type="button"

@@ -43,7 +43,7 @@ const CategoryList = () => {
   };
 
   return (
-    <div className="mx-4 pt-3 w-100">
+    <div className="px-4">
       <button
         style={{ fontWeight: "700" }}
         onClick={() => setOpenCategory((state) => !state)}

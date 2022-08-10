@@ -75,7 +75,7 @@
     background-color: rgb(75, 180, 180) !important;
     color: white !important;
     transition: background-color 300ms ease-out 10ms !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
 }
 
 .submit:hover {
@@ -101,5 +101,9 @@ form + p {
 @media (max-width: 500px) {
     .auth__form__container {
         padding: 2rem 1rem;
+    }
+
+    .form__input{
+        font-size: 0.9rem;
     }
 }

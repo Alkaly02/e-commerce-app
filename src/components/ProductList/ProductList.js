@@ -38,7 +38,7 @@ const ProductList = () => {
     setSelectedProduct(selected);
   };
   return (
-    <div className="mx-4 pt-3 w-100">
+    <div className="px-4">
       <Link
         className="add-product-link mb-3 d-inline-block"
         to="/admin/add-products"

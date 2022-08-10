@@ -35,12 +35,14 @@ const AdminDashboard = () => {
       <div className="home-grid container-site">
         <Sidebar title={"Gérer votre boutique"} className="sidebar-containt" links={adminData} />
         <SidebarMob links={adminData} />
+        <div className="w-100">
         <Routes>
           <Route path="" element={<AdminHome />} />
           <Route path="add-category" element={<CategoryList />} />
           <Route path="products" element={<ProductList />} />
           <Route path="add-products" element={<AddProducts />} />
         </Routes>
+        </div>
       </div>
     </>
   );

@@ -3,7 +3,7 @@ import "./Card.css";
 
 const Card = ({ title, number, icon }) => {
   return (
-    <div className="card-info">
+    <div className="card-info mb-3 mb-sm-0 w-100">
       <div className="icon-container">
         {icon}
       </div>

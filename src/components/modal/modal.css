@@ -12,3 +12,22 @@
 .ReactModal__Overlay--before-close{
     opacity: 0;
 }
+
+.ReactModal__Content{
+    width: 50% !important;
+    inset: 1px !important;
+    margin-top: 2rem !important;
+}
+
+@media (max-width: 900px){
+    .ReactModal__Content{
+        width: 80% !important;
+    }
+}
+
+@media (max-width: 500px){
+    .ReactModal__Content{
+        width: 95% !important;
+        /* height: 100%; */
+    }
+}

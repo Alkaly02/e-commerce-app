@@ -9,13 +9,13 @@ const AdminHome = () => {
   const {numberOfCategories} = useCategories()
   const {numberOfProducts} = useProducts()
   return (
-    <div className="mx-4 pt-3 w-100">
+    <div className="px-4">
       <div className="welcome">
         <h1 style={{ fontWeight: "700" }} className="text-left mb-4 home-title">
           Gérer votre boutique avec faciliter
         </h1>
       </div>
-      <div className="d-flex justify-content-start">
+      <div className="d-sm-flex justify-content-start">
         <Card title="Catégories" number={numberOfCategories} icon={<AiOutlineInfoCircle />} />
         <Card title="Produits" number={numberOfProducts} icon={<RiStore2Line />} />
       </div>

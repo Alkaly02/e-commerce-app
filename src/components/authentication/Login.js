@@ -56,7 +56,7 @@ const Login = () => {
       </div>
       <div className="auth__form__head">
         <img style={{width: '100px'}} src={logo} alt="E-commerce Logo" className="auth-logo" />
-        <h1 className="text-center">Bienvenue sur Ecommerce</h1>
+        <h1 className="text-center fs-sm-5 fs-6">Bienvenue sur Ecommerce</h1>
       </div>
       <form onSubmit={handleLogin} className="mt-3 position-relative">
         {error && (
@@ -97,7 +97,7 @@ const Login = () => {
         <button disabled={disabled} type="submit" className="btn submit w-100 mt-3">
           {loading ? (
             <div className="text-center">
-              <div className="spinner-border" role="status">
+              <div style={{ width: "20px", height: "20px" }} className="spinner-border" role="status">
                 <span className="visually-hidden">Loading...</span>
               </div>
             </div>

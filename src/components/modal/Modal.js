@@ -8,7 +8,8 @@ const customStyles = {
     backgroundColor: 'rgba(0, 0, 0, 0.5)'
   },
   content: {
-    maxWidth: '600px',
+    // maxWidth: '600px',
+    // width: '100%',
     border: 'none',
     backgroundColor: 'transparent',
     padding: "0",
