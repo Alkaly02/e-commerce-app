@@ -20,6 +20,8 @@ const EditProduct = ({ setIsOpen, selectedProduct }) => {
   
   const {imgUrl, setImgUrl, per} = useFile(file)
 
+  // setImgUrl(selectedImg)
+
   const handleChange = (e) => {
     let selected = e.target.files[0];
     if (selected) {
@@ -38,7 +40,7 @@ const EditProduct = ({ setIsOpen, selectedProduct }) => {
       quantity,
       prix,
       category,
-      imgUrl
+      imgUrl: imgUrl ? imgUrl : selectedImg
     });
     toast.success("Produit mis a jour !", {
       style: {
@@ -140,7 +142,7 @@ const EditProduct = ({ setIsOpen, selectedProduct }) => {
             placeholder="Description"
           ></textarea>
         </div>
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <select
             required
             value={categories.filter((cate) => cate.id === category)[0]?.name}
@@ -165,7 +167,7 @@ const EditProduct = ({ setIsOpen, selectedProduct }) => {
               "Pas de catégorie"
             )}
           </select>
-        </div>
+        </div> */}
         <div className="mb-3">
           <button type="submit" className="btn submit px-5 w-100">
             {loading ? (

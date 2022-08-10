@@ -1,17 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import usePanier from "../../hooks/usePanier";
 import "./Panier.css";
-import {MdOutlineShoppingBag} from 'react-icons/md'
-
-import useProducts from "../../hooks/useProducts";
+import { MdOutlineShoppingBag } from "react-icons/md";
 import PanierCard from "./PanierCard";
 import NoItems from "../NoItems";
 
 const Panier = ({ setOpenCart }) => {
   const { panier, panierLoading, numberOfPanier } = usePanier();
-  
-
-  
 
   return (
     <div
@@ -25,7 +20,14 @@ const Panier = ({ setOpenCart }) => {
     >
       <div className="panier-container vh-100">
         <div className="mb-0 d-flex justify-content-between p-4 border-bottom">
-          <h6 className="d-flex justify-content-center align-items-center"><span><MdOutlineShoppingBag color="black" size={30} /></span> <span className="ms-2" style={{fontSize: '1.3rem'}}>{numberOfPanier} item</span></h6>
+          <h6 className="d-flex justify-content-center align-items-center">
+            <span>
+              <MdOutlineShoppingBag color="black" size={30} />
+            </span>{" "}
+            <span className="ms-2" style={{ fontSize: "1.3rem" }}>
+              {numberOfPanier} item
+            </span>
+          </h6>
           <button
             style={{ fontSize: "0.9rem" }}
             onClick={() => setOpenCart(false)}
@@ -36,13 +38,15 @@ const Panier = ({ setOpenCart }) => {
           ></button>
         </div>
         <div className="panier-items">
-          {!panierLoading
-            ? panier.length !== 0
-              ? panier.map((item) => (
-                <PanierCard key={item.id} {...item} />
-              ))
-              : <NoItems />
-            : "Loading..."}
+          {!panierLoading ? (
+            numberOfPanier > 0 ? (
+              panier.map((item) => <PanierCard key={item.id} {...item} />)
+            ) : (
+              <NoItems />
+            )
+          ) : (
+            "Loading..."
+          )}
         </div>
       </div>
     </div>

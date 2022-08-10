@@ -38,7 +38,7 @@ const ProductList = () => {
     setSelectedProduct(selected);
   };
   return (
-    <div className="px-sm-5 px-3 pt-3 w-100">
+    <div className="mx-4 pt-3 w-100">
       <Link
         className="add-product-link mb-3 d-inline-block"
         to="/admin/add-products"
@@ -52,11 +52,10 @@ const ProductList = () => {
               <thead>
                 <tr>
                   <th className="th-head">Image</th>
-                  <th className="th-head">Name</th>
+                  <th className="th-head">Nom</th>
                   <th className="th-head">Catégorie</th>
-                  <th className="th-head">Description</th>
                   <th className="th-head">Stock</th>
-                  <th className="th-head">Action</th>
+                  <th className="th-head">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -78,7 +77,6 @@ const ProductList = () => {
                         )[0]?.name)
                       }
                     </td>
-                    <td>{product.description}</td>
                     <td>{product.quantity}</td>
                     <td>
                       <span

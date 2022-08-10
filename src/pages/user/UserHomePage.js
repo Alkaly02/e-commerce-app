@@ -46,12 +46,13 @@ const UserHomePage = () => {
             <span
               style={{
                 position: "absolute",
-                top: "-15%",
-                right: "-25%",
+                top: "-10%",
+                right: "-20%",
                 backgroundColor: "rgb(75, 180, 180)",
                 color: "white",
                 borderRadius: "50%",
                 padding: "0.1rem 0.5rem",
+                fontSize: '0.8rem'
               }}
             >
               {commandAmount}

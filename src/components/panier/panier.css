@@ -6,7 +6,7 @@
   overflow-y: scroll;
 }
 
-.panier-items-details:nth-of-type(odd) {
+.panier-items-details:nth-of-type(even) {
   border-top: 1px solid rgb(216, 219, 228);
   border-bottom: 1px solid rgb(216, 219, 228);
 }
@@ -56,4 +56,8 @@
 
 .panier-details button .plus-icon-disabled {
   color: rgb(125, 135, 156) !important;
+}
+
+.middle{
+  flex: 1 1 0px;
 }

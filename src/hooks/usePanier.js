@@ -21,7 +21,7 @@ const usePanier = () => {
     getProducts();
   }, []);
 
-  return { panier, panierLoading, numberOfPanier };
+  return { panier, panierLoading, numberOfPanier, setNumberOfPanier };
 };
 
 export default usePanier;

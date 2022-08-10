@@ -1,4 +1,3 @@
-// cSpell:disabled
 import React, { useEffect, useState } from "react";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { useParams } from "react-router-dom";
