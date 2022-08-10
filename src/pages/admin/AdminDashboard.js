@@ -6,6 +6,7 @@ import CategoryList from "../../components/categoryList/CategoryList";
 import Header from "../../components/header/Header";
 import ProductList from "../../components/ProductList/ProductList";
 import Sidebar from "../../components/sidebar/Sidebar";
+import SidebarMob from "../../components/sidebar/SidebarMob";
 import { useAuth } from "../../hooks/useAuth";
 import { adminData } from "../../utils/admin-navbar-items";
 import AdminHome from "./AdminHome";
@@ -33,6 +34,7 @@ const AdminDashboard = () => {
       </Header>
       <div className="home-grid container-site">
         <Sidebar title={"Gérer votre boutique"} className="sidebar-containt" links={adminData} />
+        <SidebarMob links={adminData} />
         <Routes>
           <Route path="" element={<AdminHome />} />
           <Route path="add-category" element={<CategoryList />} />

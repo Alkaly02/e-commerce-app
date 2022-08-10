@@ -7,11 +7,11 @@
 .add-title{
     font-size: 1rem;
     font-weight: 600;
-    background-color: rgb(75, 180, 180);
+    background-color: #2B3445;
     max-width: 150px;
     text-align: center;
     color: white;
-    padding: 0.5rem 1rem;
+    /* padding: 1rem 1rem !important; */
     border-radius: 5px;
     border: none;
 }
