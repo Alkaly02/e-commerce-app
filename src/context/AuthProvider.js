@@ -7,7 +7,6 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase/config";
 import logo from "../assets/img/logo-ecommerce.png";
-import { collection, getDocs, query, where } from "firebase/firestore";
 
 export const authContext = createContext();
 

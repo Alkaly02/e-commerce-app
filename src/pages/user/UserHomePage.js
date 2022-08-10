@@ -12,6 +12,7 @@ import ShowByCategoryUser from "../../components/showByCategory/ShowByCategoryUs
 import { usePanierProvider } from "../../hooks/usePanierProvider";
 import Panier from "../../components/panier/Panier";
 import {IconContext} from 'react-icons'
+import usePanier from "../../hooks/usePanier";
 
 const UserHomePage = () => {
   const { logout } = useAuth();
@@ -26,7 +27,7 @@ const UserHomePage = () => {
     }
   };
 
-  const { commandAmount } = usePanierProvider();
+  const { numberOfPanier } = usePanier();
 
   const { userData } = useUserSidebarData();
 
@@ -42,7 +43,7 @@ const UserHomePage = () => {
         </button>
         <button onClick={() => setOpenCart(true) } className="position-relative">
           <MdOutlineShoppingBag className="button__icon" />
-          {commandAmount > 0 ? (
+          {numberOfPanier > 0 ? (
             <span
               style={{
                 position: "absolute",
@@ -55,7 +56,7 @@ const UserHomePage = () => {
                 fontSize: '0.8rem'
               }}
             >
-              {commandAmount}
+              {numberOfPanier}
             </span>
           ) : null}
         </button>

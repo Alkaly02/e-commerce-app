@@ -11,12 +11,16 @@ import AddDoc from "../../utils/functions/AddDoc";
 import usePanier from "../../hooks/usePanier";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
+import firstAddToCartDetails from "../../utils/functions/firstAddToCartDetails";
+import { useAuth } from "../../hooks/useAuth";
+import increment from "../../utils/functions/increment";
 
 const ShowByCategoryUser = () => {
   const { idDomain } = useParams();
   const { categories } = useCategories();
   const { products, productsLoading } = useProducts();
   const [title, setTitle] = useState("");
+  const {currentUser} = useAuth()
 
   const { panier } = usePanier();
 
@@ -25,18 +29,7 @@ const ShowByCategoryUser = () => {
       (category) => category.id === idDomain
     );
     setTitle(firstLetterUpperCase(titleContainer[0]?.name));
-  }, [categories, idDomain]);
-
-  const increment = async (selectedCart) => {
-    // get infos about the cart(panier)
-    let { id, quantities, productId } = selectedCart[0];
-
-    await updateDoc(doc(db, "panier", id), {
-      quantities: ++quantities,
-      totalPrix:
-        products.filter((p) => p.id === productId)[0]?.prix * quantities,
-    });
-  };
+  }, [categories, idDomain]); 
 
   const decrement = async (selectedCart) => {
     let { id, quantities, productId } = selectedCart[0];
@@ -54,22 +47,6 @@ const ShowByCategoryUser = () => {
       totalPrix: products.filter((p) => p.id === productId)[0]?.prix,
     });
     await deleteDoc(doc(db, "panier", id));
-  };
-
-  const firstTimeAddToCart = async (product) => {
-    // get all the product data
-    const { category, description, id, imgUrl, name, prix, stock } = product;
-    await AddDoc("panier", {
-      category,
-      description,
-      productId: id,
-      imgUrl,
-      name,
-      prix,
-      quantities: 1,
-      totalPrix: prix,
-      stock
-    });
   };
 
   return (
@@ -111,7 +88,7 @@ const ShowByCategoryUser = () => {
                       <button
                         onClick={() =>
                           increment(
-                            panier.filter((p) => p.productId === product.id)
+                            panier.filter((p) => p.productId === product.id)[0], products
                           )
                         }
                         className="w-50 py-1"
@@ -122,7 +99,7 @@ const ShowByCategoryUser = () => {
                     </div>
                   ) : (
                     <button
-                      onClick={() => firstTimeAddToCart(product)}
+                    onClick={() => firstAddToCartDetails(product, currentUser.email)}
                       className="w-100 py-1"
                     >
                       {" "}

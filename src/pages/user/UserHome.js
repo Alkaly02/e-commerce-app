@@ -1,61 +1,21 @@
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
-import React from 'react'
-import { CgLoadbar } from 'react-icons/cg';
-import { HiOutlinePlusSm } from 'react-icons/hi';
-import ProductCard from '../../components/productCard/ProductCard';
-import ProductsContainer from '../../components/productsContainer/ProductsContainer'
-import { db } from '../../firebase/config';
-import usePanier from '../../hooks/usePanier';
+import React from "react";
+import { CgLoadbar } from "react-icons/cg";
+import { HiOutlinePlusSm } from "react-icons/hi";
+import ProductCard from "../../components/productCard/ProductCard";
+import ProductsContainer from "../../components/productsContainer/ProductsContainer";
+import usePanier from "../../hooks/usePanier";
 import useProducts from "../../hooks/useProducts";
-import AddDoc from '../../utils/functions/AddDoc';
+import decrementProduct from "../../utils/functions/decrementProduct";
+import increment from "../../utils/functions/increment";
+import firstAddToCartDetails from "../../utils/functions/firstAddToCartDetails";
+import { useAuth } from "../../hooks/useAuth";
 
 const UserHome = () => {
-    const { products, productsLoading } = useProducts();
+  const { products, productsLoading } = useProducts();
+  const {currentUser} = useAuth()
 
   const { panier } = usePanier();
-  const increment = async (selectedCart) => {
-    // get infos about the cart(panier)
-    let { id, quantities, productId } = selectedCart[0];
 
-    await updateDoc(doc(db, "panier", id), {
-      quantities: ++quantities,
-      totalPrix:
-        products.filter((p) => p.id === productId)[0]?.prix * quantities,
-    });
-  };
-
-  const decrement = async (selectedCart) => {
-    let { id, quantities, productId } = selectedCart[0];
-
-    if (quantities > 1) {
-      return await updateDoc(doc(db, "panier", id), {
-        quantities: --quantities,
-        totalPrix:
-          products.filter((p) => p.id === productId)[0]?.prix * quantities,
-      });
-    }
-    // updating the ui before deleting the last item
-    await updateDoc(doc(db, "panier", id), {
-      quantities: --quantities,
-      totalPrix: products.filter((p) => p.id === productId)[0]?.prix,
-    });
-    await deleteDoc(doc(db, "panier", id));
-  };
-  const firstTimeAddToCart = async (product) => {
-    // get all the product data
-    const { category, description, id, imgUrl, name, prix, stock } = product;
-    await AddDoc("panier", {
-      category,
-      description,
-      productId: id,
-      imgUrl,
-      name,
-      prix,
-      quantities: 1,
-      totalPrix: prix,
-      stock
-    });
-  };
   return (
     <>
       <ProductsContainer
@@ -72,8 +32,9 @@ const UserHome = () => {
                     <div className="d-flex justify-content-between">
                       <button
                         onClick={() =>
-                          decrement(
-                            panier.filter((p) => p.productId === product.id)
+                          decrementProduct(
+                            panier.filter((p) => p.productId === product.id)[0],
+                            products
                           )
                         }
                         className="w-50 py-1"
@@ -90,7 +51,8 @@ const UserHome = () => {
                       <button
                         onClick={() =>
                           increment(
-                            panier.filter((p) => p.productId === product.id)
+                            panier.filter((p) => p.productId === product.id)[0],
+                            products
                           )
                         }
                         className="w-50 py-1"
@@ -101,7 +63,7 @@ const UserHome = () => {
                     </div>
                   ) : (
                     <button
-                      onClick={() => firstTimeAddToCart(product)}
+                      onClick={() => firstAddToCartDetails(product, currentUser.email)}
                       className="w-100 py-1"
                     >
                       {" "}
@@ -114,7 +76,7 @@ const UserHome = () => {
           : "loading"}
       </ProductsContainer>
     </>
-  )
-}
+  );
+};
 
-export default UserHome
+export default UserHome;

@@ -4,11 +4,10 @@ import usePanier from "../hooks/usePanier";
 export const panierContext = createContext();
 
 export const PanierProvider = ({ children }) => {
-    const {panier, numberOfPanier: commandAmount} = usePanier()
+    const {panier, numberOfPanier} = usePanier()
     const [openCart, setOpenCart] = useState(false)
     // const [commandAmount, setCommandAmount] = useState(0)
   const value = {
-    commandAmount,
     panier,
     openCart,
     setOpenCart
