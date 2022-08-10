@@ -14,7 +14,7 @@ const EditProduct = ({ setIsOpen, selectedProduct }) => {
   const [desc, setDesc] = useState(selectedProduct[0]?.description);
   const [loading, setLoading] = useState(false);
   const [prix, setPrix] = useState(selectedProduct[0]?.prix);
-  const [quantity, setQuantity] = useState(selectedProduct[0]?.quantity);
+  const [quantity, setQuantity] = useState(selectedProduct[0]?.stock);
   const [category, setCategory] = useState(selectedProduct[0]?.category);
   const { categories } = useCategories();
   
@@ -37,7 +37,7 @@ const EditProduct = ({ setIsOpen, selectedProduct }) => {
     await updateDoc(doc(db, "products", selectedProduct[0]?.id), {
       name,
       description: desc,
-      quantity,
+      stock : quantity,
       prix,
       category,
       imgUrl: imgUrl ? imgUrl : selectedImg

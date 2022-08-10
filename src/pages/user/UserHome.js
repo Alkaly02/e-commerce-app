@@ -43,7 +43,7 @@ const UserHome = () => {
   };
   const firstTimeAddToCart = async (product) => {
     // get all the product data
-    const { category, description, id, imgUrl, name, prix } = product;
+    const { category, description, id, imgUrl, name, prix, stock } = product;
     await AddDoc("panier", {
       category,
       description,
@@ -53,6 +53,7 @@ const UserHome = () => {
       prix,
       quantities: 1,
       totalPrix: prix,
+      stock
     });
   };
   return (

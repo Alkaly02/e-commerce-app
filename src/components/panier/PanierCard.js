@@ -4,8 +4,9 @@ import { db } from "../../firebase/config";
 import useProducts from "../../hooks/useProducts";
 import { HiOutlineMinusSm, HiOutlinePlusSm } from "react-icons/hi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { Link } from "react-router-dom";
 
-const PanierCard = (item) => {
+const PanierCard = (item, { setOpenCart }) => {
   const { products } = useProducts();
 
   const increment = async (selectedCart) => {
@@ -72,7 +73,13 @@ const PanierCard = (item) => {
         />
         <div className="middle">
           <div className="ms-3">
-            <h6 className="m-0 detail-title">{item.name}</h6>
+            <Link
+              onClick={() => setOpenCart(false)}
+              style={{ textDecoration: "none", color: "inherit" }}
+              to={`/product/${item.productId}`}
+            >
+              <h6 className="m-0 detail-title">{item.name}</h6>
+            </Link>
             <p className="m-0 detail-text my-1">
               ${item.prix} * {item.quantities}
             </p>

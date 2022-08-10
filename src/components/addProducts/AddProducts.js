@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 const AddProducts = () => {
   const [name, setName] = useState("");
   const [prix, setPrix] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [stock, setStock] = useState("");
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState("");
   const [category, setCategory] = useState("");
@@ -32,7 +32,7 @@ const AddProducts = () => {
   const addProduct = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await AddDoc("products", { name, prix, quantity, description: desc, imgUrl, category });
+    await AddDoc("products", { name, prix, stock, description: desc, imgUrl, category });
     toast.success("Produit ajoutée !", {
       style: {
         backgroundColor: "#2B3445",
@@ -44,12 +44,15 @@ const AddProducts = () => {
     });
     setName('')
     setPrix('')
-    setQuantity('')
+    setStock('')
     setDesc('')
     setCategory('')
     setFile('')
     setImgUrl('')
     setLoading(false);
+    document.getElementById('img-upload').setAttribute('src', '')
+    document.getElementById('img-upload').style.display = 'none'
+    document.querySelector('.icon-upload').style.display = 'block'
   };
   return (
     <div className="mx-4 pt-3 w-100">
@@ -86,8 +89,8 @@ const AddProducts = () => {
                 <div className="mb-3 ms-md-4 w-100">
                   <input
                     required
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
+                    value={stock}
+                    onChange={(e) => setStock(e.target.value)}
                     type="text"
                     className="form__input"
                     id="name"

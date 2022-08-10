@@ -4,9 +4,11 @@ import "./Panier.css";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import PanierCard from "./PanierCard";
 import NoItems from "../NoItems";
+import { usePanierProvider } from "../../hooks/usePanierProvider";
 
-const Panier = ({ setOpenCart }) => {
+const Panier = () => {
   const { panier, panierLoading, numberOfPanier } = usePanier();
+  const {setOpenCart} = usePanierProvider()
 
   return (
     <div
@@ -40,7 +42,7 @@ const Panier = ({ setOpenCart }) => {
         <div className="panier-items">
           {!panierLoading ? (
             numberOfPanier > 0 ? (
-              panier.map((item) => <PanierCard key={item.id} {...item} />)
+              panier.map((item) => <PanierCard setOpenCart={setOpenCart} key={item.id} {...item} />)
             ) : (
               <NoItems />
             )

@@ -77,7 +77,7 @@ const ProductList = () => {
                         )[0]?.name)
                       }
                     </td>
-                    <td>{product.quantity}</td>
+                    <td>{product.stock}</td>
                     <td>
                       <span
                         onClick={() => handleUpdate(product.id)}

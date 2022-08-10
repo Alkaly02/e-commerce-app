@@ -2,7 +2,7 @@ import React from 'react'
 import './ProductCard.css'
 import defaultImg from '../../assets/img/defaultImg.jpg'
 
-const ProductCard = ({name, prix, imgUrl, children}) => {
+const ProductCard = ({name, prix, imgUrl, stock, children}) => {
   return (
     <div className='card-item'>
       <img style={{height: '200px'}} className='card-image' src={imgUrl ? imgUrl : defaultImg} alt="" />

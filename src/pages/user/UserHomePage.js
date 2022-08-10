@@ -16,7 +16,7 @@ import {IconContext} from 'react-icons'
 const UserHomePage = () => {
   const { logout } = useAuth();
   const navigate = useNavigate();
-  const [openCart, setOpenCart] = useState(false)
+  const {openCart, setOpenCart} = usePanierProvider()
   const Logout = async () => {
     try {
       await logout();
@@ -33,7 +33,7 @@ const UserHomePage = () => {
   return (
     <>
       {
-        openCart && <IconContext.Provider value={{ color: '#fff' }}> <Panier setOpenCart={setOpenCart} /></IconContext.Provider>
+        openCart && <IconContext.Provider value={{ color: '#fff' }}> <Panier /></IconContext.Provider>
       }
       <Header>
         <button>AB</button>
