@@ -55,7 +55,7 @@ const CategoryList = () => {
       {openCategory && <AddCategory setOpenCategory={setOpenCategory} />}
       {!categoriesLoading ? (
         categories.length !== 0 ? (
-          <div className="table-responsive">
+          <div style={{ paddingBottom: '10rem' }} className="table-responsive">
             <table style={{ minWidth: "400px" }} className="table mt-3 table-hover">
               <thead>
                 <tr>

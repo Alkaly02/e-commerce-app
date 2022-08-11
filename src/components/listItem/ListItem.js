@@ -1,14 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./ListItem.css";
 
 const ListItem = ({ to, icon, label }) => {
   return (
     <li>
-      <Link className="text-md-start text-center" to={to}>
+      <NavLink
+        to={to}
+        className="text-md-start text-center"
+        style={({isActive}) => ({
+          color: isActive ? "rgb(75, 180, 180)" : "#2B3445"
+        })}
+        end
+      >
         <span className="list-icon">{icon}</span>
         <span className="list-link d-md-inline-block d-none">{label}</span>
-      </Link>
+      </NavLink>
     </li>
   );
 };

@@ -32,7 +32,7 @@ const AddCategory = ({ setSuccess, setOpenCategory }) => {
     <div className="my-3">
       <form
         onSubmit={addCategory}
-        className="d-flex justify-content-start align-items-center"
+        className="d-sm-flex justify-content-start align-items-center"
       >
         <div className="mb-3">
           <input
@@ -45,7 +45,7 @@ const AddCategory = ({ setSuccess, setOpenCategory }) => {
             placeholder="Nom de la catégorie"
           />
         </div>
-        <div className="mb-3 mx-4">
+        <div className="mb-3 mx-sm-4">
           <input
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
@@ -56,7 +56,7 @@ const AddCategory = ({ setSuccess, setOpenCategory }) => {
           />
         </div>
         <div className="mb-3">
-          <button type="submit" className="btn submit px-5">
+          <button type="submit" className="btn w-100 submit px-5">
             {loading ? (
               <div className="text-center">
                 <div

@@ -8,7 +8,6 @@
 
 .img-container{
     width: 40% !important;
-    height: 20vh !important;
 }
 
 .small-image{
@@ -20,6 +19,10 @@
 
 .small-image, .small-image img {
     border-radius: 10px;
+}
+
+.product-text{
+    width: 60%;
 }
 
 .product-detail .card {
@@ -61,4 +64,17 @@
     vertical-align: middle;
     font-weight: bold;
     border-radius: 5px;
+}
+
+@media (max-width: 575px){
+    .product-detail{
+        padding: 5rem 1rem;
+    }
+    
+    .img-container{
+        width: 100% !important;
+    }
+    .product-text{
+        width: 100%;
+    }
 }

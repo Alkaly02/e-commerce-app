@@ -6,6 +6,7 @@ import useCategories from "../../hooks/useCategories";
 import replaceIcon from "../../utils/functions/replaceIcon";
 import AddDoc from "../../utils/functions/AddDoc";
 import toast from "react-hot-toast";
+import ProgressBar from "../progressBar/ProgressBar";
 
 const AddProducts = () => {
   const [name, setName] = useState("");
@@ -147,6 +148,9 @@ const AddProducts = () => {
                     onChange={handleChange}
                   />
                 </label>
+                {
+                  file && <ProgressBar file={file} setFile={setFile} />
+                }
               </div>
             </div>
           </div>

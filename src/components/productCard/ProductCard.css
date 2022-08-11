@@ -17,6 +17,8 @@
 
 .price {
     color: rgb(75, 180, 180);
+    font-size: 0.95rem;
+    font-weight: 500 !important;
 }
 
 .card-item button{

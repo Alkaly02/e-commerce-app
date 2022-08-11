@@ -83,7 +83,7 @@ const ProductDetails = () => {
           ) : null}
         </button>
       </Header>
-      <div className="d-flex product-detail">
+      <div className="d-sm-flex d-block product-detail">
         {!panierLoading && !productsLoading ? (
           <>
             <div className="img-container">
@@ -102,7 +102,7 @@ const ProductDetails = () => {
                 />
               </div>
             </div>
-            <div className="ms-5 px-3">
+            <div className="ms-sm-5 px-sm-3 product-text">
               <div className="card">
                 <h1 className="card-title">{selectedProduct?.name}</h1>
                 <p className="card-prix mb-0">${selectedProduct?.prix}</p>
