@@ -25,7 +25,7 @@ function App() {
             <Route path="/admin/*" element={<AdminDashboard />} />
             <Route path="/user/*" element={<UserHomePage />} />
             <Route path="/product/:productId" element={<ProductDetails />} />
-            <Route path="/panier" element={<Panier />} />
+            <Route path="/user/panier" element={<Panier />} />
           </Routes>
         </PanierProvider>
       </ModalProvider>

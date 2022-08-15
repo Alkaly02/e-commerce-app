@@ -5,6 +5,19 @@
   background-color: #FFFFFF !important;
 }
 
+.panier-items{
+  width: 50%;
+}
+
+.panier-items-details{
+  min-height: 100px;
+  margin: 2rem;
+  border-radius: 10px;
+  background-color: #fff;
+  /* box-shadow: 5px 5px 0px #F6F6F6; */
+  box-shadow: #F6F6F6 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
 .panier-items-details:nth-of-type(even) {
   border-top: 1px solid rgb(216, 219, 228);
   border-bottom: 1px solid rgb(216, 219, 228);

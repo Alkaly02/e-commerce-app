@@ -35,7 +35,7 @@ const UserHomePage = () => {
         <button onClick={Logout}>
           <AiOutlineLogout className="button__icon" />
         </button>
-        <Link to="/panier" className="position-relative">
+        <Link to="/user/panier" className="position-relative">
           <MdOutlineShoppingBag className="button__icon" />
           {numberOfPanier > 0 ? (
             <span

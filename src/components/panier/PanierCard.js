@@ -3,7 +3,7 @@ import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import useProducts from "../../hooks/useProducts";
 import { HiOutlineMinusSm, HiOutlinePlusSm } from "react-icons/hi";
-import { IoIosCloseCircleOutline } from "react-icons/io";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import increment from "../../utils/functions/increment";
 import decrementProduct from "../../utils/functions/decrementProduct";
@@ -17,7 +17,7 @@ const PanierCard = (item, { setOpenCart }) => {
 
   return (
     <>
-      <div className="d-flex panier-items-details py-3 px-4 align-items-center">
+      <div className="d-flex justify-content-between panier-items-details py-3 px-4 align-items-center">
         <img
           style={{ width: "70px", maxHeight: "76px", objectFit: "contain" }}
           src={item.imgUrl}
@@ -38,7 +38,7 @@ const PanierCard = (item, { setOpenCart }) => {
             </p>
           </div>
         </div>
-        <div className="panier-details d-flex align-items-center mx-5">
+        <div className="panier-details d-flex align-items-center">
           <button onClick={() => increment(item, products)}>
             <HiOutlinePlusSm className="plus-icon" />{" "}
           </button>
@@ -58,11 +58,12 @@ const PanierCard = (item, { setOpenCart }) => {
           </button>
         </div>
         {/* prix total du produit */}
-        <p className="m-0 mx-2 detail-prix">${item.totalPrix}</p>
+        <p className="m-0 detail-prix">${item.totalPrix}</p>
         <div className="align-content-icon">
-          <IoIosCloseCircleOutline
+          <RiDeleteBin6Line
+          style={{cursor: 'pointer'}}
             onClick={() => deleteCart(item.id)}
-            color="#2B3445"
+            color="#DD2424"
             size={30}
           />
         </div>
