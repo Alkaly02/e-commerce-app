@@ -1,0 +1,17 @@
+.cart--label{
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.cart--input{
+    width: 100%;
+    padding: 0.5rem 0.8rem;
+    background-color: #6268C5;
+    border: none;
+    outline: none;
+}
+
+.cart--input::placeholder{
+    color: white;
+    font-size: 0.8rem;
+}
