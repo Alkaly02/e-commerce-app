@@ -1,9 +1,8 @@
 .panier-container {
-  position: absolute !important;
-  width: 30% !important;
-  right: 0 !important;
-  background-color: white !important;
-  overflow-y: scroll;
+  border-radius: 20px;
+  max-width: 1200px;
+  margin: auto;
+  background-color: #FFFFFF !important;
 }
 
 .panier-items-details:nth-of-type(even) {
@@ -16,13 +15,12 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  border: 1px solid rgb(75, 180, 180);
-  border-radius: 100px;
-  padding: 0.3rem;
+  border: none;
 }
 
 .panier-details button .plus-icon {
-  color: rgb(75, 180, 180) !important;
+  /* color: rgb(75, 180, 180) !important; */
+  color: #2B3445 !important;
 }
 
 .detail-title {
@@ -49,9 +47,8 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  border: 1px solid rgb(125, 135, 156);
-  border-radius: 100px;
-  padding: 0.3rem;
+  border: none;
+  font-size: 1rem;
 }
 
 .panier-details button .plus-icon-disabled {
@@ -59,7 +56,7 @@
 }
 
 .middle{
-  flex: 1 1 0px;
+  /* flex: 1 0 0px; */
 }
 
 @media (max-width: 1000px){

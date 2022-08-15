@@ -1,11 +1,18 @@
 export default function replaceIcon(file, imgUrl){
     const img = document.querySelector('#img-upload')
-    if(file && imgUrl){
-        document.querySelector('.icon-upload').style.display = 'none'
+    const icon = document.querySelector('.icon-upload')
+    const label = document.querySelector('#bg-label')
+    if(imgUrl){
+        icon.style.display = 'none'
+        label.style.backgroundColor = 'transparent'
         img.style.display = 'block'
         img.style.width = '100%'
         img.style.height = '100%'
         img.style.objectFit = 'contain'
+        img.setAttribute('src', imgUrl)
+    }
+    else if(imgUrl && icon.style.display === 'none'){
+        label.style.backgroundColor = 'transparent'
         img.setAttribute('src', imgUrl)
     }
     // else{

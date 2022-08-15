@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { AiOutlineLogout } from "react-icons/ai";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
@@ -9,15 +9,12 @@ import { useAuth } from "../../hooks/useAuth";
 import useUserSidebarData from "../../hooks/useUserSidebarData";
 import UserHome from "./UserHome";
 import ShowByCategoryUser from "../../components/showByCategory/ShowByCategoryUser";
-import { usePanierProvider } from "../../hooks/usePanierProvider";
-import Panier from "../../components/panier/Panier";
-import {IconContext} from 'react-icons'
 import usePanier from "../../hooks/usePanier";
+import {Link} from 'react-router-dom'
 
 const UserHomePage = () => {
   const { logout } = useAuth();
   const navigate = useNavigate();
-  const {openCart, setOpenCart} = usePanierProvider()
   const Logout = async () => {
     try {
       await logout();
@@ -33,15 +30,12 @@ const UserHomePage = () => {
 
   return (
     <>
-      {
-        openCart && <IconContext.Provider value={{ color: '#fff' }}> <Panier /></IconContext.Provider>
-      }
       <Header>
         <button>AB</button>
         <button onClick={Logout}>
           <AiOutlineLogout className="button__icon" />
         </button>
-        <button onClick={() => setOpenCart(true) } className="position-relative">
+        <Link to="/panier" className="position-relative">
           <MdOutlineShoppingBag className="button__icon" />
           {numberOfPanier > 0 ? (
             <span
@@ -59,7 +53,7 @@ const UserHomePage = () => {
               {numberOfPanier}
             </span>
           ) : null}
-        </button>
+        </Link>
       </Header>
       <div className="home-grid container-site">
         <Sidebar

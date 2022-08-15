@@ -1,6 +1,7 @@
 import React from 'react'
 import './ProductCard.css'
 import defaultImg from '../../assets/img/defaultImg.jpg'
+import PropTypes from 'prop-types'
 
 const ProductCard = ({name, prix, imgUrl, stock, children}) => {
   return (
@@ -16,3 +17,10 @@ const ProductCard = ({name, prix, imgUrl, stock, children}) => {
 }
 
 export default ProductCard
+
+ProductCard.propTypes = {
+  imgUrl: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  prix: PropTypes.string.isRequired,
+  children: PropTypes.element
+}

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import useFile from "../../hooks/useFile";
+import PropTypes from 'prop-types'
 
 const ProgressBar = ({ file, setFile }) => {
   const { imgUrl, per } = useFile(file);
-  console.log(per, imgUrl);
   useEffect(() => {
     if(imgUrl){
       setFile(null)
@@ -23,3 +23,8 @@ const ProgressBar = ({ file, setFile }) => {
 };
 
 export default ProgressBar;
+
+ProgressBar.propTypes = {
+  file: PropTypes.object.isRequired,
+  setFile: PropTypes.func.isRequired
+}

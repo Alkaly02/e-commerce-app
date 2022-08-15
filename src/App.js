@@ -10,6 +10,7 @@ import UserHomePage from "./pages/user/UserHomePage";
 import { PanierProvider } from "./context/PanierProvider";
 import ProductDetails from "./components/productDetails/ProductDetails";
 import Redirect from "./components/Redirect";
+import Panier from "./components/panier/Panier";
 
 function App() {
   return (
@@ -20,10 +21,11 @@ function App() {
             <Route path="/*" element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/redirect" element={<Redirect />} />
             <Route path="/admin/*" element={<AdminDashboard />} />
             <Route path="/user/*" element={<UserHomePage />} />
             <Route path="/product/:productId" element={<ProductDetails />} />
-            <Route path="/redirect" element={<Redirect />} />
+            <Route path="/panier" element={<Panier />} />
           </Routes>
         </PanierProvider>
       </ModalProvider>

@@ -13,11 +13,10 @@ const Panier = () => {
   return (
     <div
       style={{
-        position: "fixed",
-        backgroundColor: "rgba(0, 0, 0, 0.2)",
-        zIndex: "1000",
         width: "100%",
-        height: "100vh",
+        minHeight: "100vh",
+        backgroundColor: '#EFF2F3',
+        paddingTop: '5rem'
       }}
     >
       <div className="panier-container vh-100">
@@ -27,17 +26,9 @@ const Panier = () => {
               <MdOutlineShoppingBag color="black" size={30} />
             </span>{" "}
             <span className="ms-2" style={{ fontSize: "1.3rem" }}>
-              {numberOfPanier} item
+              {numberOfPanier} produits dans votre panier
             </span>
           </h6>
-          <button
-            style={{ fontSize: "0.9rem" }}
-            onClick={() => setOpenCart(false)}
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
         </div>
         <div className="panier-items">
           {!panierLoading ? (

@@ -81,7 +81,7 @@ header {
   display: flex;
 }
 
-.buttons button {
+.buttons button, .buttons a {
   border: none;
   border-radius: 100%;
   display: inline-flex;

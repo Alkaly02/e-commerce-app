@@ -2,23 +2,24 @@ import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { db } from "../../firebase/config";
 import toast from "react-hot-toast";
-import useCategories from "../../hooks/useCategories";
+// import useCategories from "../../hooks/useCategories";
 import { AiOutlineCloudUpload } from "react-icons/ai";
-import useFile from '../../hooks/useFile'
+import useFile from "../../hooks/useFile";
 import replaceIcon from "../../utils/functions/replaceIcon";
+import ProgressBar from "../progressBar/ProgressBar";
 
 const EditProduct = ({ setIsOpen, selectedProduct }) => {
   const [file, setFile] = useState(null);
-  const [selectedImg, setSelectedImg] = useState(selectedProduct[0]?.imgUrl)
+  const [selectedImg, setSelectedImg] = useState(selectedProduct[0]?.imgUrl);
   const [name, setName] = useState(selectedProduct[0]?.name);
   const [desc, setDesc] = useState(selectedProduct[0]?.description);
   const [loading, setLoading] = useState(false);
   const [prix, setPrix] = useState(selectedProduct[0]?.prix);
   const [quantity, setQuantity] = useState(selectedProduct[0]?.stock);
   const [category, setCategory] = useState(selectedProduct[0]?.category);
-  const { categories } = useCategories();
-  
-  const {imgUrl, setImgUrl, per} = useFile(file)
+  // const { categories } = useCategories();
+
+  const { imgUrl } = useFile(file);
 
   // setImgUrl(selectedImg)
 
@@ -37,10 +38,10 @@ const EditProduct = ({ setIsOpen, selectedProduct }) => {
     await updateDoc(doc(db, "products", selectedProduct[0]?.id), {
       name,
       description: desc,
-      stock : quantity,
+      stock: quantity,
       prix,
       category,
-      imgUrl: imgUrl ? imgUrl : selectedImg
+      imgUrl: imgUrl ? imgUrl : selectedImg,
     });
     toast.success("Produit mis a jour !", {
       style: {
@@ -55,8 +56,7 @@ const EditProduct = ({ setIsOpen, selectedProduct }) => {
     setIsOpen(false);
   };
 
-  replaceIcon(file, imgUrl)
-
+  replaceIcon(file, imgUrl);
 
   return (
     <div
@@ -74,22 +74,39 @@ const EditProduct = ({ setIsOpen, selectedProduct }) => {
         ></button>
       </div>
       <form onSubmit={editProduct} className="">
-      <div className="mb-3 label-container">
-                <label>
-                  <AiOutlineCloudUpload style={selectedImg ? {display: 'none'} : {display: 'inline-block'}} className="icon-upload" />
-                  <img
-                    id="img-upload"
-                    style={ !selectedImg ? { display: "none" } : {display: "inline-block", width: '100%', height: '150px', objectFit: 'cover'}}
-                    src={selectedImg}
-                    alt="uploaded"
-                  />
-                  <input
-                    style={{ display: "none" }}
-                    type="file"
-                    onChange={handleChange}
-                  />
-                </label>
-              </div>
+        <div className="mb-3 label-container">
+          <label>
+            <AiOutlineCloudUpload
+              style={
+                selectedImg ? { display: "none" } : { display: "inline-block" }
+              }
+              className="icon-upload"
+            />
+            <img
+              id="img-upload"
+              style={
+                !selectedImg
+                  ? { display: "none" }
+                  : {
+                      display: "inline-block",
+                      width: "100%",
+                      height: "150px",
+                      objectFit: "cover",
+                    }
+              }
+              src={selectedImg}
+              alt="uploaded"
+            />
+            <input
+              style={{ display: "none" }}
+              type="file"
+              onChange={handleChange}
+            />
+          </label>
+            {
+              file && <ProgressBar file={file} setFile={setFile} />
+            }
+        </div>
         <div className="mb-3">
           <label className="form-label">Nom</label>
           <input

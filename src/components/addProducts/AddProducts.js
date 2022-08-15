@@ -18,7 +18,7 @@ const AddProducts = () => {
   const { categories } = useCategories();
   const [loading, setLoading] = useState(false);
   // get the url image
-  const { imgUrl, setImgUrl, per } = useFile(file);
+  const { imgUrl, setImgUrl } = useFile(file);
 
   // remove the icon
   replaceIcon(file, imgUrl);
@@ -56,7 +56,7 @@ const AddProducts = () => {
     document.querySelector('.icon-upload').style.display = 'block'
   };
   return (
-    <div style={{paddingBottom: '10rem'}} className="mx-4 pt-3 w-100">
+    <div style={{paddingBottom: '10rem'}} className="px-4">
       <div className="add-product">
         <h5 style={{cursor: ''}} className="add-title mb-4 py-3">Ajouter</h5>
         <form onSubmit={addProduct}>
@@ -134,7 +134,7 @@ const AddProducts = () => {
             </div>
             <div className="form-right">
               <div className="mb-3 label-container">
-                <label>
+                <label id="bg-label">
                   <AiOutlineCloudUpload className="icon-upload" />
                   <img
                     id="img-upload"

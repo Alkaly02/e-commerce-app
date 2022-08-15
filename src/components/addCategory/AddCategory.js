@@ -8,6 +8,7 @@ const AddCategory = ({ setSuccess, setOpenCategory }) => {
   const { currentUser } = useAuth();
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
+  
   const addCategory = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -28,6 +29,7 @@ const AddCategory = ({ setSuccess, setOpenCategory }) => {
     setLoading(false);
     setOpenCategory(false);
   };
+
   return (
     <div className="my-3">
       <form
