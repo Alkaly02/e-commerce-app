@@ -1,24 +1,9 @@
-import React, { useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import React from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
-import { db } from "../firebase/config";
+import { useUser } from "../hooks/useUser";
 
 const Redirect = () => {
-  const { currentUser } = useAuth();
-  const [auth, setAuth] = useState([]);
-
-  const getAuth = async () => {
-    const q = query(
-      collection(db, "users"),
-      where("email", "==", currentUser.email)
-    );
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      setAuth(querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-    });
-  };
-  getAuth();
+  const {auth} = useUser()
 
   if (auth?.length !== 0) {
     if (auth[0]?.role === "admin") {

@@ -4,7 +4,7 @@ import { db } from "../../firebase/config";
 import toast from "react-hot-toast";
 
 const EditCategory = ({ selectedCategory, setIsOpen }) => {
-  const [name, setName] = useState(selectedCategory[0]?.name);
+  const [name, setName] = useState(selectedCategory[0]?.categoryName);
   const [desc, setDesc] = useState(selectedCategory[0]?.description);
   const [loading, setLoading] = useState(false);
 
@@ -13,7 +13,7 @@ const EditCategory = ({ selectedCategory, setIsOpen }) => {
     setLoading(true);
     // Set the "capital" field of the city 'DC'
     await updateDoc(doc(db, "categories", selectedCategory[0]?.id), {
-      name,
+      categoryName: name,
       description: desc,
     });
     toast.success("Catégorie mise a jour !", {

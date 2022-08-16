@@ -8,7 +8,7 @@ import { db } from "../../firebase/config";
 import toast from "react-hot-toast";
 
 const Signup = () => {
-  const { signup } = useAuth();
+  const { signup, currentUser } = useAuth();
   const navigate = useNavigate();
 
   const [firstname, setFirstname] = useState("");
@@ -73,6 +73,7 @@ const Signup = () => {
         lastname,
         email,
         role: "user",
+        userId: currentUser.uid
       });
       toast.success("Inscription reussi !", {
         style: {

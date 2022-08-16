@@ -1,0 +1,29 @@
+.no-shop {
+  max-width: 1300px;
+  margin: auto;
+  padding: 5rem 3rem;
+}
+
+.no-shop .left {
+  width: 70%;
+}
+
+.no-shop .left button {
+    color: white;
+background-color: rgb(75, 180, 180);;
+  border: none;
+}
+
+.no-shop .right img {
+  width: 90%;
+}
+
+@media (max-width: 766px) {
+  .no-shop .left {
+    width: 100%;
+  }
+
+  .no-shop .right img {
+    width: 100%;
+  }
+}

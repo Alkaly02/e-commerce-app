@@ -7,6 +7,7 @@ import replaceIcon from "../../utils/functions/replaceIcon";
 import AddDoc from "../../utils/functions/AddDoc";
 import toast from "react-hot-toast";
 import ProgressBar from "../progressBar/ProgressBar";
+import { useShops } from "../../hooks/useShops";
 
 const AddProducts = () => {
   const [name, setName] = useState("");
@@ -16,6 +17,7 @@ const AddProducts = () => {
   const [desc, setDesc] = useState("");
   const [category, setCategory] = useState("");
   const { categories } = useCategories();
+  const {shops} = useShops()
   const [loading, setLoading] = useState(false);
   // get the url image
   const { imgUrl, setImgUrl } = useFile(file);
@@ -33,7 +35,7 @@ const AddProducts = () => {
   const addProduct = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await AddDoc("products", { name, prix, stock, description: desc, imgUrl, category });
+    await AddDoc("products", { name, prix, stock, description: desc, imgUrl, category, ownedShop: shops[0].id });
     toast.success("Produit ajoutée !", {
       style: {
         backgroundColor: "#2B3445",
@@ -122,8 +124,8 @@ const AddProducts = () => {
                   {categories?.length !== 0 ? (
                     <>
                       <option value="">Sélectionner la catégorie</option>
-                      {categories?.map((category) => (
-                        <option value={category.id} key={category.id}>{category.name}</option>
+                      {categories?.filter(category => category.ownedShop === shops[0]?.id).map((category) => (
+                        <option value={category.id} key={category.id}>{category.categoryName}</option>
                       ))}
                     </>
                   ) : (

@@ -14,12 +14,14 @@ import EditProduct from "../editProduct/EditProduct";
 import MyModal from "../modal/Modal";
 import useCategories from "../../hooks/useCategories";
 import firstLetterUpperCase from "../../utils/functions/firstLetterUpperCase";
+import { useShops } from "../../hooks/useShops";
 
 const ProductList = () => {
   const { products, productsLoading } = useProducts();
   const { modalIsOpen, setIsOpen } = useModal();
   const [selectedProduct, setSelectedProduct] = useState([]);
   const { categories } = useCategories();
+  const {shops} = useShops()
   const handleDelete = async (id) => {
     toast.error("Produit supprimé !", {
       style: {
@@ -59,7 +61,7 @@ const ProductList = () => {
                 </tr>
               </thead>
               <tbody>
-                {products?.map((product) => (
+                {products?.filter(product => product.ownedShop === shops[0]?.id).map((product) => (
                   <tr key={product.id}>
                     <td>
                       <img

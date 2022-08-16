@@ -15,11 +15,13 @@ import { useModal } from "../../hooks/useModal";
 import MyModal from "../modal/Modal";
 import useCategories from "../../hooks/useCategories";
 import firstLetterUpperCase from "../../utils/functions/firstLetterUpperCase";
+import { useShops } from "../../hooks/useShops";
 
 const CategoryList = () => {
   const [openCategory, setOpenCategory] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const { modalIsOpen, setIsOpen } = useModal();
+  const {shops} = useShops()
 
   const { categories, categoriesLoading } = useCategories()
 
@@ -65,9 +67,10 @@ const CategoryList = () => {
                 </tr>
               </thead>
               <tbody>
-                {categories?.map((cate) => (
+                {/* display only categories of a specific shop */}
+                {categories?.filter(category => category.ownedShop === shops[0]?.id).map((cate) => (
                   <tr key={cate.id}>
-                    <td>{firstLetterUpperCase(cate.name)}</td>
+                    <td>{firstLetterUpperCase(cate.categoryName)}</td>
                     <td>{cate.description}</td>
                     <td>
                       <span onClick={() => handleUpdate(cate.id)} className="action-icon">

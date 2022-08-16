@@ -5,7 +5,7 @@ import Login from '../authentication/Login'
 const LoginModal = () => {
   return (
     <MyModal>
-      <Login />
+      <Login title="Veuillez vous connecter pour ajouter des produits dans votre panier" />
     </MyModal>
   )
 }

@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "../../components/adminCard/Card";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import {RiStore2Line} from 'react-icons/ri'
 import useCategories from "../../hooks/useCategories";
 import useProducts from "../../hooks/useProducts";
+import { useAuth } from "../../hooks/useAuth";
 
 const AdminHome = () => {
+  const {currentUser} = useAuth()
   const {numberOfCategories} = useCategories()
   const {numberOfProducts} = useProducts()
+  useEffect(() => {
+    console.log(currentUser.uid);
+  }, [])
   return (
     <div className="px-4">
       <div className="welcome">

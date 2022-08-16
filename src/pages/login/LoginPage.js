@@ -5,7 +5,7 @@ import "./Login.css";
 const LoginPage = () => {
   return (
     <div className="auth-container">
-      <Login />
+      <Login title="Bienvenuemue sur E-commerce" />
     </div>
   );
 };

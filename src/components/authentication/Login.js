@@ -7,7 +7,7 @@ import { db } from "../../firebase/config";
 import { useAuth } from "../../hooks/useAuth";
 import { useModal } from "../../hooks/useModal";
 
-const Login = () => {
+const Login = ({title}) => {
   const { login } = useAuth();
   const { modalIsOpen, setIsOpen } = useModal();
   const navigate = useNavigate();
@@ -102,7 +102,7 @@ const Login = () => {
           alt="E-commerce Logo"
           className="auth-logo"
         />
-        <h1 className="text-center fs-sm-5 fs-6">Bienvenue sur Ecommerce</h1>
+        <h1 className="text-center fs-sm-5 fs-6">{title}</h1>
       </div>
       <form onSubmit={handleLogin} className="mt-3 position-relative">
         <div className="mb-3">

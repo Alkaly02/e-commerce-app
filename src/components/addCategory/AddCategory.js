@@ -1,16 +1,20 @@
+import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { db } from "../../firebase/config";
 import { useAuth } from "../../hooks/useAuth";
+import { useShops } from "../../hooks/useShops";
 import AddDoc from "../../utils/functions/AddDoc";
 
 const AddCategory = ({ setSuccess, setOpenCategory }) => {
   const [loading, setLoading] = useState(false);
-  const { currentUser } = useAuth();
+  const {shops} = useShops()
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   
   const addCategory = async (e) => {
     e.preventDefault();
+
     setLoading(true);
     toast.success("Catégorie ajoutée !", {
       style: {
@@ -21,11 +25,11 @@ const AddCategory = ({ setSuccess, setOpenCategory }) => {
         primary: "green",
       },
     });
-    await AddDoc("categories", {
-      name,
+    await AddDoc('categories', {
+      categoryName: name,
       description: desc,
-      userEmail: currentUser.email,
-    });
+      ownedShop: shops[0].id
+    })
     setLoading(false);
     setOpenCategory(false);
   };
@@ -57,6 +61,15 @@ const AddCategory = ({ setSuccess, setOpenCategory }) => {
             placeholder="Description"
           />
         </div>
+        {/* <div  className="mb-3">
+          <select className="form__input w-100">
+            {
+              shops.map(shop => (
+                <option>{shop.shopName}</option>
+              ))
+            }
+          </select>
+        </div> */}
         <div className="mb-3">
           <button type="submit" className="btn w-100 submit px-5">
             {loading ? (
