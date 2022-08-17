@@ -7,7 +7,7 @@ const Redirect = () => {
 
   if (auth?.length !== 0) {
     if (auth[0]?.role === "admin") {
-      return <Navigate to={"/admin"} />;
+      return <Navigate to={"/adminShops"} />;
     }
     if (auth[0]?.role === "user") {
       return <Navigate to={"/user"} />;

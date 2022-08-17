@@ -12,9 +12,7 @@ const AddShop = ({ setIsOpen }) => {
     e.preventDefault();
     await AddDoc('shops', {
         shopName: inputRef.current.value,
-        owner: currentUser.uid,
-        products: [],
-        categories: []
+        owner: currentUser.uid
     })
     setIsOpen(false)
     toast.success("Création de la boutique réussie !", {
@@ -26,7 +24,7 @@ const AddShop = ({ setIsOpen }) => {
             primary: "green",
         },
     });
-    window.location.reload()
+    // window.location.reload()
   };
   return (
     <form

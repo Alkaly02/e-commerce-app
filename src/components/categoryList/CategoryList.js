@@ -16,12 +16,15 @@ import MyModal from "../modal/Modal";
 import useCategories from "../../hooks/useCategories";
 import firstLetterUpperCase from "../../utils/functions/firstLetterUpperCase";
 import { useShops } from "../../hooks/useShops";
+import AddBtn from "../AddBtn";
+import { useAuth } from "../../hooks/useAuth";
 
 const CategoryList = () => {
   const [openCategory, setOpenCategory] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const { modalIsOpen, setIsOpen } = useModal();
   const {shops} = useShops()
+  const {globalShop} = useAuth()
 
   const { categories, categoriesLoading } = useCategories()
 
@@ -46,17 +49,10 @@ const CategoryList = () => {
 
   return (
     <div className="px-4">
-      <button
-        style={{ fontWeight: "700" }}
-        onClick={() => setOpenCategory((state) => !state)}
-        className="btn btn-outline-secondary"
-      >
-        {" "}
-        <HiOutlinePlusSm size={35} />
-      </button>
+      <AddBtn onClick={() => setOpenCategory((state) => !state)} />
       {openCategory && <AddCategory setOpenCategory={setOpenCategory} />}
       {!categoriesLoading ? (
-        categories.length !== 0 ? (
+        categories.filter(category => category.ownedShop === globalShop[0]?.id).length !== 0 ? (
           <div style={{ paddingBottom: '10rem' }} className="table-responsive">
             <table style={{ minWidth: "400px" }} className="table mt-3 table-hover">
               <thead>
@@ -68,7 +64,7 @@ const CategoryList = () => {
               </thead>
               <tbody>
                 {/* display only categories of a specific shop */}
-                {categories?.filter(category => category.ownedShop === shops[0]?.id).map((cate) => (
+                {categories?.filter(category => category.ownedShop === globalShop[0]?.id).map((cate) => (
                   <tr key={cate.id}>
                     <td>{firstLetterUpperCase(cate.categoryName)}</td>
                     <td>{cate.description}</td>

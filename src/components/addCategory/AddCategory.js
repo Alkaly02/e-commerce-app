@@ -1,16 +1,13 @@
-import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { db } from "../../firebase/config";
 import { useAuth } from "../../hooks/useAuth";
-import { useShops } from "../../hooks/useShops";
 import AddDoc from "../../utils/functions/AddDoc";
 
 const AddCategory = ({ setSuccess, setOpenCategory }) => {
   const [loading, setLoading] = useState(false);
-  const {shops} = useShops()
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
+  const {globalShop} = useAuth()
   
   const addCategory = async (e) => {
     e.preventDefault();
@@ -28,7 +25,7 @@ const AddCategory = ({ setSuccess, setOpenCategory }) => {
     await AddDoc('categories', {
       categoryName: name,
       description: desc,
-      ownedShop: shops[0].id
+      ownedShop: globalShop[0].id
     })
     setLoading(false);
     setOpenCategory(false);

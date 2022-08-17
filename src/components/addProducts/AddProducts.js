@@ -8,6 +8,8 @@ import AddDoc from "../../utils/functions/AddDoc";
 import toast from "react-hot-toast";
 import ProgressBar from "../progressBar/ProgressBar";
 import { useShops } from "../../hooks/useShops";
+import FormInput from "../FormInput";
+import { useAuth } from "../../hooks/useAuth";
 
 const AddProducts = () => {
   const [name, setName] = useState("");
@@ -18,6 +20,7 @@ const AddProducts = () => {
   const [category, setCategory] = useState("");
   const { categories } = useCategories();
   const {shops} = useShops()
+  const {globalShop} = useAuth()
   const [loading, setLoading] = useState(false);
   // get the url image
   const { imgUrl, setImgUrl } = useFile(file);
@@ -35,7 +38,8 @@ const AddProducts = () => {
   const addProduct = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await AddDoc("products", { name, prix, stock, description: desc, imgUrl, category, ownedShop: shops[0].id });
+
+    await AddDoc("products", { name, prix, stock, description: desc, imgUrl, category, ownedShop: globalShop[0].id });
     toast.success("Produit ajoutée !", {
       style: {
         backgroundColor: "#2B3445",
@@ -58,13 +62,14 @@ const AddProducts = () => {
     document.querySelector('.icon-upload').style.display = 'block'
   };
   return (
-    <div style={{paddingBottom: '10rem'}} className="px-4">
+    <div style={{paddingBottom: '10rem'}} className="px-md-5 px-4">
       <div className="add-product">
         <h5 style={{cursor: ''}} className="add-title mb-4 py-3">Ajouter</h5>
         <form onSubmit={addProduct}>
           <div className="d-flex flex-md-row flex-column-reverse">
             <div className="form-left">
               <div className="mb-3">
+                {/* <FormInput id="name" type="text" placeholder="Nom du produit" /> */}
                 <input
                   required
                   value={name}
@@ -115,16 +120,16 @@ const AddProducts = () => {
               </div>
               <div className="mb-3">
                 <select
-                  required
+                  // required
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   className="form__input"
                   aria-label="Default select example"
                 >
+                  <option value="">Sélectionner la catégorie</option>
                   {categories?.length !== 0 ? (
                     <>
-                      <option value="">Sélectionner la catégorie</option>
-                      {categories?.filter(category => category.ownedShop === shops[0]?.id).map((category) => (
+                      {categories?.map((category) => (
                         <option value={category.id} key={category.id}>{category.categoryName}</option>
                       ))}
                     </>

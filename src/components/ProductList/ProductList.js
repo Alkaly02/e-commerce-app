@@ -15,6 +15,7 @@ import MyModal from "../modal/Modal";
 import useCategories from "../../hooks/useCategories";
 import firstLetterUpperCase from "../../utils/functions/firstLetterUpperCase";
 import { useShops } from "../../hooks/useShops";
+import { useAuth } from "../../hooks/useAuth";
 
 const ProductList = () => {
   const { products, productsLoading } = useProducts();
@@ -22,6 +23,8 @@ const ProductList = () => {
   const [selectedProduct, setSelectedProduct] = useState([]);
   const { categories } = useCategories();
   const {shops} = useShops()
+  const {globalShop} = useAuth()
+
   const handleDelete = async (id) => {
     toast.error("Produit supprimé !", {
       style: {
@@ -43,7 +46,7 @@ const ProductList = () => {
     <div className="px-4">
       <Link
         className="add-product-link mb-3 d-inline-block"
-        to="/admin/add-products"
+        to={`/admin/${globalShop[0]?.shopName.toLowerCase()}/add-products`}
       >
         <HiOutlinePlusSm size={35} />
       </Link>
@@ -61,7 +64,7 @@ const ProductList = () => {
                 </tr>
               </thead>
               <tbody>
-                {products?.filter(product => product.ownedShop === shops[0]?.id).map((product) => (
+                {products?.map((product) => (
                   <tr key={product.id}>
                     <td>
                       <img
@@ -76,7 +79,7 @@ const ProductList = () => {
                       {
                         firstLetterUpperCase(categories.filter(
                           (category) => category.id === product.category
-                        )[0]?.name)
+                        )[0]?.categoryName)
                       }
                     </td>
                     <td>{product.stock}</td>

@@ -9,7 +9,7 @@ const ListItem = ({ to, icon, label }) => {
         to={to}
         className="text-md-start text-center"
         style={({isActive}) => ({
-          color: isActive ? "rgb(75, 180, 180)" : "#2B3445"
+          color: isActive ? "rgb(75, 255, 255)" : "#fff"
         })}
         end
       >

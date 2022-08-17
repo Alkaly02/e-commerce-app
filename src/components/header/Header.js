@@ -1,19 +1,30 @@
 import React from "react";
 import "./Header.css";
-import { AiOutlineSearch } from "react-icons/ai";
+// import { AiOutlineSearch } from "react-icons/ai";
+import shop from "../../assets/img/shop.png";
 
 import logo from "../../assets/img/logo-ecommerce.png";
-import fixeHeader from "../../utils/functions/fixeHeader";
+// import fixeHeader from "../../utils/functions/fixeHeader";
 
-const Header = ({children}) => {
-
+const Header = ({ children, title }) => {
   // fixeHeader()
-  
+
   return (
-    <header id="myHeader">
+    <header id="myHeader" className="py-2">
       <div className="container-site header">
-        <img style={{width: '70px'}} src={logo} alt="E-commerce Logo" className="header-brand inline-block" />
-        <div className="form--container d-md-block d-none">
+        <img
+          style={{ width: "70px" }}
+          src={logo}
+          alt="E-commerce Logo"
+          className="header-brand inline-block"
+        />
+        <div className="d-flex">
+          <img style={{width: '50px'}} src={shop} alt="Shopping" />
+          <h1 className="ms-2" style={{ color: "rgb(75, 180, 180)", fontWeight: "700" }}>
+            {title?.toUpperCase()} Shop
+          </h1>
+        </div>
+        {/* <div className="form--container d-md-block d-none">
           <form action="" className="header__form">
             <input
               type="text"
@@ -22,10 +33,8 @@ const Header = ({children}) => {
             />
             <AiOutlineSearch className="search-icon" />
           </form>
-        </div>
-        <div className="buttons">
-          {children}
-        </div>
+        </div> */}
+        <div className="buttons">{children}</div>
       </div>
     </header>
   );

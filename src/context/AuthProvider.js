@@ -13,6 +13,7 @@ export const authContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
   const [loading, setLoading] = useState(true);
+  const [globalShop, setGlobalShop] = useState('')
 
   const signup = (email, password) =>
     createUserWithEmailAndPassword(auth, email, password);
@@ -33,7 +34,9 @@ export const AuthProvider = ({ children }) => {
     currentUser,
     signup,
     login,
-    logout
+    logout,
+    globalShop,
+    setGlobalShop
   };
 
   return (

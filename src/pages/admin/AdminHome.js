@@ -1,24 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Card from "../../components/adminCard/Card";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import {RiStore2Line} from 'react-icons/ri'
 import useCategories from "../../hooks/useCategories";
 import useProducts from "../../hooks/useProducts";
-import { useAuth } from "../../hooks/useAuth";
+import Title1 from "../../components/Title1";
 
 const AdminHome = () => {
-  const {currentUser} = useAuth()
   const {numberOfCategories} = useCategories()
   const {numberOfProducts} = useProducts()
-  useEffect(() => {
-    console.log(currentUser.uid);
-  }, [])
+ 
   return (
     <div className="px-4">
       <div className="welcome">
-        <h1 style={{ fontWeight: "700" }} className="text-left mb-4 home-title">
-          Gérer votre boutique avec faciliter
-        </h1>
+        <Title1>Gérer votre boutique avec faciliter</Title1>
       </div>
       <div className="d-sm-flex justify-content-start">
         <Card title="Catégories" number={numberOfCategories} icon={<AiOutlineInfoCircle />} />

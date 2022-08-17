@@ -4,6 +4,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import AddProducts from "../../components/addProducts/AddProducts";
 import CategoryList from "../../components/categoryList/CategoryList";
 import Header from "../../components/header/Header";
+import ManageShops from "../../components/manageShops/ManageShops";
 import NoShop from "../../components/noShop/NoShop";
 import ProductList from "../../components/ProductList/ProductList";
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -37,34 +38,23 @@ const AdminDashboard = () => {
       </Header>
       {!shopLoading ? (
         shops.length !== 0 ? (
-          <div className="home-grid container-site">
-            <Sidebar
-              title={"Gérer votre boutique"}
-              className="sidebar-containt"
-              links={adminData}
-            />
-            <SidebarMob links={adminData} />
-            <div className="w-100">
-              <Routes>
-                <Route path="" element={<AdminHome />} />
-                <Route path="add-category" element={<CategoryList />} />
-                <Route path="products" element={<ProductList />} />
-                <Route path="add-products" element={<AddProducts />} />
-              </Routes>
-            </div>
-          </div>
+          <ManageShops />
         ) : (
           <NoShop />
         )
       ) : (
-        <div style={{padding: '10rem'}} className="text-center">
+        <div style={{ padding: "10rem" }} className="text-center">
           <div
-              style={{ width: "30px", height: "30px", color: 'rgb(75, 180, 180)'}}
-              className="spinner-border"
-              role="status"
-            >
-              <span className="visually-hidden">Loading...</span>
-            </div>
+            style={{
+              width: "30px",
+              height: "30px",
+              color: "rgb(75, 180, 180)",
+            }}
+            className="spinner-border"
+            role="status"
+          >
+            <span className="visually-hidden">Loading...</span>
+          </div>
         </div>
       )}
     </>

@@ -1,14 +1,22 @@
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
+import { useAuth } from "./useAuth";
 
 const useProducts = () => {
   const [products, setProducts] = useState([]);
   const [productsLoading, setProductsLoading] = useState(true);
   const [numberOfProducts, setNumberOfProducts] = useState(0)
+  const {globalShop} = useAuth()
   useEffect(() => {
     const getProducts = async () => {
-      onSnapshot(collection(db, "products"), (querySnapshot) => {
+      // on recupere tous les produits qui appartiennent a une boutique specifique
+      if(!globalShop[0]?.id) return
+      const q = query(
+        collection(db, "products"),
+        where("ownedShop", "==", globalShop[0]?.id)
+      );
+      onSnapshot(q, (querySnapshot) => {
         setNumberOfProducts(querySnapshot.size)
         const usersInfo = [];
         querySnapshot.forEach((doc) => {
@@ -19,7 +27,7 @@ const useProducts = () => {
       });
     };
     getProducts();
-  }, []);
+  }, [globalShop]);
 
   return { products, productsLoading, numberOfProducts };
 };
