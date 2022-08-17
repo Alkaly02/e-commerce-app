@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineAppstoreAdd, AiOutlineHome } from "react-icons/ai";
 import firstLetterUpperCase from "../utils/functions/firstLetterUpperCase";
 import useCategories from "./useCategories";
+import { useShops } from "./useShops";
 
 const useUserSidebarData = () => {
+  const {globalShop} = useShops()
   const [userData, setUserData] = useState([
     {
       to: "",
@@ -20,7 +22,7 @@ const useUserSidebarData = () => {
     categories?.forEach((category) => {
       sidebarLinks.push({
         to: category.id,
-        label: firstLetterUpperCase(category.name),
+        label: firstLetterUpperCase(category.categoryName),
         icon: <AiOutlineAppstoreAdd />,
       });
     });

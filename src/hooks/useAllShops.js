@@ -3,19 +3,14 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 import { useAuth } from "./useAuth";
 
-export function useShops() {
-  const { currentUser } = useAuth();
+export function useAllShops() {
   const [shops, setShops] = useState([]);
   const [shopLoading, setShopLoading] = useState(true)
 
   useEffect(() => {
     const getShops = async () => {
-      if(!currentUser?.uid) return
-      const q = query(
-        collection(db, "shops"),
-        where("owner", "==", currentUser?.uid)
-      );
-      onSnapshot(q, (querySnapshot) => {
+      
+      onSnapshot( collection(db, "shops"), (querySnapshot) => {
         // setNumberOfProducts(querySnapshot.size)
         const usersInfo = [];
         querySnapshot.forEach((doc) => {

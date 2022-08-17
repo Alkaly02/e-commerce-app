@@ -18,7 +18,7 @@ import { useShops } from "../../hooks/useShops";
 import { useAuth } from "../../hooks/useAuth";
 
 const ProductList = () => {
-  const { products, productsLoading } = useProducts();
+  const { products, productsLoading,numberOfProducts } = useProducts();
   const { modalIsOpen, setIsOpen } = useModal();
   const [selectedProduct, setSelectedProduct] = useState([]);
   const { categories } = useCategories();
@@ -51,7 +51,7 @@ const ProductList = () => {
         <HiOutlinePlusSm size={35} />
       </Link>
       {!productsLoading ? (
-        products.length !== 0 ? (
+        numberOfProducts !== 0 ? (
           <div style={{paddingBottom: '8rem'}} className="table-responsive">
             <table style={{ minWidth: "400px" }} className="table mt-3 table-hover">
               <thead>

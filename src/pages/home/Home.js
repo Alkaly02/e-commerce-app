@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../../components/header/Header";
 import LoginModal from "../../components/loginModal/LoginModal";
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -10,15 +10,29 @@ import ShowByCategory from "../../components/showByCategory/ShowByCategory";
 import SidebarMob from "../../components/sidebar/SidebarMob";
 import UserHomePage from "./HomePage";
 import useUserSidebarData from "../../hooks/useUserSidebarData";
+import { useParams } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import { useAllShops } from "../../hooks/useAllShops";
 
 const Home = () => {
   const { setIsOpen } = useModal();
+  const {shops} = useAllShops()
+
+  const {setGlobalShop} = useAuth()
+
+  const {shopNameUrl} = useParams()
+
+  useEffect(() => {
+    // get the current shop in All shops collections
+    let selectedShop = shops.filter(shop => shop.shopName.toLowerCase() === shopNameUrl.toLowerCase())
+    setGlobalShop(selectedShop)
+  }, [shops, shopNameUrl])
   
   const {userData} = useUserSidebarData()
 
   return (
     <>
-      <Header>
+      <Header title={shopNameUrl}>
         <button onClick={() => setIsOpen(true)}>
           <MdPersonOutline className="button__icon" />
         </button>
@@ -38,7 +52,7 @@ const Home = () => {
         <div className="w-100">
           <Routes>
             <Route path="" element={<UserHomePage />} />
-            <Route path="/:id" element={<ShowByCategory />} />
+            <Route path=":id" element={<ShowByCategory />} />
           </Routes>
         </div>
       </div>

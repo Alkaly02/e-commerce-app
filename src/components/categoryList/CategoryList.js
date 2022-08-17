@@ -4,7 +4,6 @@ import {
 } from "firebase/firestore";
 import React, { useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
-import { HiOutlinePlusSm } from "react-icons/hi";
 import { MdDelete } from "react-icons/md";
 import EditCategory from "../editCategory/EditCategory";
 import { db } from "../../firebase/config";
@@ -15,7 +14,6 @@ import { useModal } from "../../hooks/useModal";
 import MyModal from "../modal/Modal";
 import useCategories from "../../hooks/useCategories";
 import firstLetterUpperCase from "../../utils/functions/firstLetterUpperCase";
-import { useShops } from "../../hooks/useShops";
 import AddBtn from "../AddBtn";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -23,10 +21,9 @@ const CategoryList = () => {
   const [openCategory, setOpenCategory] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const { modalIsOpen, setIsOpen } = useModal();
-  const {shops} = useShops()
   const {globalShop} = useAuth()
 
-  const { categories, categoriesLoading } = useCategories()
+  const { categories, categoriesLoading, numberOfCategories } = useCategories()
 
   const handleDelete = async (id) => {
     toast.error("Catégorie supprimée !", {
@@ -52,7 +49,7 @@ const CategoryList = () => {
       <AddBtn onClick={() => setOpenCategory((state) => !state)} />
       {openCategory && <AddCategory setOpenCategory={setOpenCategory} />}
       {!categoriesLoading ? (
-        categories.filter(category => category.ownedShop === globalShop[0]?.id).length !== 0 ? (
+        numberOfCategories !== 0 ? (
           <div style={{ paddingBottom: '10rem' }} className="table-responsive">
             <table style={{ minWidth: "400px" }} className="table mt-3 table-hover">
               <thead>

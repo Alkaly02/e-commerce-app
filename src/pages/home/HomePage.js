@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import ProductCard from "../../components/productCard/ProductCard";
 import ProductsContainer from "../../components/productsContainer/ProductsContainer";
@@ -8,6 +8,9 @@ import useProducts from "../../hooks/useProducts";
 const UserHomePage = () => {
   const { products, productsLoading } = useProducts();
   const { setIsOpen } = useModal();
+  useEffect(() => {
+    console.log('home render');
+  }, [])
   return (
     <>
       <ProductsContainer

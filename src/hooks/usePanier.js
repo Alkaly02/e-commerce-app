@@ -10,6 +10,7 @@ const usePanier = () => {
   const {currentUser} = useAuth()
   useEffect(() => {
     const getPanier = async () => {
+      if(!currentUser?.email) return
       const q = query(
         collection(db, "panier"),
         where("addedBy", "==", currentUser?.email)

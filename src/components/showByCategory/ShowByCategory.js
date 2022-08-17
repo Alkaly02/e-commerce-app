@@ -10,14 +10,15 @@ import ProductsContainer from "../productsContainer/ProductsContainer";
 
 const ShowByCategory = () => {
   const { id } = useParams();
-  const { categories } = useCategories();
+  const { categories, categoriesLoading } = useCategories();
   const {products, productsLoading} = useProducts()
   const [title, setTitle] = useState("");
   const { setIsOpen } = useModal();
 
   useEffect(() => {
     let titleContainer = categories.filter((category) => category.id === id);
-    setTitle(firstLetterUpperCase(titleContainer[0]?.name));
+    console.log('showCategory render');
+    setTitle(firstLetterUpperCase(titleContainer[0]?.categoryName));
   }, [categories, id]);
   return (
     <>
@@ -25,6 +26,7 @@ const ShowByCategory = () => {
         title={title}
         description="Meilleure collection de 2021 pour vous !"
         className="main-content"
+        loading={categoriesLoading}
       >
         {
             !productsLoading ? products.filter(product => product.category === id).length !== 0 ? products.filter(product => product.category === id).map(product => (

@@ -75,7 +75,7 @@ const EditProduct = ({ setIsOpen, selectedProduct }) => {
       </div>
       <form onSubmit={editProduct} className="">
         <div className="mb-3 label-container">
-          <label>
+          <label id="bg-label">
             <AiOutlineCloudUpload
               style={
                 selectedImg ? { display: "none" } : { display: "inline-block" }

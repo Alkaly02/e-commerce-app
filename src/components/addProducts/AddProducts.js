@@ -120,7 +120,7 @@ const AddProducts = () => {
               </div>
               <div className="mb-3">
                 <select
-                  // required
+                  required
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   className="form__input"
