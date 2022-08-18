@@ -1,6 +1,5 @@
 import { AiOutlineAppstoreAdd, AiOutlineHome } from "react-icons/ai";
-import { CgShoppingBag } from "react-icons/cg";
-import { GiShop, GiShoppingCart } from "react-icons/gi";
+import { GiShoppingCart } from "react-icons/gi";
 import { HiShoppingBag } from "react-icons/hi";
 
 export const adminData = [

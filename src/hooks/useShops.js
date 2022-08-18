@@ -7,16 +7,19 @@ export function useShops() {
   const { currentUser } = useAuth();
   const [shops, setShops] = useState([]);
   const [shopLoading, setShopLoading] = useState(true)
+  const [numberOfShops, setNumberOfShops] = useState(0)
 
+  const userId = currentUser?.uid;
+  
   useEffect(() => {
     const getShops = async () => {
-      if(!currentUser?.uid) return
+      if(!userId) return
       const q = query(
         collection(db, "shops"),
-        where("owner", "==", currentUser?.uid)
+        where("owner", "==", userId)
       );
       onSnapshot(q, (querySnapshot) => {
-        // setNumberOfProducts(querySnapshot.size)
+        setNumberOfShops(querySnapshot.size)
         const usersInfo = [];
         querySnapshot.forEach((doc) => {
           usersInfo.push({ ...doc.data(), id: doc.id });
@@ -26,7 +29,7 @@ export function useShops() {
       });
     };
     getShops();
-  }, []);
+  }, [userId]);
   
-  return { shops, shopLoading };
+  return { shops, shopLoading, numberOfShops };
 }

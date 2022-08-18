@@ -1,23 +1,16 @@
 import React from "react";
 import { AiOutlineLogout } from "react-icons/ai";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import AddProducts from "../../components/addProducts/AddProducts";
-import CategoryList from "../../components/categoryList/CategoryList";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import ManageShops from "../../components/manageShops/ManageShops";
 import NoShop from "../../components/noShop/NoShop";
-import ProductList from "../../components/ProductList/ProductList";
-import Sidebar from "../../components/sidebar/Sidebar";
-import SidebarMob from "../../components/sidebar/SidebarMob";
 import { useAuth } from "../../hooks/useAuth";
 import { useShops } from "../../hooks/useShops";
-import { adminData } from "../../utils/admin-navbar-items";
-import AdminHome from "./AdminHome";
 
 const AdminDashboard = () => {
   const { logout } = useAuth();
   const navigate = useNavigate();
-  const { shops, shopLoading } = useShops();
+  const {shopLoading, numberOfShops } = useShops();
 
   const Logout = async () => {
     try {
@@ -37,7 +30,7 @@ const AdminDashboard = () => {
         </button>
       </Header>
       {!shopLoading ? (
-        shops.length !== 0 ? (
+        numberOfShops !== 0 ? (
           <ManageShops />
         ) : (
           <NoShop />

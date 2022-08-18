@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { ModalProvider } from "./context/ModalProvider";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -19,6 +19,7 @@ function App() {
       <ModalProvider>
         <PanierProvider>
           <Routes>
+            <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/:shopNameUrl/*" element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<Signup />} />
@@ -28,6 +29,7 @@ function App() {
             <Route path="/user/*" element={<UserHomePage />} />
             <Route path="/user/panier" element={<Panier />} />
             <Route path="/product/:productId" element={<ProductDetails />} />
+            <Route path="*" element={<Navigate to="/login" />} />
           </Routes>
         </PanierProvider>
       </ModalProvider>
