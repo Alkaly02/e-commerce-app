@@ -9,19 +9,18 @@ import replaceIcon from "../../utils/functions/replaceIcon";
 import ProgressBar from "../progressBar/ProgressBar";
 
 const EditProduct = ({ setIsOpen, selectedProduct }) => {
+  const selectedImg = selectedProduct[0]?.imgUrl;
   const [file, setFile] = useState(null);
-  const [selectedImg, setSelectedImg] = useState(selectedProduct[0]?.imgUrl);
   const [name, setName] = useState(selectedProduct[0]?.name);
   const [desc, setDesc] = useState(selectedProduct[0]?.description);
   const [loading, setLoading] = useState(false);
   const [prix, setPrix] = useState(selectedProduct[0]?.prix);
   const [quantity, setQuantity] = useState(selectedProduct[0]?.stock);
-  const [category, setCategory] = useState(selectedProduct[0]?.category);
+  const [categoryId, setCategoryId] = useState(selectedProduct[0]?.categoryId);
   // const { categories } = useCategories();
 
   const { imgUrl } = useFile(file);
 
-  // setImgUrl(selectedImg)
 
   const handleChange = (e) => {
     let selected = e.target.files[0];
@@ -34,13 +33,13 @@ const EditProduct = ({ setIsOpen, selectedProduct }) => {
   const editProduct = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // Set the "capital" field of the city 'DC'
-    await updateDoc(doc(db, "products", selectedProduct[0]?.id), {
+    const productId = selectedProduct[0]?.id;
+    await updateDoc(doc(db, "products", productId), {
       name,
       description: desc,
       stock: quantity,
       prix,
-      category,
+      categoryId,
       imgUrl: imgUrl ? imgUrl : selectedImg,
     });
     toast.success("Produit mis a jour !", {

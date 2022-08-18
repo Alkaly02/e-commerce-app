@@ -17,7 +17,7 @@ const AddProducts = () => {
   const [stock, setStock] = useState("");
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState("");
-  const [category, setCategory] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   const { categories } = useCategories();
   const {shops} = useShops()
   const {globalShop} = useAuth()
@@ -39,7 +39,7 @@ const AddProducts = () => {
     e.preventDefault();
     setLoading(true);
 
-    await AddDoc("products", { name, prix, stock, description: desc, imgUrl, category, ownedShop: globalShop[0].id });
+    await AddDoc("products", { name, prix, stock, description: desc, imgUrl, categoryId, ownedShop: globalShop[0].id });
     toast.success("Produit ajoutée !", {
       style: {
         backgroundColor: "#2B3445",
@@ -53,12 +53,13 @@ const AddProducts = () => {
     setPrix('')
     setStock('')
     setDesc('')
-    setCategory('')
+    setCategoryId('')
     setFile('')
     setImgUrl('')
     setLoading(false);
     document.getElementById('img-upload').setAttribute('src', '')
     document.getElementById('img-upload').style.display = 'none'
+    document.querySelector('#bg-label').style.backgroundColor = '#2B3445'
     document.querySelector('.icon-upload').style.display = 'block'
   };
   return (
@@ -121,8 +122,8 @@ const AddProducts = () => {
               <div className="mb-3">
                 <select
                   required
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
+                  value={categoryId}
+                  onChange={(e) => setCategoryId(e.target.value)}
                   className="form__input"
                   aria-label="Default select example"
                 >
@@ -172,7 +173,7 @@ const AddProducts = () => {
                   <span className="visually-hidden">Loading...</span>
                 </div>
               ) : (
-                "Ajouter"
+                "Enregistrer"
               )}
             </button>
           </div>

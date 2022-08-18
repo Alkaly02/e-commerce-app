@@ -18,7 +18,7 @@ const Home = () => {
   const { setIsOpen } = useModal();
   const {shops} = useAllShops()
 
-  const {setGlobalShop} = useAuth()
+  const { setGlobalShop} = useAuth()
 
   const {shopNameUrl} = useParams()
 
@@ -27,7 +27,7 @@ const Home = () => {
     let selectedShop = shops.filter(shop => shop.shopName.toLowerCase() === shopNameUrl.toLowerCase())
     setGlobalShop(selectedShop)
   }, [shops, shopNameUrl])
-  
+     
   const {userData} = useUserSidebarData()
 
   return (

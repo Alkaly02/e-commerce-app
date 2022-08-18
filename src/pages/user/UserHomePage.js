@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import SidebarMob from "../../components/sidebar/SidebarMob";
@@ -11,9 +11,14 @@ import UserHome from "./UserHome";
 import ShowByCategoryUser from "../../components/showByCategory/ShowByCategoryUser";
 import usePanier from "../../hooks/usePanier";
 import {Link} from 'react-router-dom'
+import { useAllShops } from "../../hooks/useAllShops";
 
 const UserHomePage = () => {
-  const { logout } = useAuth();
+  const { logout, setGlobalShop } = useAuth();
+  const {shops} = useAllShops()
+  const {shopNameUrl} = useParams()
+  const { numberOfPanier } = usePanier();
+  const { userData } = useUserSidebarData();
   const navigate = useNavigate();
   const Logout = async () => {
     try {
@@ -24,13 +29,14 @@ const UserHomePage = () => {
     }
   };
 
-  const { numberOfPanier } = usePanier();
-
-  const { userData } = useUserSidebarData();
+  useEffect(() => {
+    let selectedShop = shops.filter(shop => shop.shopName.toLowerCase() === shopNameUrl.toLocaleLowerCase())
+    setGlobalShop(selectedShop)
+  }, [shops])
 
   return (
     <>
-      <Header>
+      <Header title={shopNameUrl}>
         <button>AB</button>
         <button onClick={Logout}>
           <AiOutlineLogout className="button__icon" />
@@ -65,7 +71,7 @@ const UserHomePage = () => {
         <div className="w-100">
           <Routes>
             <Route path="" element={<UserHome />} />
-            <Route path="/:idDomain" element={<ShowByCategoryUser />} />
+            <Route path=":idDomain" element={<ShowByCategoryUser />} />
           </Routes>
         </div>
       </div>

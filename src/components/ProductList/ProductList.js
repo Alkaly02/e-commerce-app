@@ -14,7 +14,6 @@ import EditProduct from "../editProduct/EditProduct";
 import MyModal from "../modal/Modal";
 import useCategories from "../../hooks/useCategories";
 import firstLetterUpperCase from "../../utils/functions/firstLetterUpperCase";
-import { useShops } from "../../hooks/useShops";
 import { useAuth } from "../../hooks/useAuth";
 
 const ProductList = () => {
@@ -22,7 +21,6 @@ const ProductList = () => {
   const { modalIsOpen, setIsOpen } = useModal();
   const [selectedProduct, setSelectedProduct] = useState([]);
   const { categories } = useCategories();
-  const {shops} = useShops()
   const {globalShop} = useAuth()
 
   const handleDelete = async (id) => {
@@ -78,7 +76,7 @@ const ProductList = () => {
                     <td>
                       {
                         firstLetterUpperCase(categories.filter(
-                          (category) => category.id === product.category
+                          (category) => category.id === product.categoryId
                         )[0]?.categoryName)
                       }
                     </td>

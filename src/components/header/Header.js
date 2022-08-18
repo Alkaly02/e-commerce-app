@@ -13,7 +13,7 @@ const Header = ({ children, title }) => {
     <header id="myHeader" className="py-2">
       <div className="container-site header">
         <img
-          style={{ width: "70px" }}
+          style={{ width: "70px", height: '50px' }}
           src={logo}
           alt="E-commerce Logo"
           className="header-brand inline-block"

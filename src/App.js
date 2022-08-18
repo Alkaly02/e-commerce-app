@@ -26,8 +26,8 @@ function App() {
             <Route path="/redirect" element={<Redirect />} />
             <Route path="/adminShops" element={<AdminDashboard />} />
             <Route path="/admin/:shopNameUrl/*" element={<Shop />} />
-            <Route path="/user/*" element={<UserHomePage />} />
-            <Route path="/user/panier" element={<Panier />} />
+            <Route path="/user/:shopNameUrl/*" element={<UserHomePage />} />
+            {/* <Route path="/user/panier" element={<Panier />} /> */}
             <Route path="/product/:productId" element={<ProductDetails />} />
             <Route path="*" element={<Navigate to="/login" />} />
           </Routes>

@@ -67,13 +67,12 @@ const Signup = () => {
       });
     }
     try {
-      await signup(email, password);
+      const userCred = await signup(email, password);
       await addDoc(collection(db, "users"), {
         firstname,
         lastname,
-        email,
         role: "user",
-        userId: currentUser.uid
+        userId: userCred.user.uid
       });
       toast.success("Inscription reussi !", {
         style: {

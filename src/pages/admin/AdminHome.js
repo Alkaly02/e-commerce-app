@@ -13,7 +13,7 @@ const AdminHome = () => {
   return (
     <div className="px-4">
       <div className="welcome">
-        <Title1>Gérer votre boutique avec faciliter</Title1>
+        <Title1>Gérer votre boutique avec facilité</Title1>
       </div>
       <div className="d-sm-flex justify-content-start">
         <Card title="Catégories" number={numberOfCategories} icon={<AiOutlineInfoCircle />} />

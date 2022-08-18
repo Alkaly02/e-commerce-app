@@ -8,9 +8,6 @@ import useProducts from "../../hooks/useProducts";
 const UserHomePage = () => {
   const { products, productsLoading } = useProducts();
   const { setIsOpen } = useModal();
-  useEffect(() => {
-    console.log('home render');
-  }, [])
   return (
     <>
       <ProductsContainer

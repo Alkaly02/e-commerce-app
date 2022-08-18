@@ -20,7 +20,7 @@ const ShowByCategoryUser = () => {
   const { categories } = useCategories();
   const { products, productsLoading } = useProducts();
   const [title, setTitle] = useState("");
-  const {currentUser} = useAuth()
+  const {currentUser, globalShop} = useAuth()
 
   const { panier } = usePanier();
 
@@ -28,7 +28,7 @@ const ShowByCategoryUser = () => {
     let titleContainer = categories.filter(
       (category) => category.id === idDomain
     );
-    setTitle(firstLetterUpperCase(titleContainer[0]?.name));
+    setTitle(firstLetterUpperCase(titleContainer[0]?.categoryName));
   }, [categories, idDomain]); 
 
   const decrement = async (selectedCart) => {
@@ -58,10 +58,10 @@ const ShowByCategoryUser = () => {
         loading={productsLoading}
       >
         {!productsLoading ? (
-          products.filter((product) => product.category === idDomain).length !==
+          products.filter((product) => product.categoryId === idDomain).length !==
           0 ? (
             products
-              .filter((product) => product.category === idDomain)
+              .filter((product) => product.categoryId === idDomain)
               .map((product) => (
                 <ProductCard key={product.id} {...product}>
                   {/* children */}

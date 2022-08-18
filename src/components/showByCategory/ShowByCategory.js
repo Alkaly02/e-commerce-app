@@ -14,12 +14,15 @@ const ShowByCategory = () => {
   const {products, productsLoading} = useProducts()
   const [title, setTitle] = useState("");
   const { setIsOpen } = useModal();
+  const [categoryProducts, setCategoryProducts] = useState([])
 
   useEffect(() => {
     let titleContainer = categories.filter((category) => category.id === id);
-    console.log('showCategory render');
+    // get category products
+    let categoryProducts = products.filter(product => product.categoryId === id)
+    setCategoryProducts(categoryProducts)
     setTitle(firstLetterUpperCase(titleContainer[0]?.categoryName));
-  }, [categories, id]);
+  }, [categories, id, products]);
   return (
     <>
       <ProductsContainer
@@ -29,14 +32,14 @@ const ShowByCategory = () => {
         loading={categoriesLoading}
       >
         {
-            !productsLoading ? products.filter(product => product.category === id).length !== 0 ? products.filter(product => product.category === id).map(product => (
+            !productsLoading ? categoryProducts.length !== 0 ? categoryProducts.map(product => (
                 <ProductCard key={product.id} {...product} >
                   <button onClick={() => setIsOpen(true)} className="w-100 py-1">
                     {" "}
                     <HiOutlinePlusSm className="plus-icon" />{" "}
                   </button>
                 </ProductCard>
-            )) : 'Pas de produits !' : 'loading'
+            )) : 'Pas de produits !' : 'loading...'
         }
       </ProductsContainer>
     </>

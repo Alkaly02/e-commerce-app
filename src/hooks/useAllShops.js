@@ -10,7 +10,7 @@ export function useAllShops() {
   useEffect(() => {
     const getShops = async () => {
       
-      onSnapshot( collection(db, "shops"), (querySnapshot) => {
+      onSnapshot(collection(db, "shops"), (querySnapshot) => {
         // setNumberOfProducts(querySnapshot.size)
         const usersInfo = [];
         querySnapshot.forEach((doc) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CgLoadbar } from "react-icons/cg";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import ProductCard from "../../components/productCard/ProductCard";
@@ -9,12 +9,18 @@ import decrementProduct from "../../utils/functions/decrementProduct";
 import increment from "../../utils/functions/increment";
 import firstAddToCartDetails from "../../utils/functions/firstAddToCartDetails";
 import { useAuth } from "../../hooks/useAuth";
+import { useParams } from "react-router-dom";
 
 const UserHome = () => {
   const { products, productsLoading } = useProducts();
-  const {currentUser} = useAuth()
+  const {currentUser, globalShop} = useAuth()
+  const {shopNameUrl} = useParams()
 
   const { panier } = usePanier();
+
+  useEffect(() => {
+    // console.log(globalShop, shopNameUrl);
+  }, [])
 
   return (
     <>
