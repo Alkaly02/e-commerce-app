@@ -2,14 +2,16 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "./ListItem.css";
 
-const ListItem = ({ to, icon, label }) => {
+const ListItem = ({ to, icon, label, color, activeColor, isAdmin }) => {
   return (
     <li>
       <NavLink
+      
         to={to}
-        className="text-md-start text-center"
+        className={isAdmin ? "adminLinkHover text-md-start text-center" : "userLinkHover text-md-start text-center"}
+        // className={"text-md-start text-center" + !false ? "adminLinkHover" : "userLinkHover"}
         style={({isActive}) => ({
-          color: isActive ? "rgb(75, 255, 255)" : "#fff"
+          color: isActive ? activeColor : color
         })}
         end
       >

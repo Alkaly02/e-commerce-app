@@ -1,12 +1,13 @@
 import AddDoc from "./AddDoc";
 
-export default async function firstAddToCartDetails (product, email) {
+export default async function firstAddToCartDetails (product, userId, shop) {
     // get all the product data
-    const { category, description, imgUrl, name, prix, stock, id } = product;
+    const { categoryId, description, imgUrl, name, prix, stock, id } = product;
 
     await AddDoc('panier', {
-      addedBy: email,
-      category,
+      ownedShop: shop,
+      addedBy: userId,
+      categoryId,
       description,
       productId: id,
       imgUrl,

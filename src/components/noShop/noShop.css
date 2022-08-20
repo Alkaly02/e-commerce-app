@@ -1,11 +1,19 @@
+.no-shop{
+  background-color: rgb(75, 180, 180);
+  color: white;
+  /* height: 100vh; */
+}
+
 .no-shop .left {
   width: 70%;
 }
 
 .no-shop .left button {
-    color: white;
-background-color: rgb(75, 180, 180);;
+    color: rgb(75, 180, 180);
+background-color: #fff;
+font-weight: 600 !important;
   border: none;
+  font-size: 1.4rem;
 }
 
 .no-shop .right img {

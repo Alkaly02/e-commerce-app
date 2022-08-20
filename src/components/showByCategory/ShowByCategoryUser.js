@@ -99,7 +99,7 @@ const ShowByCategoryUser = () => {
                     </div>
                   ) : (
                     <button
-                    onClick={() => firstAddToCartDetails(product, currentUser.email)}
+                    onClick={() => firstAddToCartDetails(product, currentUser.uid, globalShop[0].id)}
                       className="w-100 py-1"
                     >
                       {" "}

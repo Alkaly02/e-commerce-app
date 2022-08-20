@@ -12,14 +12,13 @@ import UserHomePage from "./HomePage";
 import useUserSidebarData from "../../hooks/useUserSidebarData";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import { useAllShops } from "../../hooks/useAllShops";
+import {useDocs} from 'easy-firestore/hooks'
+import { db } from "../../firebase/config";
 
 const Home = () => {
   const { setIsOpen } = useModal();
-  const {shops} = useAllShops()
-
+  const {data: shops} = useDocs(db, 'shops')
   const { setGlobalShop} = useAuth()
-
   const {shopNameUrl} = useParams()
 
   useEffect(() => {
@@ -47,6 +46,10 @@ const Home = () => {
           title={"Liste des catégories"}
           className="sidebar-containt"
           links={userData}
+          bgColor="#fff"
+          activeColor="rgb(75, 180, 180)"
+          color="#2B3445"
+          isAdmin={false}
         />
         <SidebarMob links={userData} />
         <div className="w-100">
@@ -56,7 +59,7 @@ const Home = () => {
           </Routes>
         </div>
       </div>
-      <LoginModal />
+      <LoginModal title="Veuillez vous connecter pour ajouter des produits dans votre panier" />
     </>
   );
 };

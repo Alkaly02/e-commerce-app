@@ -25,15 +25,21 @@ li > a {
     width: 100%;
 }
 
+.adminLinkHover:hover{
+    color: rgb(75, 255, 255) !important;
+}
+
+.userLinkHover:hover{
+    color: rgb(75, 180, 180) !important; 
+}
+
 @media screen and (max-width: 767px) {
     li:nth-of-type(even){
         border: none;
     }
 }
 
-li > a:hover{
-    color: rgb(75, 255, 255) !important;
-}
+
 
 .list-icon{
     font-size: 1.1rem;

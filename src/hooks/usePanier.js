@@ -6,18 +6,21 @@ import { useAuth } from "./useAuth";
 const usePanier = () => {
   const [panier, setPanier] = useState([]);
   const [panierLoading, setPanierLoading] = useState(true);
-  const [numberOfPanier, setNumberOfPanier] = useState(0)
-  const {currentUser} = useAuth()
+  const [numberOfPanier, setNumberOfPanier] = useState(0);
+  const { currentUser, globalShop } = useAuth();
+  let userId = currentUser?.uid;
+  let shopId = globalShop[0]?.id;
   useEffect(() => {
     const getPanier = async () => {
-      if(!currentUser?.email) return
+      if (!userId && !shopId) return;
       const q = query(
         collection(db, "panier"),
-        where("addedBy", "==", currentUser?.email)
+        where("ownedShop", "==", shopId),
+        where("addedBy", "==", userId)
       );
-  
+
       onSnapshot(q, (querySnapshot) => {
-        setNumberOfPanier(querySnapshot.size)
+        setNumberOfPanier(querySnapshot.size);
         const usersInfo = [];
         querySnapshot.forEach((doc) => {
           usersInfo.push({ ...doc.data(), id: doc.id });
@@ -27,7 +30,7 @@ const usePanier = () => {
       });
     };
     getPanier();
-  }, [currentUser?.email]);
+  }, [userId, shopId]);
 
   return { panier, panierLoading, numberOfPanier, setNumberOfPanier };
 };

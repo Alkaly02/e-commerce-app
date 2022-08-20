@@ -11,11 +11,12 @@ import UserHome from "./UserHome";
 import ShowByCategoryUser from "../../components/showByCategory/ShowByCategoryUser";
 import usePanier from "../../hooks/usePanier";
 import {Link} from 'react-router-dom'
-import { useAllShops } from "../../hooks/useAllShops";
+import {useDocs} from 'easy-firestore/hooks'
+import { db } from "../../firebase/config";
 
 const UserHomePage = () => {
   const { logout, setGlobalShop } = useAuth();
-  const {shops} = useAllShops()
+  const {data: shops} = useDocs(db, 'shops')
   const {shopNameUrl} = useParams()
   const { numberOfPanier } = usePanier();
   const { userData } = useUserSidebarData();
@@ -32,7 +33,7 @@ const UserHomePage = () => {
   useEffect(() => {
     let selectedShop = shops.filter(shop => shop.shopName.toLowerCase() === shopNameUrl.toLocaleLowerCase())
     setGlobalShop(selectedShop)
-  }, [shops])
+  }, [shopNameUrl, shops])
 
   return (
     <>
@@ -66,6 +67,10 @@ const UserHomePage = () => {
           title={"Liste des catégories"}
           className="sidebar-containt"
           links={userData}
+          bgColor="#fff"
+          activeColor="rgb(75, 180, 180)"
+          color="#2B3445"
+          isAdmin={false}
         />
         <SidebarMob links={userData} />
         <div className="w-100">

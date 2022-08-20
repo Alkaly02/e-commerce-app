@@ -24,10 +24,10 @@ const ManageShops = () => {
       </div>
       <AllShops>
         {!shopLoading ? (
-          shops.map((shop) => (
+          shops.map((shop, index) => (
             <Link style={{textDecoration: 'none'}} to={`/admin/${shop.shopName.toLowerCase()}`}>
               <ShopCard
-                key={shop.shopName}
+                key={`${shop.shopName}-${index}`}
                 icon={<GiShoppingBag />}
                 shopName={firstLetterUpperCase(shop.shopName)}
               />

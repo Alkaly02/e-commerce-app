@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { useParams } from "react-router-dom";
-import useCategories from "../../hooks/useCategories";
+import { db } from "../../firebase/config";
+import { useAuth } from "../../hooks/useAuth";
 import { useModal } from "../../hooks/useModal";
-import useProducts from "../../hooks/useProducts";
 import firstLetterUpperCase from "../../utils/functions/firstLetterUpperCase";
 import ProductCard from "../productCard/ProductCard";
 import ProductsContainer from "../productsContainer/ProductsContainer";
+import {useWhereDocs} from 'easy-firestore/hooks'
+
 
 const ShowByCategory = () => {
   const { id } = useParams();
-  const { categories, categoriesLoading } = useCategories();
-  const {products, productsLoading} = useProducts()
+  const {globalShop} = useAuth()
+  const shopId = globalShop[0]?.id
+  const {data: categories, dataLoading: categoriesLoading} = useWhereDocs(db, 'categories', 'ownedShop', shopId)
+  const {data: products, dataLoading: productsLoading} = useWhereDocs(db, 'products', 'ownedShop', shopId)
   const [title, setTitle] = useState("");
   const { setIsOpen } = useModal();
   const [categoryProducts, setCategoryProducts] = useState([])

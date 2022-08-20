@@ -13,16 +13,29 @@ const Header = ({ children, title }) => {
     <header id="myHeader" className="py-2">
       <div className="container-site header">
         <img
-          style={{ width: "70px", height: '50px' }}
+          style={{ width: "70px" }}
           src={logo}
           alt="E-commerce Logo"
           className="header-brand inline-block"
         />
-        <div className="d-flex">
-          <img style={{width: '50px'}} src={shop} alt="Shopping" />
-          <h1 className="ms-2" style={{ color: "rgb(75, 180, 180)", fontWeight: "700" }}>
-            {title?.toUpperCase()} Shop
-          </h1>
+        <div className="d-flex align-items-center">
+          {title ? (
+            <>
+              <img
+                style={{ width: "50px", height: "50px" }}
+                src={shop}
+                alt="Shopping"
+              />
+              <h1
+                className="ms-2"
+                style={{ color: "rgb(75, 180, 180)", fontWeight: "700" }}
+              >
+                {title?.toUpperCase()} Shop
+              </h1>
+            </>
+          ) : (
+            null
+          )}
         </div>
         {/* <div className="form--container d-md-block d-none">
           <form action="" className="header__form">

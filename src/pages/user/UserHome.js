@@ -1,26 +1,21 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { CgLoadbar } from "react-icons/cg";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import ProductCard from "../../components/productCard/ProductCard";
 import ProductsContainer from "../../components/productsContainer/ProductsContainer";
 import usePanier from "../../hooks/usePanier";
-import useProducts from "../../hooks/useProducts";
 import decrementProduct from "../../utils/functions/decrementProduct";
 import increment from "../../utils/functions/increment";
 import firstAddToCartDetails from "../../utils/functions/firstAddToCartDetails";
 import { useAuth } from "../../hooks/useAuth";
-import { useParams } from "react-router-dom";
+import {useWhereDocs} from 'easy-firestore/hooks'
+import { db } from "../../firebase/config";
 
 const UserHome = () => {
-  const { products, productsLoading } = useProducts();
   const {currentUser, globalShop} = useAuth()
-  const {shopNameUrl} = useParams()
-
+  const shopId = globalShop[0]?.id
+  const {data: products, numberOfData: numberOfProducts, dataLoading: productsLoading} = useWhereDocs(db, 'products', 'ownedShop', shopId)
   const { panier } = usePanier();
-
-  useEffect(() => {
-    // console.log(globalShop, shopNameUrl);
-  }, [])
 
   return (
     <>
@@ -30,7 +25,7 @@ const UserHome = () => {
         className="main-content"
       >
         {!productsLoading
-          ? products.length !== 0
+          ? numberOfProducts !== 0
             ? products.map((product) => (
                 <ProductCard key={product.id} {...product}>
                   {panier.filter((p) => p.productId === product.id)[0]
@@ -69,7 +64,7 @@ const UserHome = () => {
                     </div>
                   ) : (
                     <button
-                      onClick={() => firstAddToCartDetails(product, currentUser.email)}
+                      onClick={() => firstAddToCartDetails(product, currentUser.uid, globalShop[0].id)}
                       className="w-100 py-1"
                     >
                       {" "}

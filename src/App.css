@@ -1,11 +1,11 @@
 .shop-container{
   max-width: 1300px;
   margin: auto;
-  padding: 5rem 3rem;
+  padding: 6rem 3rem;
 }
 
 @media screen and (max-width: 800px) {
   .shop-container{
-    padding: 2rem;
+    padding: 4rem 2rem;
   }
 }

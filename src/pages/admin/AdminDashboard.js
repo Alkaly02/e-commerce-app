@@ -4,13 +4,18 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import ManageShops from "../../components/manageShops/ManageShops";
 import NoShop from "../../components/noShop/NoShop";
+import { db } from "../../firebase/config";
 import { useAuth } from "../../hooks/useAuth";
-import { useShops } from "../../hooks/useShops";
+import { useModal } from "../../hooks/useModal";
+import {useWhereDocs} from 'easy-firestore/hooks'
 
 const AdminDashboard = () => {
   const { logout } = useAuth();
+  const {currentUser} = useAuth()
+  const shopId = currentUser?.uid
+  const {numberOfData: numberOfShops, dataLoading: shopLoading} = useWhereDocs(db, 'shops', 'owner', shopId)
   const navigate = useNavigate();
-  const {shopLoading, numberOfShops } = useShops();
+  const { setIsOpen } = useModal();
 
   const Logout = async () => {
     try {
@@ -33,7 +38,11 @@ const AdminDashboard = () => {
         numberOfShops !== 0 ? (
           <ManageShops />
         ) : (
-          <NoShop />
+          <NoShop onlyOpenInAdmin={true} title="site E-commerce">
+            <button onClick={() => setIsOpen(true)} className="px-5 mt-3 py-3">
+            Créer
+          </button>
+          </NoShop>
         )
       ) : (
         <div style={{ padding: "10rem" }} className="text-center">
@@ -50,6 +59,11 @@ const AdminDashboard = () => {
           </div>
         </div>
       )}
+      {/* {modalIsOpen && (
+          <MyModal>
+            <AddShop setIsOpen={setIsOpen} />
+          </MyModal>
+        )} */}
     </>
   );
 };

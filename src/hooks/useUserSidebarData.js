@@ -4,19 +4,17 @@ import firstLetterUpperCase from "../utils/functions/firstLetterUpperCase";
 import useCategories from "./useCategories";
 
 const useUserSidebarData = () => {
-  const [userData, setUserData] = useState([
-    {
-      to: "",
-      label: "Acceuil",
-      icon: <AiOutlineHome />,
-    },
-  ]);
+  const [userData, setUserData] = useState([]);
 
   const { categories } = useCategories();
 
   useEffect(() => {
+    let initialLink = {
+      to: "",
+      label: "Acceuil",
+      icon: <AiOutlineHome />,
+    };
     const sidebarLinks = [];
-
     categories?.forEach((category) => {
       sidebarLinks.push({
         to: category.id,
@@ -25,7 +23,7 @@ const useUserSidebarData = () => {
       });
     });
 
-    setUserData((state) => [...state, ...sidebarLinks]);
+    setUserData([initialLink, ...sidebarLinks]);
   }, [categories]);
 
   return { userData };

@@ -45,6 +45,10 @@ const Shop = () => {
           title={"Gérer votre boutique"}
           className="sidebar-containt"
           links={adminData}
+          bgColor="#2B3445"
+          activeColor="rgb(75, 255, 255)"
+          color="#fff"
+          isAdmin={true}
         />
         <SidebarMob links={adminData} />
         <div className="w-100">

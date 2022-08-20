@@ -12,6 +12,7 @@ import ProductDetails from "./components/productDetails/ProductDetails";
 import Redirect from "./components/Redirect";
 import Panier from "./components/panier/Panier";
 import Shop from "./components/Shop";
+import Welcome from "./pages/welcome/Welcome";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
       <ModalProvider>
         <PanierProvider>
           <Routes>
-            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/" element={<Welcome />} />
             <Route path="/:shopNameUrl/*" element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<Signup />} />
@@ -27,7 +28,7 @@ function App() {
             <Route path="/adminShops" element={<AdminDashboard />} />
             <Route path="/admin/:shopNameUrl/*" element={<Shop />} />
             <Route path="/user/:shopNameUrl/*" element={<UserHomePage />} />
-            {/* <Route path="/user/panier" element={<Panier />} /> */}
+            <Route path="/user/panier" element={<Panier />} />
             <Route path="/product/:productId" element={<ProductDetails />} />
             <Route path="*" element={<Navigate to="/login" />} />
           </Routes>

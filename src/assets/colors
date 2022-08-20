@@ -1,3 +1,4 @@
 green: rgb(75, 180, 180)
 gray: rgb(125, 135, 156)
 black: #2B3445
+active green clear: rgb(75, 255, 255)

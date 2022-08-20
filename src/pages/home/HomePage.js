@@ -1,13 +1,20 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import ProductCard from "../../components/productCard/ProductCard";
 import ProductsContainer from "../../components/productsContainer/ProductsContainer";
+import { db } from "../../firebase/config";
 import { useModal } from "../../hooks/useModal";
-import useProducts from "../../hooks/useProducts";
+import {useWhereDocs} from 'easy-firestore/hooks'
+import { useAuth } from "../../hooks/useAuth";
 
 const UserHomePage = () => {
-  const { products, productsLoading } = useProducts();
+  const {globalShop} = useAuth()
+  const shopId = globalShop[0]?.id
+
+  const {data: products, dataLoading: productsLoading} = useWhereDocs(db, 'products', 'ownedShop', shopId)
+  
   const { setIsOpen } = useModal();
+  
   return (
     <>
       <ProductsContainer
