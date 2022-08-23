@@ -5,13 +5,11 @@ import useProducts from "../../hooks/useProducts";
 import { HiOutlineMinusSm, HiOutlinePlusSm } from "react-icons/hi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { decrement, deleteInCart, increment } from "../../redux/slices/cartSlice";
+import increment from "../../utils/functions/increment";
+import decrementProduct from "../../utils/functions/decrementProduct";
 
-const PanierCard = (item, { setOpenCart }) => {
+const PanierCardConnected = (item, { setOpenCart }) => {
   const { products } = useProducts();
-
-  const dispatch = useDispatch()
 
   const deleteCart = async (id) => {
     await deleteDoc(doc(db, "panier", id));
@@ -41,7 +39,7 @@ const PanierCard = (item, { setOpenCart }) => {
           </div>
         </div>
         <div className="panier-details d-flex align-items-center">
-          <button onClick={() => dispatch(increment(item.productId))}>
+          <button onClick={() => increment(item, products)}>
             <HiOutlinePlusSm className="plus-icon" />{" "}
           </button>
           <span className="border px-2" style={{ fontWeight: "600", margin: "0.2rem 0" }}>
@@ -49,7 +47,7 @@ const PanierCard = (item, { setOpenCart }) => {
           </span>
           <button
             disabled={item.quantities === 1 ? true : false}
-            onClick={() => dispatch(decrement(item.productId))}
+            onClick={() => decrementProduct(item, products)}
             className={item.quantities === 1 ? "disabled" : null}
           >
             <HiOutlineMinusSm
@@ -64,7 +62,7 @@ const PanierCard = (item, { setOpenCart }) => {
         <div className="align-content-icon">
           <RiDeleteBin6Line
           style={{cursor: 'pointer'}}
-            onClick={() => dispatch(deleteInCart(item.productId))}
+            onClick={() => deleteCart(item.id)}
             color="#DD2424"
             size={30}
           />
@@ -74,4 +72,4 @@ const PanierCard = (item, { setOpenCart }) => {
   );
 };
 
-export default PanierCard;
+export default PanierCardConnected;

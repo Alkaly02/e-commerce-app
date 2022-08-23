@@ -65,7 +65,7 @@ const AddProducts = () => {
   return (
     <div style={{paddingBottom: '10rem'}} className="px-md-5 px-4">
       <div className="add-product">
-        <h5 style={{cursor: ''}} className="add-title mb-4 py-3">Ajouter</h5>
+        <h5 style={{cursor: ''}} className="mb-4 pb-3">Ajouter un produit</h5>
         <form onSubmit={addProduct}>
           <div className="d-flex flex-md-row flex-column-reverse">
             <div className="form-left">

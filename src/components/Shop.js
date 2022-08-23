@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
-import { Route, Routes, useNavigate, useParams } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useShops } from "../hooks/useShops";
 import AdminHome from "../pages/admin/AdminHome";
 import { adminData } from "../utils/admin-navbar-items";
 import AddProducts from "./addProducts/AddProducts";
 import CategoryList from "./categoryList/CategoryList";
+import Commands from "./commands/Commands";
 import Header from "./header/Header";
 import ProductList from "./ProductList/ProductList";
 import Sidebar from "./sidebar/Sidebar";
@@ -17,11 +18,16 @@ const Shop = () => {
   const {shopNameUrl} = useParams()
   const navigate = useNavigate();
   const {shops} = useShops()
-
+  const {currentUser} = useAuth()
   useEffect(() => {
     let selectedShop = shops.filter(shop => shop.shopName.toLowerCase() === shopNameUrl.toLowerCase())
     setGlobalShop(selectedShop)
   }, [shops, shopNameUrl])
+
+  if(!currentUser){
+    return <Navigate to={`/admin/${shopNameUrl}/login`} />
+  }
+
 
   const Logout = async () => {
     try {
@@ -57,6 +63,7 @@ const Shop = () => {
             <Route path="categories" element={<CategoryList />} />
             <Route path="products" element={<ProductList />} />
             <Route path="add-products" element={<AddProducts />} />
+            <Route path="commands" element={<Commands />} />
           </Routes>
         </div>
       </div>

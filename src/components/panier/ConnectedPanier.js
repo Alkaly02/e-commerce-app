@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import usePanier from "../../hooks/usePanier";
 import "./Panier.css";
 import PanierCard from "./PanierCard";
@@ -6,15 +6,21 @@ import NoItems from "../NoItems";
 import { usePanierProvider } from "../../hooks/usePanierProvider";
 import CartForm from "../cartForm/CartForm";
 import { Link, useParams } from "react-router-dom";
+import PanierCardConnected from "./PanierCardConnected";
 import { useDispatch, useSelector } from "react-redux";
-import { isCommand } from "../../redux/slices/commandeSlice";
+import {makeCommandFalse} from '../../redux/slices/commandeSlice'
 
-const Panier = () => {
-  // const { panier, panierLoading, numberOfPanier } = usePanier();
+const ConnectedPanier = () => {
+  const { panier, panierLoading, numberOfPanier } = usePanier();
   const { setOpenCart } = usePanierProvider();
-  const { shopNameUrl } = useParams();
-  const cart = useSelector((state) => state.cart);
+  const {shopNameUrl} = useParams()
+
+  // const cart = useSelector(state => state.command)
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(makeCommandFalse())
+  }, [])
 
   return (
     <div
@@ -34,7 +40,7 @@ const Panier = () => {
               color: "#2B3445",
               fontWeight: "600",
             }}
-            to={`/${shopNameUrl}`}
+            to={`/user/${shopNameUrl}`}
           >
             &larr; Continuer vos achats
           </Link>
@@ -43,23 +49,27 @@ const Panier = () => {
           <div className="panier-items border-top">
             <div style={{ padding: "0.8rem 2rem" }}>
               <h6 className="fw-bold">Panier</h6>
-              <p style={{ fontSize: "0.9rem", fontWeight: "600" }} className="">
-                {cart.length > 1
-                  ? cart.length + " produits dans votre panier"
-                  : cart.length + " produit dans votre panier"}
+              <p style={{fontSize: '0.9rem', fontWeight: '600'}} className="">
+                {numberOfPanier > 1
+                  ? numberOfPanier + " produits dans votre panier"
+                  : numberOfPanier + " produit dans votre panier"}
               </p>
             </div>
             <div style={{ padding: "0.8rem 2rem" }}>
-              {cart.length > 0 ? (
-                cart.map((item, index) => (
-                  <PanierCard
-                    setOpenCart={setOpenCart}
-                    key={index}
-                    {...item}
-                  />
-                ))
+              {!panierLoading ? (
+                numberOfPanier > 0 ? (
+                  panier.map((item) => (
+                    <PanierCardConnected
+                      setOpenCart={setOpenCart}
+                      key={item.id}
+                      {...item}
+                    />
+                  ))
+                ) : (
+                  <NoItems />
+                )
               ) : (
-                <NoItems />
+                "Loading..."
               )}
             </div>
           </div>
@@ -83,15 +93,12 @@ const Panier = () => {
                 <span className="fw-bold">$2020</span>
               </p>
               <Link
-                style={{textDecoration: 'none', color: 'white'}}
+                style={{ textDecoration: "none" }}
                 className="d-flex justify-content-between submit px-4 rounded-3 mt-4"
-                to={`/${shopNameUrl}/login`}
-                onClick={() => dispatch(isCommand())}
+                to={"#"}
               >
                 <span>$2020</span>
-                <span>
-                  Valider &rarr;
-                </span>
+                <span>Valider &rarr;</span>
               </Link>
             </div>
           </div>
@@ -101,4 +108,4 @@ const Panier = () => {
   );
 };
 
-export default Panier;
+export default ConnectedPanier;

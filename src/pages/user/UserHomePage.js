@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
-import { Route, Routes, useNavigate, useParams } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import SidebarMob from "../../components/sidebar/SidebarMob";
@@ -13,27 +13,45 @@ import usePanier from "../../hooks/usePanier";
 import {Link} from 'react-router-dom'
 import {useDocs} from 'easy-firestore/hooks'
 import { db } from "../../firebase/config";
+import {useDispatch, useSelector} from 'react-redux'
+import AddDoc from "../../utils/functions/AddDoc";
+import { deleteCart } from "../../redux/slices/cartSlice";
 
 const UserHomePage = () => {
-  const { logout, setGlobalShop } = useAuth();
+  const { logout, setGlobalShop, currentUser } = useAuth();
   const {data: shops} = useDocs(db, 'shops')
   const {shopNameUrl} = useParams()
   const { numberOfPanier } = usePanier();
   const { userData } = useUserSidebarData();
   const navigate = useNavigate();
+  const cart = useSelector(state => state.cart)
+  const dispatch = useDispatch()
+
   const Logout = async () => {
     try {
       await logout();
-      navigate("/");
+      navigate(`/${shopNameUrl}`);
     } catch (err) {
       alert(err.code);
     }
   };
 
+  // useEffect(() => {
+  //   cart.forEach( async (c) => {
+  //     await AddDoc('panier', {addedBy: currentUser?.uid, ...c})
+  //     console.log("panier")
+  //   })
+  // }, [])
+  
   useEffect(() => {
     let selectedShop = shops.filter(shop => shop.shopName.toLowerCase() === shopNameUrl.toLocaleLowerCase())
-    setGlobalShop(selectedShop)
+    setGlobalShop(selectedShop);
+    dispatch(deleteCart())
   }, [shopNameUrl, shops])
+
+  if(!currentUser){
+    return <Navigate to={`/${shopNameUrl}`} />
+  }
 
   return (
     <>
@@ -42,7 +60,7 @@ const UserHomePage = () => {
         <button onClick={Logout}>
           <AiOutlineLogout className="button__icon" />
         </button>
-        <Link to="/user/panier" className="position-relative">
+        <Link to={`/user/${shopNameUrl}/panier`} className="position-relative">
           <MdOutlineShoppingBag className="button__icon" />
           {numberOfPanier > 0 ? (
             <span

@@ -7,12 +7,16 @@ import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'normalize.css'
 import { AuthProvider } from "./context/AuthProvider";
+import store from "./redux/store";
+import {Provider} from 'react-redux'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <BrowserRouter>
       <AuthProvider>
+        <Provider store={store}>
         <App />
+        </Provider>
       </AuthProvider>
     </BrowserRouter>
 );

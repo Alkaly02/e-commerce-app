@@ -1,6 +1,6 @@
 import React from "react";
 import { AiOutlineLogout } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import ManageShops from "../../components/manageShops/ManageShops";
 import NoShop from "../../components/noShop/NoShop";
@@ -16,6 +16,10 @@ const AdminDashboard = () => {
   const {numberOfData: numberOfShops, dataLoading: shopLoading} = useWhereDocs(db, 'shops', 'owner', shopId)
   const navigate = useNavigate();
   const { setIsOpen } = useModal();
+
+  if(!currentUser){
+    return <Navigate to={`/`} />
+  }
 
   const Logout = async () => {
     try {
