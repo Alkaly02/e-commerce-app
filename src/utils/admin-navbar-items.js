@@ -1,6 +1,7 @@
 import { AiOutlineAppstoreAdd, AiOutlineHome } from "react-icons/ai";
 import { GiShoppingCart } from "react-icons/gi";
 import { HiShoppingBag } from "react-icons/hi";
+import { RiCommandFill } from "react-icons/ri";
 
 export const adminData = [
     {
@@ -17,6 +18,11 @@ export const adminData = [
         to: 'products',
         label: 'Produits',
         icon: <GiShoppingCart />
+    },
+    {
+        to: 'commands',
+        label: 'Commandes',
+        icon: <RiCommandFill />
     },
     {
         to: '/adminShops',

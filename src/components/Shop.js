@@ -7,6 +7,7 @@ import AdminHome from "../pages/admin/AdminHome";
 import { adminData } from "../utils/admin-navbar-items";
 import AddProducts from "./addProducts/AddProducts";
 import CategoryList from "./categoryList/CategoryList";
+import CommandDetails from "./commands/CommandDetails";
 import Commands from "./commands/Commands";
 import Header from "./header/Header";
 import ProductList from "./ProductList/ProductList";
@@ -64,6 +65,7 @@ const Shop = () => {
             <Route path="products" element={<ProductList />} />
             <Route path="add-products" element={<AddProducts />} />
             <Route path="commands" element={<Commands />} />
+            <Route path="commands/:commandDetailUrl" element={<CommandDetails />} />
           </Routes>
         </div>
       </div>

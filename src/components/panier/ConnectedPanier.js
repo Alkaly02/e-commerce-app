@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import usePanier from "../../hooks/usePanier";
 import "./Panier.css";
 import PanierCard from "./PanierCard";
@@ -9,18 +9,58 @@ import { Link, useParams } from "react-router-dom";
 import PanierCardConnected from "./PanierCardConnected";
 import { useDispatch, useSelector } from "react-redux";
 import {makeCommandFalse} from '../../redux/slices/commandeSlice'
+import AddDoc from "../../utils/functions/AddDoc";
+import { db } from "../../firebase/config";
+import toast from "react-hot-toast";
+import { deleteDoc, doc } from "firebase/firestore";
 
 const ConnectedPanier = () => {
   const { panier, panierLoading, numberOfPanier } = usePanier();
   const { setOpenCart } = usePanierProvider();
   const {shopNameUrl} = useParams()
+  const [totalCommand, setTotalCommand] = useState(0)
+  const EXPEDITION_PRIX = 20
 
   // const cart = useSelector(state => state.command)
   const dispatch = useDispatch()
 
   useEffect(() => {
+    // prix total d'une commande
+    let totalCommand = panier.reduce((total, item) => {
+      return total + Number(item.totalPrix) 
+    }, 0)
+
+    setTotalCommand(totalCommand)
     dispatch(makeCommandFalse())
-  }, [])
+  }, [panier])
+
+  const addToCommand = (panier) => {
+    let userId = panier[0].addedBy
+    let ownedShop = panier[0].ownedShop
+    let commandItems = panier.map(command => {
+      return {
+        commandProductId: command.productId,
+        commandQuantities: command.quantities,
+        commandTotalPrix: command.totalPrix
+      }
+    })
+    AddDoc('commands', {
+        commandOwnedShop: ownedShop,
+        commandedBy: userId,
+        userCommands: commandItems 
+      })
+      panier.forEach(async (cart) => await deleteDoc(doc(db, "panier", cart.id)))
+    toast.success("Produits commandés !", {
+      style: {
+        backgroundColor: "#2B3445",
+        color: "white",
+      },
+      iconTheme: {
+        primary: "green",
+      },
+    });
+    // console.log(command, totalCommand);
+  }
 
   return (
     <div
@@ -82,7 +122,7 @@ const ConnectedPanier = () => {
             <div className="border-top py-3">
               <p className="d-flex justify-content-between">
                 <span className="fs-6">Total</span>{" "}
-                <span className="fw-bold">$2000</span>
+                <span className="fw-bold">{totalCommand}</span>
               </p>
               <p className="d-flex justify-content-between">
                 <span className="fs-6">Expedition</span>{" "}
@@ -90,16 +130,17 @@ const ConnectedPanier = () => {
               </p>
               <p className="d-flex justify-content-between">
                 <span className="fs-6">Total TTC</span>{" "}
-                <span className="fw-bold">$2020</span>
+                <span className="fw-bold">${totalCommand + EXPEDITION_PRIX}</span>
               </p>
-              <Link
-                style={{ textDecoration: "none" }}
-                className="d-flex justify-content-between submit px-4 rounded-3 mt-4"
-                to={"#"}
+              <button
+              disabled={panierLoading}
+              onClick={() => addToCommand(panier)}
+                style={{ textDecoration: "none", border: 'none' }}
+                className="d-flex justify-content-between submit px-4 rounded-3 mt-4 w-100"
               >
-                <span>$2020</span>
+                <span>${totalCommand + EXPEDITION_PRIX}</span>
                 <span>Valider &rarr;</span>
-              </Link>
+              </button>
             </div>
           </div>
         </div>

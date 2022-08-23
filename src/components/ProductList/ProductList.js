@@ -22,13 +22,14 @@ const ProductList = () => {
   const { products, productsLoading, numberOfProducts } = useProducts();
   const { data: commands, numberOfData: numberOfCommands } = useWhereDocs(
     db,
-    "panier",
-    "ownedShop",
+    "commands",
+    "commandOwnedShop",
     globalShop[0]?.id
   );
   const { modalIsOpen, setIsOpen } = useModal();
   const [selectedProduct, setSelectedProduct] = useState([]);
   const { categories } = useCategories();
+  const [numberOfCommand, setNumberOfCommand] = useState()
 
   const handleDelete = async (id) => {
     toast.error("Produit supprimé !", {
