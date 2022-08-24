@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom";
 import { db } from "../../firebase/config";
 import { useAuth } from "../../hooks/useAuth";
 import { useWhereDocs } from "easy-firestore/hooks";
+import { useSelector } from "react-redux";
 
 const CommandDetails = () => {
   const { commandDetailUrl } = useParams();
-  const { globalShop } = useAuth();
+  const globalShop = useSelector(state => state.globalShop)
   const shopId = globalShop[0]?.id;
   const {
     data: commands,

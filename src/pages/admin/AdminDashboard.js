@@ -8,6 +8,8 @@ import { db } from "../../firebase/config";
 import { useAuth } from "../../hooks/useAuth";
 import { useModal } from "../../hooks/useModal";
 import {useWhereDocs} from 'easy-firestore/hooks'
+import { useDispatch } from "react-redux";
+import { deleteGlobalShop } from "../../redux/slices/globalShopSlice";
 
 const AdminDashboard = () => {
   const { logout } = useAuth();
@@ -16,6 +18,7 @@ const AdminDashboard = () => {
   const {numberOfData: numberOfShops, dataLoading: shopLoading} = useWhereDocs(db, 'shops', 'owner', shopId)
   const navigate = useNavigate();
   const { setIsOpen } = useModal();
+  const dispatch = useDispatch()
 
   if(!currentUser){
     return <Navigate to={`/`} />
@@ -25,6 +28,8 @@ const AdminDashboard = () => {
     try {
       await logout();
       navigate("/");
+      dispatch(deleteGlobalShop())
+
     } catch (err) {
       alert(err.code);
     }

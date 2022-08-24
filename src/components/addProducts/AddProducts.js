@@ -10,6 +10,7 @@ import ProgressBar from "../progressBar/ProgressBar";
 import { useShops } from "../../hooks/useShops";
 import FormInput from "../FormInput";
 import { useAuth } from "../../hooks/useAuth";
+import { useSelector } from "react-redux";
 
 const AddProducts = () => {
   const [name, setName] = useState("");
@@ -20,7 +21,7 @@ const AddProducts = () => {
   const [categoryId, setCategoryId] = useState("");
   const { categories } = useCategories();
   const {shops} = useShops()
-  const {globalShop} = useAuth()
+  const globalShop = useSelector(state => state.globalShop)
   const [loading, setLoading] = useState(false);
   // get the url image
   const { imgUrl, setImgUrl } = useFile(file);

@@ -16,12 +16,14 @@ import useCategories from "../../hooks/useCategories";
 import firstLetterUpperCase from "../../utils/functions/firstLetterUpperCase";
 import AddBtn from "../AddBtn";
 import { useAuth } from "../../hooks/useAuth";
+import { useSelector } from "react-redux";
 
 const CategoryList = () => {
   const [openCategory, setOpenCategory] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const { modalIsOpen, setIsOpen } = useModal();
-  const {globalShop} = useAuth()
+  // const {globalShop} = useAuth()
+  const globalShop = useSelector(state => state.globalShop)
 
   const { categories, categoriesLoading, numberOfCategories } = useCategories()
 

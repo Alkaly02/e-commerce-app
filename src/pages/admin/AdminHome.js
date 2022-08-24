@@ -6,9 +6,10 @@ import Title1 from "../../components/Title1";
 import { useAuth } from "../../hooks/useAuth";
 import { db } from "../../firebase/config";
 import {useWhereDocs} from 'easy-firestore/hooks'
+import { useSelector } from "react-redux";
 
 const AdminHome = () => {
-  const {globalShop} = useAuth()
+  const globalShop = useSelector(state => state.globalShop)
   const shopId = globalShop[0]?.id
   
   const {numberOfData: numberOfProducts} = useWhereDocs(db, 'products', 'ownedShop', shopId)

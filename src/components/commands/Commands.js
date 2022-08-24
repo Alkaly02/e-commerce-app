@@ -4,9 +4,10 @@ import { useWhereDocs, useDocs } from "easy-firestore/hooks";
 import { db } from "../../firebase/config";
 import { Link } from "react-router-dom";
 import { GiEyeOfHorus, GiEyeTarget } from "react-icons/gi";
+import { useSelector } from "react-redux";
 
 const Commands = () => {
-  const { globalShop } = useAuth();
+  const globalShop = useSelector(state => state.globalShop)
   const shopId = globalShop[0]?.id;
   const {
     data: commands,

@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
+import { useDispatch } from "react-redux";
 import { Navigate, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useShops } from "../hooks/useShops";
 import AdminHome from "../pages/admin/AdminHome";
+import { setGlogalShop } from "../redux/slices/globalShopSlice";
 import { adminData } from "../utils/admin-navbar-items";
 import AddProducts from "./addProducts/AddProducts";
 import CategoryList from "./categoryList/CategoryList";
@@ -20,9 +22,12 @@ const Shop = () => {
   const navigate = useNavigate();
   const {shops} = useShops()
   const {currentUser} = useAuth()
+  const dispatch = useDispatch()
   useEffect(() => {
-    let selectedShop = shops.filter(shop => shop.shopName.toLowerCase() === shopNameUrl.toLowerCase())
-    setGlobalShop(selectedShop)
+    let selectedShop = shops.filter(shop => shop.shopName.toLowerCase() === shopNameUrl.toLowerCase())[0]
+    if (selectedShop) {
+      dispatch(setGlogalShop(selectedShop));
+    }
   }, [shops, shopNameUrl])
 
   if(!currentUser){

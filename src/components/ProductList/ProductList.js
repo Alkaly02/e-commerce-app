@@ -16,11 +16,12 @@ import useCategories from "../../hooks/useCategories";
 import firstLetterUpperCase from "../../utils/functions/firstLetterUpperCase";
 import { useAuth } from "../../hooks/useAuth";
 import { useWhereDocs } from "easy-firestore/hooks";
+import { useSelector } from "react-redux";
 
 const ProductList = () => {
-  const { globalShop } = useAuth();
-  const { products, productsLoading, numberOfProducts } = useProducts();
-  const { data: commands, numberOfData: numberOfCommands } = useWhereDocs(
+  const globalShop = useSelector(state => state.globalShop)
+  const {data: products,numberOfData: numberOfProducts ,dataLoading: productsLoading } = useWhereDocs(db, 'products', 'ownedShop', globalShop[0]?.id);
+  const { numberOfData: numberOfCommands } = useWhereDocs(
     db,
     "commands",
     "commandOwnedShop",
@@ -29,7 +30,6 @@ const ProductList = () => {
   const { modalIsOpen, setIsOpen } = useModal();
   const [selectedProduct, setSelectedProduct] = useState([]);
   const { categories } = useCategories();
-  const [numberOfCommand, setNumberOfCommand] = useState()
 
   const handleDelete = async (id) => {
     toast.error("Produit supprimé !", {

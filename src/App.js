@@ -21,8 +21,10 @@ function App() {
       <ModalProvider>
         <PanierProvider>
           <Routes>
+            <Route path="/" element={<Welcome />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<Signup />} />
+            {/* <Route path="*" element={<Navigate to="/login" />} /> */}
             <Route path="/:shopNameUrl/*" element={<Home />} />
             <Route path="/:shopNameUrl/panier" element={<Panier />} />
             <Route path="/:shopNameUrl/login" element={<LoginPage />} />
@@ -33,8 +35,6 @@ function App() {
             <Route path="/user/:shopNameUrl/*" element={<UserHomePage />} />
             <Route path="/user/:shopNameUrl/panier" element={<ConnectedPanier />} />
             <Route path="/product/:productId" element={<ProductDetails />} />
-            <Route path="/" element={<Welcome />} />
-            <Route path="*" element={<Navigate to="/login" />} />
           </Routes>
         </PanierProvider>
       </ModalProvider>

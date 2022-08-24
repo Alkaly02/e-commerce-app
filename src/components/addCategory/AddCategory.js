@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 import { useAuth } from "../../hooks/useAuth";
 import AddDoc from "../../utils/functions/AddDoc";
 
@@ -7,7 +8,7 @@ const AddCategory = ({ setSuccess, setOpenCategory }) => {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
-  const {globalShop} = useAuth()
+  const globalShop = useSelector(state => state.globalShop)
   
   const addCategory = async (e) => {
     e.preventDefault();

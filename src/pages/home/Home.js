@@ -94,6 +94,7 @@ const Home = () => {
           <Routes>
             <Route path="" element={<UserHomePage />} />
             <Route path=":id" element={<ShowByCategory />} />
+          
           </Routes>
         </div>
       </div>
