@@ -3,7 +3,7 @@ import ListItem from "../listItem/ListItem";
 import "./Sidebar.css";
 import PropTypes from 'prop-types'
 
-const SidebarMob = ({ links }) => {
+const SidebarMob = ({ links, bgColor, color, activeColor, isAdmin }) => {
   return (
     <nav style={{
         position: 'fixed',
@@ -16,7 +16,7 @@ const SidebarMob = ({ links }) => {
       <ul className="p-0 mt-4 d-flex justify-content-between">
         {
           links?.map((link, index) => (
-            <ListItem key={index} {...link} />
+            <ListItem isAdmin={isAdmin} activeColor={activeColor} color={color} key={index} {...link} />
           ))
         }
       </ul>

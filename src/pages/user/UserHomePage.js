@@ -22,7 +22,10 @@ import { db } from "../../firebase/config";
 import { useDispatch, useSelector } from "react-redux";
 import AddDoc from "../../utils/functions/AddDoc";
 import { deleteCart } from "../../redux/slices/cartSlice";
-import { deleteGlobalShop, setGlogalShop } from "../../redux/slices/globalShopSlice";
+import {
+  deleteGlobalShop,
+  setGlogalShop,
+} from "../../redux/slices/globalShopSlice";
 
 const UserHomePage = () => {
   const { logout, currentUser } = useAuth();
@@ -37,7 +40,7 @@ const UserHomePage = () => {
     try {
       await logout();
       navigate(`/${shopNameUrl}`);
-      dispatch(deleteGlobalShop())
+      dispatch(deleteGlobalShop());
     } catch (err) {
       alert(err.code);
     }
@@ -94,7 +97,13 @@ const UserHomePage = () => {
           color="#2B3445"
           isAdmin={false}
         />
-        <SidebarMob links={userData} />
+        <SidebarMob
+          bgColor="#fff"
+          activeColor="rgb(75, 180, 180)"
+          color="#2B3445"
+          isAdmin={false}
+          links={userData}
+        />
         <div className="w-100">
           <Routes>
             <Route path="" element={<UserHome />} />

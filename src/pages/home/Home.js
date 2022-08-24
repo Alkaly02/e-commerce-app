@@ -12,32 +12,43 @@ import UserHomePage from "./HomePage";
 import useUserSidebarData from "../../hooks/useUserSidebarData";
 import { useParams, Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import {useDocs} from 'easy-firestore/hooks'
+import { useDocs } from "easy-firestore/hooks";
 import { db } from "../../firebase/config";
-import cartSlice from "../../redux/slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { setGlogalShop } from "../../redux/slices/globalShopSlice";
+import {
+  setGlogalShop,
+} from "../../redux/slices/globalShopSlice";
+import { makeCommandFalse } from "../../redux/slices/commandeSlice";
+import logo from "../../assets/img/logo-ecommerce.png";
 
 const Home = () => {
   const { setIsOpen } = useModal();
-  const {data: shops} = useDocs(db, 'shops')
-  const {shopNameUrl} = useParams()
-  const cart = useSelector(state => state.cart)
-  const dispatch = useDispatch()
+  const { data: shops } = useDocs(db, "shops");
+  const { shopNameUrl } = useParams();
+  const isFromCommand = useSelector((state) => state.command.fromCommand);
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const globalShop = useSelector((state) => state.globalShop);
+  const { userData } = useUserSidebarData();
 
   useEffect(() => {
     // get the current shop in All shops collections
-    let selectedShop = shops.filter(shop => shop.shopName.toLowerCase() === shopNameUrl.toLowerCase())[0]
-    if(selectedShop){
-      dispatch(setGlogalShop(selectedShop))
+    let selectedShop = shops.filter(
+      (shop) => shop.shopName.toLowerCase() === shopNameUrl.toLowerCase()
+    )[0];
+    // the user will not be redirected to the cart if isFromCommand is false
+    if (isFromCommand) {
+      dispatch(makeCommandFalse());
     }
-    // setGlobalShop(selectedShop)
-  }, [shops, shopNameUrl])
-     
-  const {userData} = useUserSidebarData()
+    if (selectedShop) {
+      dispatch(setGlogalShop(selectedShop));
+    }
+  }, [shops, shopNameUrl]);
 
-  return (
-    <>
+  // setLoading(false)
+
+  return globalShop[0]?.shopName.toLowerCase() === shopNameUrl ? (
+    <> 
       <Header title={shopNameUrl}>
         <button onClick={() => setIsOpen(true)}>
           <MdPersonOutline className="button__icon" />
@@ -54,7 +65,7 @@ const Home = () => {
                 color: "white",
                 borderRadius: "50%",
                 padding: "0.1rem 0.5rem",
-                fontSize: '0.8rem'
+                fontSize: "0.8rem",
               }}
             >
               {cart.length}
@@ -72,7 +83,13 @@ const Home = () => {
           color="#2B3445"
           isAdmin={false}
         />
-        <SidebarMob links={userData} />
+        <SidebarMob
+          bgColor="#fff"
+          activeColor="rgb(75, 180, 180)"
+          color="#2B3445"
+          isAdmin={false}
+          links={userData}
+        />
         <div className="w-100">
           <Routes>
             <Route path="" element={<UserHomePage />} />
@@ -82,7 +99,7 @@ const Home = () => {
       </div>
       <LoginModal title="Veuillez vous connecter pour ajouter des produits dans votre panier" />
     </>
-  );
+  ): <div className="vh-100 w-100 d-flex justify-content-center align-items-center">Redirection..., attendez</div>
 };
 
 export default Home;

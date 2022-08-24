@@ -19,7 +19,7 @@ root.render(
   <BrowserRouter>
     <AuthProvider>
       <Provider store={store}>
-        <PersistGate persistor={persistor}>
+        <PersistGate loading={<p>loading...</p>} persistor={persistor}>
           <App />
         </PersistGate>
       </Provider>

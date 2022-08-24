@@ -93,6 +93,7 @@ const ProductList = () => {
                           width: "80px",
                           height: "55px",
                           objectFit: "cover",
+                          borderRadius: '10px'
                         }}
                         src={product.imgUrl ? product.imgUrl : logo}
                         alt={product.name}

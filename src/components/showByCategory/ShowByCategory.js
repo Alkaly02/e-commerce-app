@@ -7,30 +7,51 @@ import { useModal } from "../../hooks/useModal";
 import firstLetterUpperCase from "../../utils/functions/firstLetterUpperCase";
 import ProductCard from "../productCard/ProductCard";
 import ProductsContainer from "../productsContainer/ProductsContainer";
-import {useWhereDocs} from 'easy-firestore/hooks'
+import { useWhereDocs } from "easy-firestore/hooks";
 import { useDispatch, useSelector } from "react-redux";
-import { decrement, firstAddToCart, increment } from "../../redux/slices/cartSlice";
+import {
+  decrement,
+  firstAddToCart,
+  increment,
+} from "../../redux/slices/cartSlice";
 import { CgLoadbar } from "react-icons/cg";
-
 
 const ShowByCategory = () => {
   const { id } = useParams();
-  const {globalShop} = useAuth()
-  const shopId = globalShop[0]?.id
-  const {data: categories, dataLoading: categoriesLoading} = useWhereDocs(db, 'categories', 'ownedShop', shopId)
-  const {data: products, dataLoading: productsLoading} = useWhereDocs(db, 'products', 'ownedShop', shopId)
-  const [title, setTitle] = useState("");
+  const globalShop = useSelector((state) => state.globalShop);
+  const shopId = globalShop[0]?.id;
+  const { data: categories, dataLoading: categoriesLoading } = useWhereDocs(
+    db,
+    "categories",
+    "ownedShop",
+    shopId
+  );
+  const { data: products, dataLoading: productsLoading } = useWhereDocs(
+    db,
+    "products",
+    "ownedShop",
+    shopId
+  );
+  const [title, setTitle] = useState(" ");
   const { setIsOpen } = useModal();
-  const [categoryProducts, setCategoryProducts] = useState([])
-  const cart = useSelector(state => state.cart)
-  const dispatch = useDispatch()
+  const [categoryProducts, setCategoryProducts] = useState([]);
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  let categoryProducts_2 = products.filter(
+    (product) => product.categoryId === id
+  );
 
   useEffect(() => {
-    let titleContainer = categories.filter((category) => category.id === id);
+    if (categories.length !== 0) {
+      let titleContainer = categories.filter((category) => category.id === id);
+      setTitle(firstLetterUpperCase(titleContainer[0]?.categoryName));
+    }
     // get category products
-    let categoryProducts = products.filter(product => product.categoryId === id)
-    setCategoryProducts(categoryProducts)
-    setTitle(firstLetterUpperCase(titleContainer[0]?.categoryName));
+    let categoryProducts = products.filter(
+      (product) => product.categoryId === id
+    );
+    setCategoryProducts(categoryProducts);
   }, [categories, id, products]);
   return (
     <>
@@ -40,9 +61,10 @@ const ShowByCategory = () => {
         className="main-content"
         loading={categoriesLoading}
       >
-        {
-            !productsLoading ? categoryProducts.length !== 0 ? categoryProducts.map(product => (
-                <ProductCard key={product.id} {...product} >
+        {!productsLoading
+          ? categoryProducts_2.length !== 0
+            ? categoryProducts.map((product) => (
+                <ProductCard key={product.id} {...product}>
                   {cart.length !== 0 &&
                   cart.filter((p) => p.productId === product.id).length !==
                     0 ? (
@@ -87,8 +109,9 @@ const ShowByCategory = () => {
                     </button>
                   )}
                 </ProductCard>
-            )) : 'Pas de produits !' : 'loading...'
-        }
+              ))
+            : "Pas de produits !"
+          : "loading..."}
       </ProductsContainer>
     </>
   );

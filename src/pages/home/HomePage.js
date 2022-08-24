@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import ProductCard from "../../components/productCard/ProductCard";
 import ProductsContainer from "../../components/productsContainer/ProductsContainer";
 import { db } from "../../firebase/config";
-import { useModal } from "../../hooks/useModal";
 import { useWhereDocs } from "easy-firestore/hooks";
-import { useAuth } from "../../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import {
   decrement,
@@ -26,8 +24,6 @@ const UserHomePage = () => {
     numberOfData: numberOfProducts,
     dataLoading: productsLoading,
   } = useWhereDocs(db, "products", "ownedShop", shopId);
-
-  const { setIsOpen } = useModal();
 
   // const increment = (cart, id) => {
   //   const selectedProduct = cart.find(p => p.productId === id)

@@ -16,7 +16,7 @@ const Header = ({ children, title }) => {
           style={{ width: "70px" }}
           src={logo}
           alt="E-commerce Logo"
-          className="header-brand inline-block"
+          className="header-brand inline-block d-none d-sm-inline"
         />
         <div className="d-flex align-items-center">
           {title ? (
