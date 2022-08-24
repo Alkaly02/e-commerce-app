@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
-import { Navigate, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import SidebarMob from "../../components/sidebar/SidebarMob";
@@ -10,47 +16,45 @@ import useUserSidebarData from "../../hooks/useUserSidebarData";
 import UserHome from "./UserHome";
 import ShowByCategoryUser from "../../components/showByCategory/ShowByCategoryUser";
 import usePanier from "../../hooks/usePanier";
-import {Link} from 'react-router-dom'
-import {useDocs} from 'easy-firestore/hooks'
+import { Link } from "react-router-dom";
+import { useDocs } from "easy-firestore/hooks";
 import { db } from "../../firebase/config";
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import AddDoc from "../../utils/functions/AddDoc";
 import { deleteCart } from "../../redux/slices/cartSlice";
+import { deleteGlobalShop, setGlogalShop } from "../../redux/slices/globalShopSlice";
 
 const UserHomePage = () => {
-  const { logout, setGlobalShop, currentUser } = useAuth();
-  const {data: shops} = useDocs(db, 'shops')
-  const {shopNameUrl} = useParams()
+  const { logout, currentUser } = useAuth();
+  const { data: shops } = useDocs(db, "shops");
+  const { shopNameUrl } = useParams();
   const { numberOfPanier } = usePanier();
   const { userData } = useUserSidebarData();
   const navigate = useNavigate();
-  const cart = useSelector(state => state.cart)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const Logout = async () => {
     try {
       await logout();
       navigate(`/${shopNameUrl}`);
+      dispatch(deleteGlobalShop())
     } catch (err) {
       alert(err.code);
     }
   };
 
-  // useEffect(() => {
-  //   cart.forEach( async (c) => {
-  //     await AddDoc('panier', {addedBy: currentUser?.uid, ...c})
-  //     console.log("panier")
-  //   })
-  // }, [])
-  
   useEffect(() => {
-    let selectedShop = shops.filter(shop => shop.shopName.toLowerCase() === shopNameUrl.toLocaleLowerCase())
-    setGlobalShop(selectedShop);
-    dispatch(deleteCart())
-  }, [shopNameUrl, shops])
+    let selectedShop = shops.filter(
+      (shop) => shop.shopName.toLowerCase() === shopNameUrl.toLocaleLowerCase()
+    )[0];
+    if (selectedShop) {
+      dispatch(setGlogalShop(selectedShop));
+    }
+    dispatch(deleteCart());
+  }, [shopNameUrl, shops]);
 
-  if(!currentUser){
-    return <Navigate to={`/${shopNameUrl}`} />
+  if (!currentUser) {
+    return <Navigate to={`/${shopNameUrl}`} />;
   }
 
   return (
@@ -72,7 +76,7 @@ const UserHomePage = () => {
                 color: "white",
                 borderRadius: "50%",
                 padding: "0.1rem 0.5rem",
-                fontSize: '0.8rem'
+                fontSize: "0.8rem",
               }}
             >
               {numberOfPanier}

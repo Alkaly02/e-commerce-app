@@ -10,9 +10,11 @@ import firstAddToCartDetails from "../../utils/functions/firstAddToCartDetails";
 import { useAuth } from "../../hooks/useAuth";
 import {useWhereDocs} from 'easy-firestore/hooks'
 import { db } from "../../firebase/config";
+import { useSelector } from "react-redux";
 
 const UserHome = () => {
-  const {currentUser, globalShop} = useAuth()
+  const {currentUser} = useAuth()
+  const globalShop = useSelector(state => state.globalShop)
   const shopId = globalShop[0]?.id
   const {data: products, numberOfData: numberOfProducts, dataLoading: productsLoading} = useWhereDocs(db, 'products', 'ownedShop', shopId)
   const { panier } = usePanier();

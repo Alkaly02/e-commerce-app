@@ -13,15 +13,18 @@ import AddDoc from "../../utils/functions/AddDoc";
 import { db } from "../../firebase/config";
 import toast from "react-hot-toast";
 import { deleteDoc, doc } from "firebase/firestore";
+import {useDocs} from 'easy-firestore/hooks'
+import { setGlogalShop } from "../../redux/slices/globalShopSlice";
 
 const ConnectedPanier = () => {
   const { panier, panierLoading, numberOfPanier } = usePanier();
+  const {data: shops} = useDocs(db, 'shops')
   const { setOpenCart } = usePanierProvider();
   const {shopNameUrl} = useParams()
   const [totalCommand, setTotalCommand] = useState(0)
   const EXPEDITION_PRIX = 20
-
-  // const cart = useSelector(state => state.command)
+  const globalShop = useSelector((state) => state.globalShop);
+  
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -29,10 +32,18 @@ const ConnectedPanier = () => {
     let totalCommand = panier.reduce((total, item) => {
       return total + Number(item.totalPrix) 
     }, 0)
-
+    // get the globalShop
+    let selectedShop = shops.filter(
+      (shop) => shop.shopName.toLowerCase() === shopNameUrl.toLocaleLowerCase()
+    )[0];
+    // if(selectedShop) console.log(selectedShop);
+    
+    if (selectedShop) {
+      dispatch(setGlogalShop(selectedShop));
+    }
     setTotalCommand(totalCommand)
     dispatch(makeCommandFalse())
-  }, [panier])
+  }, [panier, shops])
 
   const addToCommand = (panier) => {
     let userId = panier[0].addedBy
@@ -66,12 +77,12 @@ const ConnectedPanier = () => {
     <div
       style={{
         width: "100%",
-        // minHeight: "100vh",
+        minHeight: "100vh",
         backgroundColor: "#EFF2F3",
         paddingTop: "5rem",
       }}
     >
-      <div className="panier-container vh-100">
+      <div style={{minHeight: '80vh'}} className="panier-container">
         <div className="mb-0 d-flex justify-content-between p-4">
           <Link
             className="ps-2"
@@ -85,9 +96,9 @@ const ConnectedPanier = () => {
             &larr; Continuer vos achats
           </Link>
         </div>
-        <div className="d-flex">
+        <div className="d-lg-flex justify-content-between px-lg-4 px-3">
           <div className="panier-items border-top">
-            <div style={{ padding: "0.8rem 2rem" }}>
+            <div>
               <h6 className="fw-bold">Panier</h6>
               <p style={{fontSize: '0.9rem', fontWeight: '600'}} className="">
                 {numberOfPanier > 1
@@ -95,7 +106,7 @@ const ConnectedPanier = () => {
                   : numberOfPanier + " produit dans votre panier"}
               </p>
             </div>
-            <div style={{ padding: "0.8rem 2rem" }}>
+            <div>
               {!panierLoading ? (
                 numberOfPanier > 0 ? (
                   panier.map((item) => (
@@ -114,7 +125,7 @@ const ConnectedPanier = () => {
             </div>
           </div>
           <div
-            className="right-cart py-4 px-4 rounded-5"
+            className="right-cart py-4 px-4 rounded-5 ms-lg-4"
             style={{ backgroundColor: "#565CBA" }}
           >
             <h6 className="mb-3">Details du panier</h6>
@@ -139,7 +150,7 @@ const ConnectedPanier = () => {
                 className="d-flex justify-content-between submit px-4 rounded-3 mt-4 w-100"
               >
                 <span>${totalCommand + EXPEDITION_PRIX}</span>
-                <span>Valider &rarr;</span>
+                <span>Passer la commande &rarr;</span>
               </button>
             </div>
           </div>

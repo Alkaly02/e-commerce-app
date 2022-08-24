@@ -15,7 +15,7 @@ import {
 import { CgLoadbar } from "react-icons/cg";
 
 const UserHomePage = () => {
-  const { globalShop } = useAuth();
+  const globalShop = useSelector(state => state.globalShop)
   const shopId = globalShop[0]?.id;
   const dispatch = useDispatch();
 
@@ -94,7 +94,7 @@ const UserHomePage = () => {
                 </ProductCard>
               ))
             : "No products"
-          : "loading"}
+          : "loading..."}
       </ProductsContainer>
     </>
   );

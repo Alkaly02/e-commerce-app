@@ -74,21 +74,30 @@
 
 .right-cart{
   color: white;
-  width: 35%;
+  width: 50%;
 }
 
 .right-cart h6{
   font-weight: 600 !important;
 }
 
-@media (max-width: 1000px){
+/* @media (max-width: 1000px){
   .panier-container {
     width: 50% !important;
+  }
+} */
+
+@media (max-width: 992px){
+  .panier-items{
+    width: 100%;
+  }
+  .right-cart{
+    width: 100%;
   }
 }
 
 @media (max-width: 650px){
-  .panier-container {
+  /* .panier-container {
     width: 90% !important;
-  }
+  } */
 }

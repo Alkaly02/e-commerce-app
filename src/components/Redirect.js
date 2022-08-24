@@ -9,7 +9,8 @@ import { db } from "../firebase/config";
 
 const Redirect = () => {
   const { auth } = useUser();
-  const { globalShop, currentUser } = useAuth();
+  const { currentUser } = useAuth();
+  const globalShop = useSelector(state => state.globalShop)
   const shopName = globalShop[0]?.shopName.toLowerCase();
   const fromCommand = useSelector((state) => state.command.fromCommand);
   const cart = useSelector((state) => state.cart);

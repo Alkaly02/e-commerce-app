@@ -15,19 +15,23 @@ import { useAuth } from "../../hooks/useAuth";
 import {useDocs} from 'easy-firestore/hooks'
 import { db } from "../../firebase/config";
 import cartSlice from "../../redux/slices/cartSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setGlogalShop } from "../../redux/slices/globalShopSlice";
 
 const Home = () => {
   const { setIsOpen } = useModal();
   const {data: shops} = useDocs(db, 'shops')
-  const { setGlobalShop} = useAuth()
   const {shopNameUrl} = useParams()
   const cart = useSelector(state => state.cart)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     // get the current shop in All shops collections
-    let selectedShop = shops.filter(shop => shop.shopName.toLowerCase() === shopNameUrl.toLowerCase())
-    setGlobalShop(selectedShop)
+    let selectedShop = shops.filter(shop => shop.shopName.toLowerCase() === shopNameUrl.toLowerCase())[0]
+    if(selectedShop){
+      dispatch(setGlogalShop(selectedShop))
+    }
+    // setGlobalShop(selectedShop)
   }, [shops, shopNameUrl])
      
   const {userData} = useUserSidebarData()

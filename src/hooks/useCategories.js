@@ -1,5 +1,6 @@
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { db } from "../firebase/config";
 import { useAuth } from "./useAuth";
 
@@ -7,7 +8,7 @@ const useCategories = () => {
   const [categories, setCategories] = useState([]);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
   const [numberOfCategories, setNumberOfCategories] = useState(0)
-  const {globalShop} = useAuth()
+  const globalShop = useSelector(state => state.globalShop)
   useEffect(() => {
     const getCategories = async () => {
       if(!globalShop[0]?.id) return

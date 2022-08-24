@@ -14,18 +14,18 @@ const Panier = () => {
   const { setOpenCart } = usePanierProvider();
   const { shopNameUrl } = useParams();
   const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   return (
     <div
       style={{
         width: "100%",
-        // minHeight: "100vh",
+        minHeight: "100vh",
         backgroundColor: "#EFF2F3",
         paddingTop: "5rem",
       }}
     >
-      <div className="panier-container vh-100">
+      <div style={{minHeight: '80vh'}} className="panier-container">
         <div className="mb-0 d-flex justify-content-between p-4">
           <Link
             className="ps-2"
@@ -39,7 +39,7 @@ const Panier = () => {
             &larr; Continuer vos achats
           </Link>
         </div>
-        <div className="d-flex">
+        <div className="d-lg-flex justify-content-between px-lg-4 px-3">
           <div className="panier-items border-top">
             <div style={{ padding: "0.8rem 2rem" }}>
               <h6 className="fw-bold">Panier</h6>
@@ -52,11 +52,7 @@ const Panier = () => {
             <div style={{ padding: "0.8rem 2rem" }}>
               {cart.length > 0 ? (
                 cart.map((item, index) => (
-                  <PanierCard
-                    setOpenCart={setOpenCart}
-                    key={index}
-                    {...item}
-                  />
+                  <PanierCard setOpenCart={setOpenCart} key={index} {...item} />
                 ))
               ) : (
                 <NoItems />
@@ -64,7 +60,7 @@ const Panier = () => {
             </div>
           </div>
           <div
-            className="right-cart py-4 px-4 rounded-5"
+            className="right-cart py-4 px-4 rounded-5 ms-lg-4"
             style={{ backgroundColor: "#565CBA" }}
           >
             <h6 className="mb-3">Details du panier</h6>
@@ -83,15 +79,13 @@ const Panier = () => {
                 <span className="fw-bold">$2020</span>
               </p>
               <Link
-                style={{textDecoration: 'none', color: 'white'}}
+                style={{ textDecoration: "none", color: "white" }}
                 className="d-flex justify-content-between submit px-4 rounded-3 mt-4"
                 to={`/${shopNameUrl}/login`}
                 onClick={() => dispatch(isCommand())}
               >
                 <span>$2020</span>
-                <span>
-                  Valider &rarr;
-                </span>
+                <span>Valider &rarr;</span>
               </Link>
             </div>
           </div>
