@@ -20,12 +20,12 @@ const Panier = () => {
     <div
       style={{
         width: "100%",
-        minHeight: "100vh",
+        minHeight: "120vh",
         backgroundColor: "#EFF2F3",
         paddingTop: "5rem",
       }}
     >
-      <div style={{minHeight: '80vh'}} className="panier-container">
+      <div style={{minHeight: '80vh'}} className="panier-container pb-5">
         <div className="mb-0 d-flex justify-content-between p-4">
           <Link
             className="ps-2"
@@ -41,7 +41,7 @@ const Panier = () => {
         </div>
         <div className="d-lg-flex justify-content-between px-lg-4 px-3">
           <div className="panier-items border-top">
-            <div style={{ padding: "0.8rem 2rem" }}>
+            <div style={{ padding: "0.8rem 0.5rem" }}>
               <h6 className="fw-bold">Panier</h6>
               <p style={{ fontSize: "0.9rem", fontWeight: "600" }} className="">
                 {cart.length > 1
@@ -49,7 +49,7 @@ const Panier = () => {
                   : cart.length + " produit dans votre panier"}
               </p>
             </div>
-            <div style={{ padding: "0.8rem 2rem" }}>
+            <div style={{ padding: "0.8rem 0" }}>
               {cart.length > 0 ? (
                 cart.map((item, index) => (
                   <PanierCard setOpenCart={setOpenCart} key={index} {...item} />

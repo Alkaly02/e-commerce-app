@@ -19,12 +19,12 @@ const PanierCard = (item, { setOpenCart }) => {
 
   return (
     <>
-      <div className="d-flex justify-content-between panier-items-details py-3 px-4 align-items-center">
+      <div className="d-flex justify-content-between panier-items-details py-3 px-sm-4 px-2 align-items-center">
         <img
           style={{ width: "70px", maxHeight: "76px", objectFit: "contain" }}
           src={item.imgUrl}
           alt={item.name}
-          className="ms-3 rounded-4"
+          className="ms-0 rounded-4"
         />
         <div className="middle">
           <div className="ms-3">
