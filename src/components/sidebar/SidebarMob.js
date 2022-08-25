@@ -10,7 +10,7 @@ const SidebarMob = ({ links, bgColor, color, activeColor, isAdmin }) => {
         bottom: 0,
         left: 0,
         width: '100%',
-        backgroundColor: 'white',
+        backgroundColor: bgColor,
         boxShadow: '0px 0px 6px 0px rgba(0, 0, 0, 0.5) !important'
     }} className="p-0 shadow d-md-none d-block">
       <ul className="p-0 mt-4 d-flex justify-content-between">

@@ -36,8 +36,20 @@ const AddProducts = () => {
     }
     setFile(null);
   };
+
   const addProduct = async (e) => {
     e.preventDefault();
+    if(prix <= 0 || stock <= 0){
+      return toast.error("Veuillez mettre des nombres positives!", {
+        style: {
+          backgroundColor: "#2B3445",
+          color: "white",
+        },
+        iconTheme: {
+          primary: "red",
+        },
+      }); 
+    }
     setLoading(true);
 
     await AddDoc("products", { name, prix, stock, description: desc, imgUrl, categoryId, ownedShop: globalShop[0].id });
@@ -164,7 +176,7 @@ const AddProducts = () => {
             </div>
           </div>
           <div className="mb-3 btn-container">
-            <button type="submit" className="btn submit submit-product px-5">
+            <button disabled={loading} type="submit" className="btn submit submit-product px-5">
               {loading ? (
                 <div
                   style={{ width: "20px", height: "20px" }}

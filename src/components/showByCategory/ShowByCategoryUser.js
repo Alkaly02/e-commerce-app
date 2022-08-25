@@ -2,25 +2,27 @@ import React, { useEffect, useState } from "react";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { useParams } from "react-router-dom";
 import useCategories from "../../hooks/useCategories";
-import useProducts from "../../hooks/useProducts";
 import firstLetterUpperCase from "../../utils/functions/firstLetterUpperCase";
 import ProductCard from "../productCard/ProductCard";
 import ProductsContainer from "../productsContainer/ProductsContainer";
 import { CgLoadbar } from "react-icons/cg";
-import AddDoc from "../../utils/functions/AddDoc";
 import usePanier from "../../hooks/usePanier";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import firstAddToCartDetails from "../../utils/functions/firstAddToCartDetails";
 import { useAuth } from "../../hooks/useAuth";
 import increment from "../../utils/functions/increment";
+import { useSelector } from "react-redux";
+import {useWhereDocs} from 'easy-firestore/hooks'
 
 const ShowByCategoryUser = () => {
   const { idDomain } = useParams();
   const { categories } = useCategories();
-  const { products, productsLoading } = useProducts();
+  const globalShop = useSelector(state => state.globalShop)
+  const ownerShopId = globalShop[0]?.id
+  const {data: products, dataLoading: productsLoading} = useWhereDocs(db, 'products', 'ownedShop', ownerShopId)
   const [title, setTitle] = useState("");
-  const {currentUser, globalShop} = useAuth()
+  const {currentUser} = useAuth()
 
   const { panier } = usePanier();
 

@@ -1,7 +1,13 @@
 import React, { useEffect } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { Navigate, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useShops } from "../hooks/useShops";
 import AdminHome from "../pages/admin/AdminHome";
@@ -18,22 +24,23 @@ import SidebarMob from "./sidebar/SidebarMob";
 
 const Shop = () => {
   const { logout, setGlobalShop } = useAuth();
-  const {shopNameUrl} = useParams()
+  const { shopNameUrl } = useParams();
   const navigate = useNavigate();
-  const {shops} = useShops()
-  const {currentUser} = useAuth()
-  const dispatch = useDispatch()
+  const { shops } = useShops();
+  const { currentUser } = useAuth();
+  const dispatch = useDispatch();
   useEffect(() => {
-    let selectedShop = shops.filter(shop => shop.shopName.toLowerCase() === shopNameUrl.toLowerCase())[0]
+    let selectedShop = shops.filter(
+      (shop) => shop.shopName.toLowerCase() === shopNameUrl.toLowerCase()
+    )[0];
     if (selectedShop) {
       dispatch(setGlogalShop(selectedShop));
     }
-  }, [shops, shopNameUrl])
+  }, [shops, shopNameUrl]);
 
-  if(!currentUser){
-    return <Navigate to={`/admin/${shopNameUrl}/login`} />
+  if (!currentUser) {
+    return <Navigate to={`/admin/${shopNameUrl}/login`} />;
   }
-
 
   const Logout = async () => {
     try {
@@ -62,7 +69,13 @@ const Shop = () => {
           color="#fff"
           isAdmin={true}
         />
-        <SidebarMob links={adminData} />
+        <SidebarMob
+          bgColor="#2B3445"
+          activeColor="rgb(75, 255, 255)"
+          color="#fff"
+          isAdmin={true}
+          links={adminData}
+        />
         <div className="w-100">
           <Routes>
             <Route path="" element={<AdminHome />} />
@@ -70,7 +83,10 @@ const Shop = () => {
             <Route path="products" element={<ProductList />} />
             <Route path="add-products" element={<AddProducts />} />
             <Route path="commands" element={<Commands />} />
-            <Route path="commands/:commandDetailUrl" element={<CommandDetails />} />
+            <Route
+              path="commands/:commandDetailUrl"
+              element={<CommandDetails />}
+            />
           </Routes>
         </div>
       </div>

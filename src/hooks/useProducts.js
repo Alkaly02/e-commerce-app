@@ -1,5 +1,6 @@
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { db } from "../firebase/config";
 import { useAuth } from "./useAuth";
 
@@ -7,7 +8,7 @@ const useProducts = () => {
   const [products, setProducts] = useState([]);
   const [productsLoading, setProductsLoading] = useState(true);
   const [numberOfProducts, setNumberOfProducts] = useState(0)
-  const {globalShop} = useAuth()
+  const globalShop = useSelector(state => state.globalShop)
   useEffect(() => {
     const getProducts = async () => {
       // on recupere tous les produits qui appartiennent a une boutique specifique

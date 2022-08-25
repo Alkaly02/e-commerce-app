@@ -27,10 +27,10 @@ const Header = ({ children, title }) => {
                 alt="Shopping"
               />
               <h1
-                className="ms-2"
+                className="ms-2 shop-title"
                 style={{ color: "rgb(75, 180, 180)", fontWeight: "700" }}
               >
-                {title?.toUpperCase()} Shop
+                {title?.toUpperCase()} <span className="d-none d-sm-inline-block">Shop</span> 
               </h1>
             </>
           ) : (

@@ -69,7 +69,7 @@ const AddCategory = ({ setSuccess, setOpenCategory }) => {
           </select>
         </div> */}
         <div className="mb-3">
-          <button type="submit" className="btn w-100 submit px-5">
+          <button disabled={loading} type="submit" className="btn w-100 submit px-5">
             {loading ? (
               <div className="text-center">
                 <div

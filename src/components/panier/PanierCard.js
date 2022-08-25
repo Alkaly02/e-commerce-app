@@ -1,7 +1,4 @@
 import React from "react";
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebase/config";
-import useProducts from "../../hooks/useProducts";
 import { HiOutlineMinusSm, HiOutlinePlusSm } from "react-icons/hi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
@@ -9,13 +6,7 @@ import { useDispatch } from "react-redux";
 import { decrement, deleteInCart, increment } from "../../redux/slices/cartSlice";
 
 const PanierCard = (item, { setOpenCart }) => {
-  const { products } = useProducts();
-
   const dispatch = useDispatch()
-
-  const deleteCart = async (id) => {
-    await deleteDoc(doc(db, "panier", id));
-  };
 
   return (
     <>
