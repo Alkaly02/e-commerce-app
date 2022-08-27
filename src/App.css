@@ -8,4 +8,16 @@
   .shop-container{
     padding: 4rem 2rem;
   }
+
+  .headline-1{
+    font-size: 1rem !important;
+  }
+
+  h6{
+    font-size: 0.9rem !important;
+  }
+
+  p{
+    font-size: 0.8rem !important;
+  }
 }

@@ -1,6 +1,5 @@
-import React from "react";
-import usePanier from "../../hooks/usePanier";
-import "./Panier.css";
+import React, { useEffect, useState } from "react";
+import "./panier.css";
 import PanierCard from "./PanierCard";
 import NoItems from "../NoItems";
 import { usePanierProvider } from "../../hooks/usePanierProvider";
@@ -15,6 +14,15 @@ const Panier = () => {
   const { shopNameUrl } = useParams();
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const [totalCommandPrice, setTotalCommandPrice] = useState(0)
+  const EXPEDITION_PRICE = 2000;
+
+  useEffect(() => {
+    const totalPrice = cart.reduce((total, cartItem) => {
+      return total + Number(cartItem.totalPrix)
+    }, 0)
+    setTotalCommandPrice(totalPrice)
+  }, [cart])
 
   return (
     <div
@@ -68,15 +76,15 @@ const Panier = () => {
             <div className="border-top py-3">
               <p className="d-flex justify-content-between">
                 <span className="fs-6">Total</span>{" "}
-                <span className="fw-bold">$2000</span>
+                <span className="fw-bold">{totalCommandPrice} F CFA</span>
               </p>
               <p className="d-flex justify-content-between">
                 <span className="fs-6">Expedition</span>{" "}
-                <span className="fw-bold">$20</span>
+                <span className="fw-bold">2000 F CFA</span>
               </p>
               <p className="d-flex justify-content-between">
-                <span className="fs-6">Total TTC</span>{" "}
-                <span className="fw-bold">$2020</span>
+                <span className="fs-6">Total Commande</span>{" "}
+                <span className="fw-bold">{totalCommandPrice} F CFA</span>
               </p>
               <Link
                 style={{ textDecoration: "none", color: "white" }}
@@ -84,7 +92,7 @@ const Panier = () => {
                 to={`/${shopNameUrl}/login`}
                 onClick={() => dispatch(isCommand())}
               >
-                <span>$2020</span>
+                <span>{totalCommandPrice ? `${totalCommandPrice + EXPEDITION_PRICE} F CFA` : 0 }</span>
                 <span>Valider &rarr;</span>
               </Link>
             </div>

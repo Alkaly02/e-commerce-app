@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import usePanier from "../../hooks/usePanier";
-import "./Panier.css";
-import PanierCard from "./PanierCard";
+import "./panier.css";
 import NoItems from "../NoItems";
 import { usePanierProvider } from "../../hooks/usePanierProvider";
 import CartForm from "../cartForm/CartForm";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import PanierCardConnected from "./PanierCardConnected";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {makeCommandFalse} from '../../redux/slices/commandeSlice'
 import AddDoc from "../../utils/functions/AddDoc";
 import { db } from "../../firebase/config";
@@ -15,6 +14,7 @@ import toast from "react-hot-toast";
 import { deleteDoc, doc } from "firebase/firestore";
 import {useDocs} from 'easy-firestore/hooks'
 import { setGlogalShop } from "../../redux/slices/globalShopSlice";
+import successMsg from "../../utils/functions/successMsg";
 
 const ConnectedPanier = () => {
   const { panier, panierLoading, numberOfPanier } = usePanier();
@@ -22,8 +22,8 @@ const ConnectedPanier = () => {
   const { setOpenCart } = usePanierProvider();
   const {shopNameUrl} = useParams()
   const [totalCommand, setTotalCommand] = useState(0)
-  const EXPEDITION_PRIX = 20
-  const globalShop = useSelector((state) => state.globalShop);
+  const EXPEDITION_PRICE = 2000
+  const navigate = useNavigate()
   
   const dispatch = useDispatch()
 
@@ -35,14 +35,14 @@ const ConnectedPanier = () => {
     // get the globalShop
     let selectedShop = shops.filter(
       (shop) => shop.shopName.toLowerCase() === shopNameUrl.toLocaleLowerCase()
-    )[0];
-    // if(selectedShop) console.log(selectedShop);
-    
-    if (selectedShop) {
-      dispatch(setGlogalShop(selectedShop));
-    }
-    setTotalCommand(totalCommand)
+      )[0];
+      
+      if (selectedShop) {
+        dispatch(setGlogalShop(selectedShop));
+      }
     dispatch(makeCommandFalse())
+    if(numberOfPanier === 0) return setTotalCommand(0)
+    setTotalCommand(totalCommand)
   }, [panier, shops])
 
   const addToCommand = (panier) => {
@@ -61,16 +61,10 @@ const ConnectedPanier = () => {
         userCommands: commandItems 
       })
       panier.forEach(async (cart) => await deleteDoc(doc(db, "panier", cart.id)))
-    toast.success("Produits commandés !", {
-      style: {
-        backgroundColor: "#2B3445",
-        color: "white",
-      },
-      iconTheme: {
-        primary: "green",
-      },
-    });
-    // console.log(command, totalCommand);
+    successMsg("Produits commandés !")
+    setTimeout(() => {
+      navigate(`/user/${shopNameUrl}`)
+    }, 1500)
   }
 
   return (
@@ -133,23 +127,23 @@ const ConnectedPanier = () => {
             <div className="border-top py-3">
               <p className="d-flex justify-content-between">
                 <span className="fs-6">Total</span>{" "}
-                <span className="fw-bold">{totalCommand}</span>
+                <span className="fw-bold">{totalCommand} F CFA</span>
               </p>
               <p className="d-flex justify-content-between">
                 <span className="fs-6">Expedition</span>{" "}
-                <span className="fw-bold">$20</span>
+                <span className="fw-bold">{EXPEDITION_PRICE} F CFA</span>
               </p>
               <p className="d-flex justify-content-between">
-                <span className="fs-6">Total TTC</span>{" "}
-                <span className="fw-bold">${totalCommand + EXPEDITION_PRIX}</span>
+                <span className="fs-6">Total Commande</span>{" "}
+                <span className="fw-bold">{totalCommand ? `${totalCommand + EXPEDITION_PRICE} F CFA`: 0}</span>
               </p>
               <button
-              disabled={panierLoading}
+              disabled={!panierLoading && totalCommand > 0 ? false : true}
               onClick={() => addToCommand(panier)}
                 style={{ textDecoration: "none", border: 'none' }}
                 className="d-flex justify-content-between submit px-4 rounded-3 mt-4 w-100"
               >
-                <span>${totalCommand + EXPEDITION_PRIX}</span>
+                <span>{totalCommand ? `${totalCommand + EXPEDITION_PRICE} F CFA`: 0}</span>
                 <span>Passer la commande &rarr;</span>
               </button>
             </div>

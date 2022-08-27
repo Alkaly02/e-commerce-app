@@ -83,6 +83,10 @@
     background-color: rgb(24, 104, 104) !important;
 }
 
+.submit.annuler-commande:hover{
+    background-color: #a23742 !important
+}
+
 .login-signup {
     display: inline-block;
     font-weight: 700;
@@ -106,5 +110,9 @@ form + p {
 
     .form__input{
         font-size: 0.9rem;
+    }
+
+    .submit{
+        font-size: 0.8rem !important;
     }
 }
