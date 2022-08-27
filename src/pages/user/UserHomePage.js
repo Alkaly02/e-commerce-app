@@ -26,6 +26,7 @@ import {
   deleteGlobalShop,
   setGlogalShop,
 } from "../../redux/slices/globalShopSlice";
+import { resetGlobalCart } from "../../redux/slices/globalCartSlice";
 
 const UserHomePage = () => {
   const { logout, currentUser } = useAuth();
@@ -41,6 +42,7 @@ const UserHomePage = () => {
       await logout();
       navigate(`/${shopNameUrl}`);
       dispatch(deleteGlobalShop());
+      dispatch(resetGlobalCart())
     } catch (err) {
       alert(err.code);
     }

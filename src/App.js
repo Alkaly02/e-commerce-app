@@ -14,6 +14,7 @@ import Panier from "./components/panier/Panier";
 import Shop from "./components/Shop";
 import Welcome from "./pages/welcome/Welcome";
 import ConnectedPanier from "./components/panier/ConnectedPanier";
+import RedirectUser from "./components/RedirectUser";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/:shopNameUrl/panier" element={<Panier />} />
             <Route path="/:shopNameUrl/login" element={<LoginPage />} />
             <Route path="/redirect" element={<Redirect />} />
+            <Route path="/redirectUser" element={<RedirectUser />} />
             <Route path="/adminShops" element={<AdminDashboard />} />
             <Route path="/admin/:shopNameUrl/*" element={<Shop />} />
             <Route path="/admin/:shopNameUrl/login" element={<LoginPage />} />

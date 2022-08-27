@@ -20,6 +20,7 @@ import {
 } from "../../redux/slices/globalShopSlice";
 import { makeCommandFalse } from "../../redux/slices/commandeSlice";
 import logo from "../../assets/img/logo-ecommerce.png";
+import { addToGlobalCart } from "../../redux/slices/globalCartSlice";
 
 const Home = () => {
   const { setIsOpen } = useModal();
@@ -30,6 +31,15 @@ const Home = () => {
   const dispatch = useDispatch();
   const globalShop = useSelector((state) => state.globalShop);
   const { userData } = useUserSidebarData();
+
+  const {data: panier} = useDocs(db, 'panier')
+
+  useEffect(() => {
+    if(panier.length !== 0){
+      dispatch(addToGlobalCart(panier))
+    }
+    console.log(panier);
+  }, [panier])
 
   useEffect(() => {
     // get the current shop in All shops collections

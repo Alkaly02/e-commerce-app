@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import cartSlice from "./slices/cartSlice";
 import commandeSlice from "./slices/commandeSlice";
 import globalShopSlice from "./slices/globalShopSlice";
+import globalCartSlice from "./slices/globalCartSlice";
 import {
   persistReducer,
   FLUSH,
@@ -22,6 +23,7 @@ const reducers = combineReducers({
   cart: cartSlice,
   command: commandeSlice,
   globalShop: globalShopSlice,
+  globalCart: globalCartSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
