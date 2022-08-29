@@ -20,7 +20,8 @@ import { useSelector } from "react-redux";
 
 const ProductList = () => {
   const globalShop = useSelector(state => state.globalShop)
-  const {data: products,numberOfData: numberOfProducts ,dataLoading: productsLoading } = useWhereDocs(db, 'products', 'ownedShop', globalShop[0]?.id);
+  const shopId = globalShop[0]?.id
+  const {data: products,numberOfData: numberOfProducts ,dataLoading: productsLoading } = useWhereDocs(db, 'products', 'ownedShop', shopId);
   const { numberOfData: numberOfCommands } = useWhereDocs(
     db,
     "commands",

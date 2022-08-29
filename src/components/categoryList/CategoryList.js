@@ -17,6 +17,8 @@ import firstLetterUpperCase from "../../utils/functions/firstLetterUpperCase";
 import AddBtn from "../AddBtn";
 import { useAuth } from "../../hooks/useAuth";
 import { useSelector } from "react-redux";
+import { useWhereDocs } from 'easy-firestore/hooks';
+import errorMsg from "../../utils/functions/errorMsg";
 
 const CategoryList = () => {
   const [openCategory, setOpenCategory] = useState(false);
@@ -24,20 +26,18 @@ const CategoryList = () => {
   const { modalIsOpen, setIsOpen } = useModal();
   // const {globalShop} = useAuth()
   const globalShop = useSelector(state => state.globalShop)
-
+  const shopId = globalShop[0]?.id
   const { categories, categoriesLoading, numberOfCategories } = useCategories()
+  const {data: products,numberOfData: numberOfProducts ,dataLoading: productsLoading } = useWhereDocs(db, 'products', 'ownedShop', shopId);
 
   const handleDelete = async (id) => {
-    toast.error("Catégorie supprimée !", {
-      style: {
-        backgroundColor: "#2B3445",
-        color: "white",
-      },
-      iconTheme: {
-        primary: "red",
-      },
-    });
+    errorMsg("Catégorie supprimée")
     await deleteDoc(doc(db, "categories", id));
+    // supprimer les produits de la catégorie correspondante
+    const selectedProduct = products.filter(product => product.categoryId === id)
+    selectedProduct.forEach(async (product) => {
+      await deleteDoc(doc(db, 'products', product.id))
+    })
   };
 
   const handleUpdate = (id) => {

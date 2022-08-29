@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../../firebase/config";
 import { useWhereDocs } from "easy-firestore/hooks";
 import { useSelector } from "react-redux";
+import { updateDoc } from 'firebase/firestore';
+import { doc } from 'firebase/firestore';
+import successMsg from '../../utils/functions/successMsg';
 
 const CommandDetails = () => {
   const { commandDetailUrl } = useParams();
@@ -15,15 +18,26 @@ const CommandDetails = () => {
   } = useWhereDocs(db, "commands", "commandOwnedShop", shopId);
   const { data: products } = useWhereDocs(db, "products", "ownedShop", shopId);
 
+  const validCommand = (id) => {
+    const selectedCommand = commands.find(command => command.id === id)
+    const isConfirmed = selectedCommand.isConfirmed
+    updateDoc(doc(db, 'commands', id), {
+      isConfirmed: !isConfirmed
+    })
+    successMsg("Commande confirmée")
+  }
+
+  const cancelCommand = (id) => {
+    const selectedCommand = commands.find(command => command.id === id)
+    const isConfirmed = selectedCommand.isConfirmed
+    updateDoc(doc(db, 'commands', id), {
+      isConfirmed: !isConfirmed
+    })
+    successMsg("Commande annulée")
+  }
+
   return (
     <div className="px-4">
-      <div className="d-sm-flex justify-content-between align-items-center mb-4">
-      <h1 className="m-0 headline-1">Détails de la commande</h1>
-      <div className="d-flex mt-3 mt-sm-0">
-        <button type="" className="submit me-3" style={{border: 'none'}}>Valider la commande</button>
-        <button type="" className="submit annuler-commande bg-danger" style={{border: 'none'}}>Annuler la commande</button>
-      </div>
-      </div>
       {/* {console.log(commands.filter(command => command.id === commandDetailUrl))} */}
       {!commandsLoading ? (
         numberOfCommands !== 0 ? (
@@ -32,6 +46,9 @@ const CommandDetails = () => {
             .map((command) => {
               const commandproducts = command.userCommands.map((command) => {
                 return {
+                  isStockAvailable: command.isStockAvailable,
+                  isDelivered: command.isDelivered,
+                  isConfirmed: command.isConfirmed,
                   commandQuantities: command.commandQuantities,
                   commandTotalPrix: command.commandTotalPrix,
                   ...products.find(
@@ -47,8 +64,19 @@ const CommandDetails = () => {
                 0
               );
 
+              const isConfirmed = command.isConfirmed
+
               return (
-                <>
+                <div key={command.id}>
+                  <div className="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h1 className="m-0 headline-1 position-relative">Détails de la commande <span style={{fontSize: '0.8rem', border: '1px solid', padding: '0.2rem', position: 'absolute', top: '15%', right: '-22%'}}>{isConfirmed ? 'Confirmée' : 'Annulée'}</span></h1>
+                    <div className="d-flex mt-3 mt-sm-0">
+                      {
+                        !isConfirmed ? <button onClick={() => validCommand(command.id)} type="" className="submit" style={{ border: 'none' }}>Valider la commande</button> :
+                          <button onClick={() => cancelCommand(command.id)} type="" className="submit annuler-commande bg-danger" style={{ border: 'none' }}>Annuler la commande</button>
+                      }
+                    </div>
+                  </div>
                   {commandproducts.map((product) => (
                     <div key={product.id} className="d-flex justify-content-between panier-items-details py-3 px-sm-4 px-2 align-items-center">
                       <img
@@ -78,9 +106,9 @@ const CommandDetails = () => {
                     </div>
                   ))}
                   <div className="d-flex justify-content-end mt-3">
-                  <h5>Total de la commande : <span className="fw-bold fs-4">${totalCommandPrix}</span></h5>
+                    <h5>Total de la commande : <span className="fw-bold fs-4">${totalCommandPrix}</span></h5>
                   </div>
-                </>
+                </div>
               );
             })
         ) : (

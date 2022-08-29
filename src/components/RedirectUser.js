@@ -15,41 +15,42 @@ const RedirectUser = () => {
   const cart = useSelector((state) => state.cart);
   const connectedCart = useSelector(state => state.globalCart)
 
-    if (auth?.length !== 0) {
-      if (cart.length !== 0) {
-        const userProductsInCart = connectedCart.filter(cartItem => cartItem.addedBy === userId)
-        // verifier si on a deja des produits dans le panier connecté
-        if(userProductsInCart.length !== 0){
-          let goodCart = [...cart]
-          // on recupere les produits qui ne sont pas dans le panier connecté
-          cart.forEach( (cartItem) => {
-            connectedCart.forEach(async (cart) => {
-              if(cart.productId === cartItem.productId){
-                goodCart = goodCart.filter(item => item.productId !== cartItem.productId)
-              }
-            })
-          });
-
-          goodCart.length !== 0 &&  goodCart.forEach(async (product) => {
-            await AddDoc("panier", { addedBy: userId, ...product });
+  if (auth?.length !== 0) {
+    if (cart.length !== 0) {
+      // use some instead of filter
+      const userProductsInCart = connectedCart.filter(cartItem => cartItem.addedBy === userId)
+      // verifier si on a deja des produits dans le panier connecté
+      if (userProductsInCart.length !== 0) {
+        let goodCart = [...cart]
+        // on recupere les produits qui ne sont pas dans le panier connecté
+        cart.forEach((cartItem) => {
+          connectedCart.forEach(async (cart) => {
+            if (cart.productId === cartItem.productId) {
+              goodCart = goodCart.filter(item => item.productId !== cartItem.productId)
+            }
           })
-        }
-        else{
-          cart.forEach( async (cartItem) => {
-              await AddDoc("panier", { addedBy: userId, ...cartItem });
-          });
-        }      
-        
+        });
+
+        goodCart.length !== 0 && goodCart.forEach(async (product) => {
+          await AddDoc("panier", { addedBy: userId, ...product });
+        })
+      }
+      else {
+        cart.forEach(async (cartItem) => {
+          await AddDoc("panier", { addedBy: userId, ...cartItem });
+        });
       }
 
-      let navigate = fromCommand ? (
-        <Navigate to={`/user/${shopName}/panier`} />
-      ) : (
-        <Navigate to={`/user/${shopName}`} />
-      );
-
-      return navigate;
     }
+
+    let navigate = fromCommand ? (
+      <Navigate to={`/user/${shopName}/panier`} />
+    ) : (
+      <Navigate to={`/user/${shopName}`} />
+    );
+
+    return navigate;
+  }
 
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100 vw-100">
