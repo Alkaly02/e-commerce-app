@@ -37,6 +37,7 @@ const CanceledCommands = () => {
                                 key={command.id}
                                 {...command}
                                 numberOfCommand={command.userCommands.length}
+                                path={command.id}
                             >
                                 <button
                                     onClick={() => validateCommand(command.id)}
@@ -44,7 +45,7 @@ const CanceledCommands = () => {
                                     className="btn btn-outline-success me-2"
                                     type=""
                                 >
-                                    Valider la commande
+                                    Valider
                                 </button>
                             </CommandCard>
                         ))

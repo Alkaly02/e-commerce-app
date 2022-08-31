@@ -38,15 +38,18 @@ const UserCommands = () => {
                                 key={command.id}
                                 {...command}
                                 numberOfCommand={command.userCommands.length}
+                                path={command.id}
                             >
-                                <button
-                                    onClick={() => canceledCommand(command.id)}
-                                    style={{ fontWeight: "600" }}
-                                    className="btn btn-outline-danger me-2"
-                                    type=""
-                                >
-                                    Annuler la commande
-                                </button>
+                                {
+                                    !command.isDelivered && <button
+                                        onClick={() => canceledCommand(command.id)}
+                                        style={{ fontWeight: "600" }}
+                                        className="btn btn-outline-danger me-2"
+                                        type=""
+                                    >
+                                        Annuler
+                                    </button>
+                                }
                             </CommandCard>
                         ))
                 ) : (

@@ -56,3 +56,61 @@
   color: white;
   background-color: rgb(21, 141, 141);
 }
+
+/* command historique timeline */
+.timeline{
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+
+.timeline > li {
+  border: none !important;
+  margin-bottom: 1rem;
+  position: relative;
+  width: 80%;
+}
+
+.timeline__icon{
+  display: inline;
+  font-size: 1.5rem !important;
+}
+
+.command-status--active-true::before{
+  content: "";
+  display: block;
+  width: 3px;
+  height: 55px;
+  background-color: #7cb2c3;
+  position: absolute;
+  left: 9px;
+  bottom: -22px;
+}
+
+.command-status--active-false::before{
+  content: "";
+  display: block;
+  width: 3px;
+  height: 55px;
+  background-color: #2B3445;
+  position: absolute;
+  left: 9px;
+  bottom: -22px;
+}
+
+.timeline span {
+  display: block;
+  width: 100%;
+  padding: 0.1rem 0.2rem;
+}
+
+.command-status--active {
+  color: white;
+  background-color: #7cb2c3;
+  font-size: 0.95rem;
+}
+
+.timeline-date{
+  font-size: 0.8rem;
+  margin: 0.1rem 0 0 2.2rem;
+}

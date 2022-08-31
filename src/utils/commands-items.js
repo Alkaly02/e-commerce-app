@@ -4,7 +4,7 @@ import { RiCommandLine, RiFolderReceivedLine } from "react-icons/ri";
 
 export const commandsData = [
     {
-        to: '',
+        to: 'all',
         label: 'Commandes',
         icon: <RiCommandLine />
     },

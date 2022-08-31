@@ -24,6 +24,7 @@ import UserCommands from './UserCommands';
 import ReceivedCommands from './ReceivedCommands';
 import CanceledCommands from './CanceledCommands';
 import { CgShoppingCart } from 'react-icons/cg';
+import UserCommandDetails from './UserCommandDetails';
 
 const UserComandsPage = () => {
   const { logout, currentUser } = useAuth();
@@ -112,10 +113,13 @@ const UserComandsPage = () => {
         <div className="w-100">
           <div className='user-commands-container shadow'>
             <Routes>
-              <Route path="" element={<UserCommands />} />
-              <Route path=":command-details" element={<p>COMMANDS DETAILS</p>} />
+              <Route path='' element={<Navigate to='all' />} />
+              <Route index path="all" element={<UserCommands />} />
+              <Route path="all/:details" element={<UserCommandDetails />} />
               <Route path="delivered" element={<ReceivedCommands />} />
+              <Route path="delivered/:details" element={<UserCommandDetails />} />
               <Route path="canceled" element={<CanceledCommands />} />
+              <Route path="canceled/:details" element={<UserCommandDetails />} />
             </Routes>
           </div>
         </div>

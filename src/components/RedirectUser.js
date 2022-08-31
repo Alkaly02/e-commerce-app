@@ -18,9 +18,9 @@ const RedirectUser = () => {
   if (auth?.length !== 0) {
     if (cart.length !== 0) {
       // use some instead of filter
-      const userProductsInCart = connectedCart.filter(cartItem => cartItem.addedBy === userId)
+      const userProductsInCart = connectedCart.some(cartItem => cartItem.addedBy === userId)
       // verifier si on a deja des produits dans le panier connecté
-      if (userProductsInCart.length !== 0) {
+      if (userProductsInCart) {
         let goodCart = [...cart]
         // on recupere les produits qui ne sont pas dans le panier connecté
         cart.forEach((cartItem) => {

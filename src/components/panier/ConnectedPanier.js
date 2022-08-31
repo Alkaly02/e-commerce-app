@@ -62,7 +62,9 @@ const ConnectedPanier = () => {
       userCommands: commandItems,
       isStockAvailable: true,
       isDelivered: false,
-      isConfirmed: true
+      isConfirmed: true,
+      beingProcessed: false,
+      beingDelivered: false,
     })
     panier.forEach(async (cart) => await deleteDoc(doc(db, "panier", cart.id)))
     successMsg("Produits commandés !")

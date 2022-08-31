@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { updateDoc } from 'firebase/firestore';
 import { doc } from 'firebase/firestore';
 import successMsg from '../../utils/functions/successMsg';
+import CommandProductCart from "./CommandProductCart";
 
 const CommandDetails = () => {
   const { commandDetailUrl } = useParams();
@@ -78,32 +79,7 @@ const CommandDetails = () => {
                     </div>
                   </div>
                   {commandproducts.map((product) => (
-                    <div key={product.id} className="d-flex justify-content-between panier-items-details py-3 px-sm-4 px-2 align-items-center">
-                      <img
-                        style={{
-                          width: "70px",
-                          maxHeight: "76px",
-                          objectFit: "contain",
-                        }}
-                        src={product.imgUrl}
-                        alt={product.name}
-                        className="m-0 rounded-4"
-                      />
-                      <h6>{product.name}</h6>
-                      <div className="middle">
-                        <div className="ms-3">
-                          <p className="m-0 detail-text my-1">
-                            Quantité : {product.commandQuantities}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="panier-details d-flex align-items-center"></div>
-                      {/* prix total du produit */}
-                      <p className="m-0 detail-prix">
-                        ${product.commandTotalPrix}
-                      </p>
-                      <div className="align-content-icon"></div>
-                    </div>
+                    <CommandProductCart key={product.id} {...product} />
                   ))}
                   <div className="d-flex justify-content-end mt-3">
                     <h5>Total de la commande : <span className="fw-bold fs-4">${totalCommandPrix}</span></h5>
