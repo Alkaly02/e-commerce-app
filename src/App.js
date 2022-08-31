@@ -15,6 +15,7 @@ import Shop from "./components/Shop";
 import Welcome from "./pages/welcome/Welcome";
 import ConnectedPanier from "./components/panier/ConnectedPanier";
 import RedirectUser from "./components/RedirectUser";
+import UserComandsPage from "./components/commands/UserComandsPage";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="/admin/:shopNameUrl/login" element={<LoginPage />} />
             <Route path="/user/:shopNameUrl/*" element={<UserHomePage />} />
             <Route path="/user/:shopNameUrl/panier" element={<ConnectedPanier />} />
+            <Route path="/user/:shopNameUrl/commands/*" element={<UserComandsPage />} />
             <Route path="/product/:productId" element={<ProductDetails />} />
           </Routes>
         </PanierProvider>

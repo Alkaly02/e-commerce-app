@@ -32,10 +32,10 @@ const Home = () => {
   const globalShop = useSelector((state) => state.globalShop);
   const { userData } = useUserSidebarData();
 
-  const {data: panier} = useDocs(db, 'panier')
+  const { data: panier } = useDocs(db, 'panier')
 
   useEffect(() => {
-    if(panier.length !== 0){
+    if (panier.length !== 0) {
       dispatch(addToGlobalCart(panier))
     }
     console.log(panier);
@@ -58,7 +58,7 @@ const Home = () => {
   // setLoading(false)
 
   return globalShop[0]?.shopName.toLowerCase() === shopNameUrl ? (
-    <> 
+    <>
       <Header title={shopNameUrl}>
         <button onClick={() => setIsOpen(true)}>
           <MdPersonOutline className="button__icon" />
@@ -104,13 +104,12 @@ const Home = () => {
           <Routes>
             <Route path="" element={<UserHomePage />} />
             <Route path=":id" element={<ShowByCategory />} />
-          
           </Routes>
         </div>
       </div>
       <LoginModal title="Veuillez vous connecter pour ajouter des produits dans votre panier" />
     </>
-  ): <div className="vh-100 w-100 d-flex justify-content-center align-items-center">Redirection..., attendez</div>
+  ) : <div className="vh-100 w-100 d-flex justify-content-center align-items-center">Redirection..., attendez</div>
 };
 
 export default Home;

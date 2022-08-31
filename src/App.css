@@ -21,3 +21,38 @@
     font-size: 0.8rem !important;
   }
 }
+
+
+@media screen and (max-width: 500px) {
+  .h1-admin{
+    font-size: 1.2rem !important;
+  }
+}
+/* commands */
+.user-commands-container {
+  background-color: white;
+  min-height: 80vh;
+  margin: 0 1rem;
+}
+
+.commands-h1{
+  font-size: 1.1rem !important;
+  font-weight: 600;
+  margin: 0 !important;
+  padding: 0.8rem 1rem;
+}
+
+.user-command-details {
+  text-decoration: none;
+  color: white;
+  background-color: rgb(75, 180, 180);
+  padding: 0.5rem 2rem;
+  font-weight: 600;
+  transition: all 250ms;
+  border-radius: 5px;
+}
+
+.user-command-details:hover{
+  color: white;
+  background-color: rgb(21, 141, 141);
+}

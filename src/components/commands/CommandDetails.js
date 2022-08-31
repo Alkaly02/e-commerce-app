@@ -69,7 +69,7 @@ const CommandDetails = () => {
               return (
                 <div key={command.id}>
                   <div className="d-sm-flex justify-content-between align-items-center mb-4">
-                    <h1 className="m-0 headline-1 position-relative">Détails de la commande <span style={{fontSize: '0.8rem', border: '1px solid', padding: '0.2rem', position: 'absolute', top: '15%', right: '-22%'}}>{isConfirmed ? 'Confirmée' : 'Annulée'}</span></h1>
+                    <h1 className="m-0 headline-1 position-relative">Détails de la commande <span style={{fontSize: '0.8rem', border: '1px solid', padding: '0.2rem', position: 'absolute', top: '-10%', marginLeft: '8px'}}>{isConfirmed ? 'Confirmée' : 'Annulée'}</span></h1>
                     <div className="d-flex mt-3 mt-sm-0">
                       {
                         !isConfirmed ? <button onClick={() => validCommand(command.id)} type="" className="submit" style={{ border: 'none' }}>Valider la commande</button> :
