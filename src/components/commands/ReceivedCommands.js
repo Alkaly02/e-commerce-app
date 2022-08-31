@@ -20,8 +20,7 @@ const ReceivedCommands = () => {
             <h1 className="border-bottom commands-h1">Commandes reçues</h1>
             {!commandsLoading ? (
                 numberOfCommands !== 0 &&
-                    commands?.filter((command) => command.isDelivered === true).length !==
-                    0 ? (
+                    commands?.some((command) => command.isDelivered === true) ? (
                     commands
                         ?.filter((command) => command.isDelivered === true)
                         .map((command) => (

@@ -28,8 +28,7 @@ const CanceledCommands = () => {
             <h1 className="border-bottom commands-h1">Commandes annulées</h1>
             {!commandsLoading ? (
                 numberOfCommands !== 0 &&
-                    commands?.filter((command) => command.isConfirmed === false).length !==
-                    0 ? (
+                    commands?.some((command) => command.isConfirmed === false) ? (
                     commands
                         ?.filter((command) => command.isConfirmed === false)
                         .map((command) => (
@@ -45,7 +44,7 @@ const CanceledCommands = () => {
                                     className="btn btn-outline-success me-2"
                                     type=""
                                 >
-                                    Valider
+                                    Commander à nouveau
                                 </button>
                             </CommandCard>
                         ))

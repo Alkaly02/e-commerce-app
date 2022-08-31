@@ -29,8 +29,7 @@ const UserCommands = () => {
             <h1 className="border-bottom commands-h1">Liste de vos commandes</h1>
             {!commandsLoading ? (
                 numberOfCommands !== 0 &&
-                    commands?.filter((command) => command.isConfirmed === true).length !==
-                    0 ? (
+                    commands?.some((command) => command.isConfirmed === true) ? (
                     commands
                         ?.filter((command) => command.isConfirmed === true)
                         .map((command) => (

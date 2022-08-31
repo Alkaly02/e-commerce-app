@@ -6,7 +6,6 @@ const CommandProductCart = (
   commandQuantities,
   commandTotalPrix}
 ) => {
-    // console.log(imgUrl, name, commandQuantities, commandTotalPrix );
   return (
     <div className="d-flex justify-content-between panier-items-details py-3 px-sm-4 px-2 align-items-center">
       <img

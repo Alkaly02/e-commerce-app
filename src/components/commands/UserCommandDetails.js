@@ -49,8 +49,7 @@ const UserCommandDetails = () => {
                   },
                   0
                 );
-
-                const isConfirmed = command.isConfirmed;
+                
                 return (
                   <div key={command.id} className="p-3 py-4">
                     <div className="d-lg-flex">
