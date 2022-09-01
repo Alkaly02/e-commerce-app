@@ -15,7 +15,7 @@ const CommandCard = ({
         style={{
           position: "absolute",
           top: "5%",
-          backgroundColor: "#75757a",
+          backgroundColor: !isConfirmed ? '#dc3545' : isDelivered ? '#6dbd28' : "#75757a",
           color: "white",
           fontSize: "0.8rem",
         }}

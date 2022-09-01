@@ -58,17 +58,15 @@ const ProductList = () => {
         >
           <HiOutlinePlusSm size={35} />
         </Link>
-        <Link
+        {/* <Link
         style={{textDecoration: 'underline', color: 'black', fontWeight: '600'}}
           className="position-relative mb-3 d-inline-block ms-3 d-flex align-items-center"
           to={`/admin/${globalShop[0]?.shopName.toLowerCase()}/commands`}
         >
          {numberOfCommands} Commandes
-          {/* <span style={{ position: "absolute", top: "-10%" }}>
-            {numberOfCommands}
-          </span> */}
-        </Link>
+        </Link> */}
       </div>
+      <h6>Liste des produits</h6>
       {!productsLoading ? (
         numberOfProducts !== 0 ? (
           <div style={{ paddingBottom: "8rem" }} className="table-responsive">

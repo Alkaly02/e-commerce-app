@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebase/config";
 import { useWhereDocs } from "easy-firestore/hooks";
 import { useSelector } from "react-redux";
@@ -18,6 +18,7 @@ const CommandDetails = () => {
     dataLoading: commandsLoading,
   } = useWhereDocs(db, "commands", "commandOwnedShop", shopId);
   const { data: products } = useWhereDocs(db, "products", "ownedShop", shopId);
+  const navigate = useNavigate()
 
   const validCommand = (id) => {
     const selectedCommand = commands.find(command => command.id === id)
@@ -35,6 +36,7 @@ const CommandDetails = () => {
       isConfirmed: !isConfirmed
     })
     successMsg("Commande annulée")
+    navigate('/admin/hijab/commands')
   }
 
   return (
@@ -43,6 +45,7 @@ const CommandDetails = () => {
       {!commandsLoading ? (
         numberOfCommands !== 0 ? (
           commands
+            .filter(command => command.isConfirmed === true)
             .filter((command) => command.id === commandDetailUrl)
             .map((command) => {
               const commandproducts = command.userCommands.map((command) => {

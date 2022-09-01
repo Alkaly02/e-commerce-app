@@ -106,18 +106,18 @@ const CommandHistorique = ({
             <li>
               <div className="d-flex align-items-center">
                 {isDelivered ? (
-                  <FaRegCheckCircle className="timeline__icon" />
+                  <FaRegCheckCircle style={{color: '#6dbd28'}} className="timeline__icon" />
                 ) : (
                   <FaRegCircle className="timeline__icon" />
                 )}
-                <span className="delivered--active-true ms-3">Livrée</span>{" "}
+                <span className={isDelivered ? "delivered--active-true ms-3" : 'ms-3'}>Livrée</span>{" "}
               </div>
               <span className="timeline-date">20-02-2022</span>
             </li>
           </>
         ) : (
           <div>
-            <p style={{ width: '100px' }} className="bg-danger px-3 text-light">Annulée</p>
+            <p style={{ width: '90px', fontSize: '0.9rem' }} className="bg-danger px-3 text-light">Annulée</p>
             <button onClick={() => validateCommand(commandId) } className="btn btn-outline-success">Commander à nouveau</button>
           </div>
         )}

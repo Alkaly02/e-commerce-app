@@ -50,6 +50,7 @@ const CategoryList = () => {
     <div className="px-4">
       <AddBtn onClick={() => setOpenCategory((state) => !state)} />
       {openCategory && <AddCategory setOpenCategory={setOpenCategory} />}
+      <h6 className="mt-3">Liste des catégories</h6>
       {!categoriesLoading ? (
         numberOfCategories !== 0 ? (
           <div style={{ paddingBottom: '10rem' }} className="table-responsive">

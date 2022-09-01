@@ -113,7 +113,7 @@ const AddProducts = () => {
                     required
                     value={stock}
                     onChange={(e) => setStock(e.target.value)}
-                    type="text"
+                    type="number"
                     className="form__input"
                     id="name"
                     aria-describedby="text"

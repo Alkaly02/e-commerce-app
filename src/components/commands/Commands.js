@@ -16,12 +16,13 @@ const Commands = () => {
   } = useWhereDocs(db, "commands", "commandOwnedShop", shopId);
   const { data: users } = useDocs(db, "users");
 
-  useEffect(() => {}, [commands]);
+  useEffect(() => { }, [commands]);
 
   return (
     <div className="px-3 border-2">
+      <h6 className="mt-3">Liste des commandes</h6>
       {!commandsLoading ? (
-        numberOfCommands !== 0 ? (
+        numberOfCommands !== 0 && commands.some(command => command.isConfirmed === true ) ? (
           <div style={{ paddingBottom: "8rem" }} className="table-responsive">
             <table
               style={{ minWidth: "400px" }}
@@ -37,16 +38,16 @@ const Commands = () => {
                 </tr>
               </thead>
               <tbody>
-                {commands.map((command) => {
+                {commands.filter(command => command.isConfirmed === true ).map((command) => {
                   return users
                     .filter((user) => user.userId === command.commandedBy)
                     .map((user) => (
                       <tr key={user.id}>
-                        <td>{user.lastname}</td>
-                        <td>{user.firstname}</td>
-                        <td>mouas@gmail.com</td>
-                        <td>789956598</td>
-                        <td><Link style={{color: '#2B3445', fontSize: '1.2rem'}} to={`${command.id}`}><GiEyeTarget /></Link></td>
+                        <td className="position-relative"><Link style={{textDecoration: 'none', color: '#2B3445'}} className="stretched-link" to={`${command.id}`}>{user.lastname}</Link></td>
+                        <td className="position-relative"><Link style={{textDecoration: 'none', color: '#2B3445'}} className="stretched-link" to={`${command.id}`}>{user.firstname}</Link></td>
+                        <td className="position-relative"><Link style={{textDecoration: 'none', color: '#2B3445'}} className="stretched-link" to={`${command.id}`}>mouas@gmail.com</Link></td>
+                        <td className="position-relative"><Link style={{textDecoration: 'none', color: '#2B3445'}} className="stretched-link" to={`${command.id}`}>789956598</Link></td>
+                        <td><Link style={{ color: '#2B3445', fontSize: '1.2rem' }} to={`${command.id}`}><GiEyeTarget /></Link></td>
                       </tr>
                     ));
                 })}
