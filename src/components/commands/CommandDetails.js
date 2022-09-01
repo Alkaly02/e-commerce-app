@@ -3,14 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebase/config";
 import { useWhereDocs } from "easy-firestore/hooks";
 import { useSelector } from "react-redux";
-import { updateDoc } from 'firebase/firestore';
-import { doc } from 'firebase/firestore';
-import successMsg from '../../utils/functions/successMsg';
+import { updateDoc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
+import successMsg from "../../utils/functions/successMsg";
 import CommandProductCart from "./CommandProductCart";
 
 const CommandDetails = () => {
   const { commandDetailUrl } = useParams();
-  const globalShop = useSelector(state => state.globalShop)
+  const globalShop = useSelector((state) => state.globalShop);
   const shopId = globalShop[0]?.id;
   const {
     data: commands,
@@ -18,26 +18,50 @@ const CommandDetails = () => {
     dataLoading: commandsLoading,
   } = useWhereDocs(db, "commands", "commandOwnedShop", shopId);
   const { data: products } = useWhereDocs(db, "products", "ownedShop", shopId);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const validCommand = (id) => {
-    const selectedCommand = commands.find(command => command.id === id)
-    const isConfirmed = selectedCommand.isConfirmed
-    updateDoc(doc(db, 'commands', id), {
-      isConfirmed: !isConfirmed
-    })
-    successMsg("Commande confirmée")
-  }
+    const selectedCommand = commands.find((command) => command.id === id);
+    const isConfirmed = selectedCommand.isConfirmed;
+    updateDoc(doc(db, "commands", id), {
+      isConfirmed: !isConfirmed,
+    });
+    successMsg("Commande confirmée");
+  };
 
   const cancelCommand = (id) => {
-    const selectedCommand = commands.find(command => command.id === id)
-    const isConfirmed = selectedCommand.isConfirmed
-    updateDoc(doc(db, 'commands', id), {
-      isConfirmed: !isConfirmed
-    })
-    successMsg("Commande annulée")
-    navigate('/admin/hijab/commands')
-  }
+    const selectedCommand = commands.find((command) => command.id === id);
+    const isConfirmed = selectedCommand.isConfirmed;
+    updateDoc(doc(db, "commands", id), {
+      isConfirmed: !isConfirmed,
+    });
+    successMsg("Commande annulée");
+    navigate("/admin/hijab/commands");
+  };
+
+  const beingProcessed = (id) => {
+    const selectedCommand = commands.find((command) => command.id === id);
+    const beingProcessed = selectedCommand.beingProcessed;
+    updateDoc(doc(db, "commands", id), {
+      beingProcessed: !beingProcessed,
+    });
+  };
+
+  const beingDelivered = (id) => {
+    const selectedCommand = commands.find((command) => command.id === id);
+    const beingDelivered = selectedCommand.beingDelivered;
+    updateDoc(doc(db, "commands", id), {
+      beingDelivered: !beingDelivered,
+    });
+  };
+
+  const delivered = (id) => {
+    const selectedCommand = commands.find((command) => command.id === id);
+    const isDelivered = selectedCommand.isDelivered;
+    updateDoc(doc(db, "commands", id), {
+      isDelivered: !isDelivered,
+    });
+  };
 
   return (
     <div className="px-4">
@@ -45,7 +69,7 @@ const CommandDetails = () => {
       {!commandsLoading ? (
         numberOfCommands !== 0 ? (
           commands
-            .filter(command => command.isConfirmed === true)
+            .filter((command) => command.isConfirmed === true)
             .filter((command) => command.id === commandDetailUrl)
             .map((command) => {
               const commandproducts = command.userCommands.map((command) => {
@@ -68,24 +92,87 @@ const CommandDetails = () => {
                 0
               );
 
-              const isConfirmed = command.isConfirmed
+              const isConfirmed = command.isConfirmed;
 
               return (
-                <div key={command.id}>
+                <div key={command.id} className="pb-5">
                   <div className="d-sm-flex justify-content-between align-items-center mb-4">
-                    <h1 className="m-0 headline-1 position-relative">Détails de la commande <span style={{fontSize: '0.8rem', border: '1px solid', padding: '0.2rem', position: 'absolute', top: '-10%', marginLeft: '8px'}}>{isConfirmed ? 'Confirmée' : 'Annulée'}</span></h1>
+                    <h1 className="m-0 headline-1 position-relative">
+                      Détails de la commande{" "}
+                      <span
+                        className="text-center"
+                        style={{
+                          fontSize: "0.8rem",
+                          border: "none",
+                          padding: "0.2rem",
+                          position: "absolute",
+                          top: "-10%",
+                          marginLeft: "8px",
+                          backgroundColor: "#6dbd28",
+                          color: "white",
+                          minWidth: '100px'
+                        }}
+                      >
+                        {isConfirmed && !command.beingProcessed
+                          ? "Confirmée"
+                          : command.beingProcessed && !command.beingDelivered
+                            ? "En cours de traitement"
+                            : command.beingDelivered && !command.isDelivered
+                              ? "En cours de livraison"
+                              : command.isDelivered
+                                ? "Livrée"
+                                : null}
+                      </span>
+                    </h1>
                     <div className="d-flex mt-3 mt-sm-0">
                       {
-                        !isConfirmed ? <button onClick={() => validCommand(command.id)} type="" className="submit" style={{ border: 'none' }}>Valider la commande</button> :
-                          <button onClick={() => cancelCommand(command.id)} type="" className="submit annuler-commande bg-danger" style={{ border: 'none' }}>Annuler la commande</button>
+                        !command.isDelivered && <button
+                          onClick={() => cancelCommand(command.id)}
+                          type=""
+                          className="submit annuler-commande bg-danger"
+                          style={{ border: "none" }}
+                        >
+                          Annuler la commande
+                        </button>
                       }
                     </div>
                   </div>
                   {commandproducts.map((product) => (
                     <CommandProductCart key={product.id} {...product} />
                   ))}
-                  <div className="d-flex justify-content-end mt-3">
-                    <h5>Total de la commande : <span className="fw-bold fs-4">${totalCommandPrix}</span></h5>
+                  <div className="d-flex justify-content-between mt-3">
+                    <div>
+                      <button
+                        onClick={() => beingProcessed(command.id)}
+                        disabled={command.beingProcessed}
+                        className="btn btn-outline-secondary"
+                      >
+                        Traiter la commande
+                      </button>
+                      {command.beingProcessed && (
+                        <button
+                          onClick={() => beingDelivered(command.id)}
+                          disabled={command.beingDelivered}
+                          className="btn btn-outline-info mx-2"
+                        >
+                          En cours de livraison
+                        </button>
+                      )}
+
+                      {command.beingProcessed && command.beingDelivered ? (
+                        <button
+                          onClick={() => delivered(command.id)}
+                          disabled={command.isDelivered}
+                          className="btn btn-outline-success"
+                        >
+                          Livrée
+                        </button>
+                      ) : null}
+                    </div>
+                    <h5>
+                      Total de la commande :{" "}
+                      <span className="fw-bold fs-4">${totalCommandPrix}</span>
+                    </h5>
                   </div>
                 </div>
               );

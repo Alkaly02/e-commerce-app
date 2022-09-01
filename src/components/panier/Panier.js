@@ -89,7 +89,7 @@ const Panier = () => {
               <Link
                 style={{ textDecoration: "none", color: "white" }}
                 className="d-flex justify-content-between submit px-4 rounded-3 mt-4"
-                to={`/${shopNameUrl}/login`}
+                to={totalCommandPrice ? `/${shopNameUrl}/login` : '#'}
                 onClick={() => dispatch(isCommand())}
               >
                 <span>{totalCommandPrice ? `${totalCommandPrice + EXPEDITION_PRICE} F CFA` : 0 }</span>

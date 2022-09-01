@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const CommandCard = ({
+  beingProcessed,
+  beingDelivered,
   isDelivered,
   numberOfCommand,
   isConfirmed,
@@ -20,7 +22,18 @@ const CommandCard = ({
           fontSize: "0.8rem",
         }}
       >
-        {isConfirmed ? (isDelivered ? "Livrée" : "Non livrée") : "Annulée"}
+        {
+          isConfirmed && !beingProcessed
+            ? "Confirmée"
+            : beingProcessed && !beingDelivered
+              ? "En cours de traitement"
+              : beingDelivered && !isDelivered
+                ? "En cours de livraison"
+                : isDelivered
+                  ? "Livrée"
+                  : 'Annulée'
+        }
+        {/* {isConfirmed ? (isDelivered ? "Livrée" : "Non livrée") : "Annulée"} */}
       </span>
       <div className="d-flex justify-content-between">
         <span

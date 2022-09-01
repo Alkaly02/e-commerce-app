@@ -45,10 +45,10 @@ export const AuthProvider = ({ children }) => {
       {loading ? (
         <div className="vh-100 w-100 d-flex justify-content-center align-items-center">
           <div className="text-center d-flex flex-column align-items-center">
-            <img src={logo} alt="Ecomerce Logo" className="logo-loading mb-2" />
+            <img style={{width: '50px'}} src={logo} alt="Ecomerce Logo" className="logo-loading mb-2 rounded-5" />
             <div
-              style={{ width: "60px", height: "60px", color: 'rgb(75, 180, 180)'}}
-              className="spinner-border"
+              style={{ width: "40px", height: "40px", color: 'rgb(75, 180, 180)'}}
+              className="spinner-border mt-2"
               role="status"
             >
               <span className="visually-hidden">Loading...</span>

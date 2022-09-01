@@ -20,7 +20,9 @@ const UserCommands = () => {
         const selectedCommand = commands.find(command => command.id === id)
         const isConfirmed = selectedCommand.isConfirmed
         updateDoc(doc(db, 'commands', id), {
-            isConfirmed: !isConfirmed
+            isConfirmed: !isConfirmed,
+            beingProcessed: false,
+            beingDelivered: false
         })
     }
 
