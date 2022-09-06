@@ -19,6 +19,7 @@ const CommandDetails = () => {
   } = useWhereDocs(db, "commands", "commandOwnedShop", shopId);
   const { data: products } = useWhereDocs(db, "products", "ownedShop", shopId);
   const navigate = useNavigate();
+  const date = new Date()
 
   const validCommand = (id) => {
     const selectedCommand = commands.find((command) => command.id === id);
@@ -34,34 +35,43 @@ const CommandDetails = () => {
     const isConfirmed = selectedCommand.isConfirmed;
     updateDoc(doc(db, "commands", id), {
       isConfirmed: !isConfirmed,
+      beingProcessed: false,
       beingDelivered: false,
-      beingProcessed: false
+      beingProcessedAt: null,
+      beingDeliveredAt: null,
+      deliveredAt: null
     });
     successMsg("Commande annulée");
     navigate("/admin/hijab/commands");
   };
 
   const beingProcessed = (id) => {
+    let beingProcessedAt = `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`;
     const selectedCommand = commands.find((command) => command.id === id);
     const beingProcessed = selectedCommand.beingProcessed;
     updateDoc(doc(db, "commands", id), {
       beingProcessed: !beingProcessed,
+      beingProcessedAt,
     });
   };
 
   const beingDelivered = (id) => {
+    let beingDeliveredAt = `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`;
     const selectedCommand = commands.find((command) => command.id === id);
     const beingDelivered = selectedCommand.beingDelivered;
     updateDoc(doc(db, "commands", id), {
       beingDelivered: !beingDelivered,
+      beingDeliveredAt,
     });
   };
 
   const delivered = (id) => {
+    let deliveredAt = `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`;
     const selectedCommand = commands.find((command) => command.id === id);
     const isDelivered = selectedCommand.isDelivered;
     updateDoc(doc(db, "commands", id), {
       isDelivered: !isDelivered,
+      deliveredAt,
     });
   };
 
@@ -142,14 +152,14 @@ const CommandDetails = () => {
                   {commandproducts.map((product) => (
                     <CommandProductCart key={product.id} {...product} />
                   ))}
-                  <div className="d-flex justify-content-between mt-3">
-                    <div>
+                  <div className="d-sm-flex justify-content-between mt-3">
+                    <div className="mb-3 mb-sm-0">
                       <button
                         onClick={() => beingProcessed(command.id)}
                         disabled={command.beingProcessed}
                         className="btn btn-outline-secondary"
                       >
-                        Traiter la commande
+                        Traiter
                       </button>
                       {command.beingProcessed && (
                         <button
@@ -157,7 +167,7 @@ const CommandDetails = () => {
                           disabled={command.beingDelivered}
                           className="btn btn-outline-info mx-2"
                         >
-                          En cours de livraison
+                          En livraison
                         </button>
                       )}
 
@@ -173,7 +183,7 @@ const CommandDetails = () => {
                     </div>
                     <h5>
                       Total de la commande :{" "}
-                      <span className="fw-bold fs-4">${totalCommandPrix}</span>
+                      <span className="fw-bold fs-4">{totalCommandPrix} F CFA</span>
                     </h5>
                   </div>
                 </div>

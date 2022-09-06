@@ -22,7 +22,10 @@ const UserCommands = () => {
         updateDoc(doc(db, 'commands', id), {
             isConfirmed: !isConfirmed,
             beingProcessed: false,
-            beingDelivered: false
+            beingDelivered: false,
+            beingProcessedAt: null,
+            beingDeliveredAt: null,
+            deliveredAt: null
         })
     }
 

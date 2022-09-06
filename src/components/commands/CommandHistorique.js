@@ -6,11 +6,15 @@ import { useSelector } from 'react-redux';
 import { useWhereDocs } from 'easy-firestore/hooks';
 
 const CommandHistorique = ({
-  commandId,
+  id,
   isConfirmed,
   beingProcessed,
   beingDelivered,
   isDelivered,
+  confirmedAt,
+  beingProcessedAt,
+  beingDeliveredAt,
+  deliveredAt
 }) => {
   const globalShop = useSelector((state) => state.globalShop);
   const shopId = globalShop[0]?.id;
@@ -49,10 +53,10 @@ const CommandHistorique = ({
                       : "command-status--active-false ms-3"
                   }
                 >
-                  Commande effectuée
+                  En cours
                 </span>
               </div>
-              <span className="timeline-date">15-01-2022</span>{" "}
+              <span className="timeline-date">{confirmedAt}</span>{" "}
             </li>
 
             <li>
@@ -73,10 +77,10 @@ const CommandHistorique = ({
                       : "command-status--active-false ms-3"
                   }
                 >
-                  En cours de traitement
+                  Traité
                 </span>{" "}
               </div>
-              <span className="timeline-date">01-02-2022</span>
+              <span className="timeline-date">{beingProcessedAt ? beingProcessedAt : "En attente"}</span>
             </li>
 
             <li>
@@ -97,28 +101,28 @@ const CommandHistorique = ({
                       : "command-status--active-false ms-3"
                   }
                 >
-                  En cours de livraison
+                  En livraison
                 </span>{" "}
               </div>
-              <span className="timeline-date">15-02-2022</span>
+              <span className="timeline-date">{beingDeliveredAt ? beingDeliveredAt : 'En attente'}</span>
             </li>
 
             <li>
               <div className="d-flex align-items-center">
                 {isDelivered ? (
-                  <FaRegCheckCircle style={{color: '#6dbd28'}} className="timeline__icon" />
+                  <FaRegCheckCircle style={{ color: '#6dbd28' }} className="timeline__icon" />
                 ) : (
                   <FaRegCircle className="timeline__icon" />
                 )}
                 <span className={isDelivered ? "delivered--active-true ms-3" : 'ms-3'}>Livrée</span>{" "}
               </div>
-              <span className="timeline-date">20-02-2022</span>
+              <span className="timeline-date">{deliveredAt ? deliveredAt : 'En attente'}</span>
             </li>
           </>
         ) : (
           <div>
             <p style={{ width: '90px', fontSize: '0.9rem' }} className="bg-danger px-3 text-light">Annulée</p>
-            <button onClick={() => validateCommand(commandId) } className="btn btn-outline-success">Commander à nouveau</button>
+            <button onClick={() => validateCommand(id)} className="btn btn-outline-success">Commander à nouveau</button>
           </div>
         )}
       </ul>

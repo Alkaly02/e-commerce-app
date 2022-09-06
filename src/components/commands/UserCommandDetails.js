@@ -61,11 +61,7 @@ const UserCommandDetails = () => {
                           HISTORIQUE DE LA COMMANDE
                         </h6>
                         <CommandHistorique
-                          commandId={command.id}
-                          isConfirmed={command.isConfirmed}
-                          beingProcessed={command.beingProcessed}
-                          beingDelivered={command.beingDelivered}
-                          isDelivered={command.isDelivered}
+                          {...command}
                         />
                       </div>
                       <div style={{ flexGrow: 1 }} className="">
@@ -76,7 +72,7 @@ const UserCommandDetails = () => {
                           <h5>
                             Total de la commande :{" "}
                             <span className="fw-bold fs-4">
-                              ${totalCommandPrix}
+                              {totalCommandPrix} F CFA
                             </span>
                           </h5>
                         </div>

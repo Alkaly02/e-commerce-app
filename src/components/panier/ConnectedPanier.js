@@ -24,10 +24,16 @@ const ConnectedPanier = () => {
   const [totalCommand, setTotalCommand] = useState(0)
   const EXPEDITION_PRICE = 2000
   const navigate = useNavigate()
+  const date = new Date()
 
   const dispatch = useDispatch()
 
   useEffect(() => {
+    console.log(`${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`);
+  }, [])
+  
+  useEffect(() => {
+    
     // prix total d'une commande
     let totalCommand = panier.reduce((total, item) => {
       return total + Number(item.totalPrix)
@@ -45,6 +51,8 @@ const ConnectedPanier = () => {
     setTotalCommand(totalCommand)
   }, [panier, shops])
 
+  // obtenir la date de commande
+  let confirmedAt = `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`;
   const addToCommand = (panier) => {
     let userId = panier[0].addedBy
     let ownedShop = panier[0].ownedShop
@@ -65,6 +73,10 @@ const ConnectedPanier = () => {
       isConfirmed: true,
       beingProcessed: false,
       beingDelivered: false,
+      confirmedAt,
+      beingProcessedAt: null,
+      beingDeliveredAt: null,
+      deliveredAt: null
     })
     panier.forEach(async (cart) => await deleteDoc(doc(db, "panier", cart.id)))
     successMsg("Produits commandés !")

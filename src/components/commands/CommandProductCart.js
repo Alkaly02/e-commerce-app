@@ -26,7 +26,7 @@ const CommandProductCart = (
       </div>
       <div className="panier-details d-flex align-items-center"></div>
       {/* prix total du produit */}
-      <p className="m-0 detail-prix">${commandTotalPrix}</p>
+      <p className="m-0 detail-prix">{commandTotalPrix} F CFA</p>
       <div className="align-content-icon"></div>
     </div>
   );

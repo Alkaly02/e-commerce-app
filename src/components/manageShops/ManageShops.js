@@ -25,9 +25,8 @@ const ManageShops = () => {
       <AllShops>
         {!shopLoading ? (
           shops.map((shop, index) => (
-            <Link style={{textDecoration: 'none'}} to={`/admin/${shop.shopName.toLowerCase()}`}>
+            <Link key={`${shop.shopName}-${index}`} style={{textDecoration: 'none'}} to={`/admin/${shop.shopName.toLowerCase()}`}>
               <ShopCard
-                key={`${shop.shopName}-${index}`}
                 icon={<GiShoppingBag />}
                 shopName={firstLetterUpperCase(shop.shopName)}
               />

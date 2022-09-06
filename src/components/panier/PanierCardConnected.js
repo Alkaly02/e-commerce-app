@@ -34,7 +34,7 @@ const PanierCardConnected = (item, { setOpenCart }) => {
               <h6 className="m-0 detail-title">{item.name}</h6>
             </Link>
             <p className="m-0 detail-text my-1">
-              ${item.prix} * {item.quantities}
+              {item.prix} * {item.quantities} F CFA
             </p>
           </div>
         </div>
@@ -58,7 +58,7 @@ const PanierCardConnected = (item, { setOpenCart }) => {
           </button>
         </div>
         {/* prix total du produit */}
-        <p className="m-0 detail-prix">${item.totalPrix}</p>
+        <p className="m-0 detail-prix">{item.totalPrix} F CFA</p>
         <div className="align-content-icon">
           <RiDeleteBin6Line
           style={{cursor: 'pointer'}}

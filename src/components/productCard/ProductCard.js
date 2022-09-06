@@ -10,7 +10,7 @@ const ProductCard = ({name, prix, imgUrl, stock, children}) => {
       <img style={{height: '200px'}} className='card-image' src={imgUrl ? imgUrl : defaultImg} alt="" />
       <div className="card-body p-3">
         <h3 className="card-title">{name}</h3>
-        <p className="card-text mt-1"><span className='price'>${prix}</span></p>
+        <p className="card-text mt-1"><span className='price'>{prix} FCFA</span></p>
         {children}
       </div>
     </div>

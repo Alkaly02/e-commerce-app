@@ -44,7 +44,7 @@ const CanceledCommands = () => {
                                     className="btn btn-outline-success me-2"
                                     type=""
                                 >
-                                    Commander à nouveau
+                                    Commander
                                 </button>
                             </CommandCard>
                         ))
