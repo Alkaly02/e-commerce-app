@@ -1,17 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
 import LoginModal from "../../components/loginModal/LoginModal";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { MdOutlineShoppingBag, MdPersonOutline } from "react-icons/md";
 import "./Home.css";
 import { useModal } from "../../hooks/useModal";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import ShowByCategory from "../../components/showByCategory/ShowByCategory";
 import SidebarMob from "../../components/sidebar/SidebarMob";
 import UserHomePage from "./HomePage";
 import useUserSidebarData from "../../hooks/useUserSidebarData";
 import { useParams, Link } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
 import { useDocs } from "easy-firestore/hooks";
 import { db } from "../../firebase/config";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +18,6 @@ import {
   setGlogalShop,
 } from "../../redux/slices/globalShopSlice";
 import { makeCommandFalse } from "../../redux/slices/commandeSlice";
-import logo from "../../assets/img/logo-ecommerce.png";
 import { addToGlobalCart } from "../../redux/slices/globalCartSlice";
 
 const Home = () => {
@@ -31,6 +29,8 @@ const Home = () => {
   const dispatch = useDispatch();
   const globalShop = useSelector((state) => state.globalShop);
   const { userData } = useUserSidebarData();
+  const [isShop, setIsShop] = useState(true)
+  const navigate = useNavigate()
 
   const { data: panier } = useDocs(db, 'panier')
 
@@ -38,11 +38,14 @@ const Home = () => {
     if (panier.length !== 0) {
       dispatch(addToGlobalCart(panier))
     }
-    console.log(panier);
   }, [panier])
 
   useEffect(() => {
-    // get the current shop in All shops collections
+    if (shops.length !== 0) {
+      const isShop = shops.some(shop => shop.shopName.toLowerCase() === shopNameUrl.toLocaleLowerCase())
+      setIsShop(isShop)
+    }
+    // get the current shop in All shops collection
     let selectedShop = shops.filter(
       (shop) => shop.shopName.toLowerCase() === shopNameUrl.toLowerCase()
     )[0];
@@ -55,7 +58,9 @@ const Home = () => {
     }
   }, [shops, shopNameUrl]);
 
-  // setLoading(false)
+  if (!isShop) {
+    return navigate(-1);
+  }
 
   return globalShop[0]?.shopName.toLowerCase() === shopNameUrl ? (
     <>
@@ -109,7 +114,7 @@ const Home = () => {
       </div>
       <LoginModal title="Veuillez vous connecter pour ajouter des produits dans votre panier" />
     </>
-  ) : <div className="vh-100 w-100 d-flex justify-content-center align-items-center">Redirection..., attendez</div>
+  ) : (<div className="vh-100 w-100 d-flex justify-content-center align-items-center">Redirection..., attendez</div>)
 };
 
 export default Home;

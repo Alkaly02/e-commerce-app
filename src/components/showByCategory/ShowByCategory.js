@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HiOutlinePlusSm } from "react-icons/hi";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebase/config";
 import { useAuth } from "../../hooks/useAuth";
 import { useModal } from "../../hooks/useModal";
@@ -37,6 +37,8 @@ const ShowByCategory = () => {
   const [categoryProducts, setCategoryProducts] = useState([]);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const [isCategory, setIsCategory] = useState(true)
+  const navigate = useNavigate()
 
   let categoryProducts_2 = products.filter(
     (product) => product.categoryId === id
@@ -44,6 +46,8 @@ const ShowByCategory = () => {
 
   useEffect(() => {
     if (categories.length !== 0) {
+      const isCategory = categories.some(category => category.id === id)
+      setIsCategory(isCategory)
       let titleContainer = categories.filter((category) => category.id === id);
       setTitle(firstLetterUpperCase(titleContainer[0]?.categoryName));
     }
@@ -53,6 +57,11 @@ const ShowByCategory = () => {
     );
     setCategoryProducts(categoryProducts);
   }, [categories, id, products]);
+
+  if (!isCategory) {
+    return navigate(-1);
+  }
+
   return (
     <>
       <ProductsContainer

@@ -10,6 +10,7 @@ import { useModal } from "../../hooks/useModal";
 import {useWhereDocs} from 'easy-firestore/hooks'
 import { useDispatch } from "react-redux";
 import { deleteGlobalShop } from "../../redux/slices/globalShopSlice";
+import { useUser } from '../../hooks/useUser';
 
 const AdminDashboard = () => {
   const { logout } = useAuth();
@@ -19,7 +20,13 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const { setIsOpen } = useModal();
   const dispatch = useDispatch()
+  const {auth} = useUser()
 
+  if(currentUser){
+    if(auth[0]?.role !== 'admin'){
+      return navigate(-1);
+    }
+  }
   if(!currentUser){
     return <Navigate to={`/`} />
   }

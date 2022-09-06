@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
 import {
   Navigate,
@@ -27,6 +27,7 @@ import {
   setGlogalShop,
 } from "../../redux/slices/globalShopSlice";
 import { resetGlobalCart } from "../../redux/slices/globalCartSlice";
+import { useUser } from "../../hooks/useUser";
 
 const UserHomePage = () => {
   const { logout, currentUser } = useAuth();
@@ -36,6 +37,8 @@ const UserHomePage = () => {
   const { userData } = useUserSidebarData();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {auth} = useUser()
+  const [isShop, setIsShop] = useState(true)
 
   const Logout = async () => {
     try {
@@ -49,6 +52,10 @@ const UserHomePage = () => {
   };
 
   useEffect(() => {
+    if (shops.length !== 0) {
+      const isShop = shops.some(shop => shop.shopName.toLowerCase() === shopNameUrl.toLocaleLowerCase())
+      setIsShop(isShop)
+    }
     let selectedShop = shops.filter(
       (shop) => shop.shopName.toLowerCase() === shopNameUrl.toLocaleLowerCase()
     )[0];
@@ -60,6 +67,10 @@ const UserHomePage = () => {
 
   if (!currentUser) {
     return <Navigate to={`/${shopNameUrl}`} />;
+  }
+
+  if (!isShop) {
+    return navigate(-1);
   }
 
   return (

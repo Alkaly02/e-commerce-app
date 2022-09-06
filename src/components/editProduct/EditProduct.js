@@ -138,7 +138,7 @@ const EditProduct = ({ setIsOpen, selectedProduct }) => {
               required
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
-              type="text"
+              type="number"
               className="form__input"
               id="name"
               aria-describedby="text"

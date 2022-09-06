@@ -16,6 +16,7 @@ import Welcome from "./pages/welcome/Welcome";
 import ConnectedPanier from "./components/panier/ConnectedPanier";
 import RedirectUser from "./components/RedirectUser";
 import UserComandsPage from "./components/commands/UserComandsPage";
+import ErrorPage from "./components/ErrorPage";
 
 function App() {
   return (
@@ -23,10 +24,10 @@ function App() {
       <ModalProvider>
         <PanierProvider>
           <Routes>
-            <Route path="/" element={<Welcome />} />
+            <Route path="*" element={<ErrorPage />} />
+            <Route path="" element={<Welcome />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<Signup />} />
-            {/* <Route path="*" element={<Navigate to="/login" />} /> */}
             <Route path="/:shopNameUrl/*" element={<Home />} />
             <Route path="/:shopNameUrl/panier" element={<Panier />} />
             <Route path="/:shopNameUrl/login" element={<LoginPage />} />
