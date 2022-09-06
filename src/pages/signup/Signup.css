@@ -2,3 +2,9 @@
     width: 100%;
     box-sizing: border-box !important;
 }
+
+/* @media (max-width: 575px){
+    .form__input--flex{
+        width: 100%;
+    }
+} */

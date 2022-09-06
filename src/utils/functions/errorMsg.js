@@ -4,6 +4,7 @@ export default function errorMsg(message) {
         style: {
           backgroundColor: "#2B3445",
           color: "white",
+          textAlign: 'center'
         },
         iconTheme: {
           primary: "red",

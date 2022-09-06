@@ -6,11 +6,13 @@ import logo from "../../assets/img/logo-ecommerce.png";
 import { db } from "../../firebase/config";
 import { useAuth } from "../../hooks/useAuth";
 import { useModal } from "../../hooks/useModal";
+import { useSelector } from 'react-redux';
 
 const Login = ({title}) => {
   const { login } = useAuth();
   const { modalIsOpen, setIsOpen } = useModal();
   const navigate = useNavigate();
+  const globalShop = useSelector(state => state.globalShop)
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -152,12 +154,12 @@ const Login = ({title}) => {
           )}
         </button>
       </form>
-      {/* <p className="text-center mt-4">
+      <p className="text-center mt-4">
         Nous n'avez pas de compte ?{" "}
-        <Link className="login-signup" to="/signup">
+        <Link className="login-signup" to={`/${globalShop[0]?.shopName.toLowerCase()}/signup`}>
           Inscrivez-vous
         </Link>
-      </p> */}
+      </p>
     </div>
   );
 };

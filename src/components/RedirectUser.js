@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useUser } from "../hooks/useUser";
 import AddDoc from "../utils/functions/AddDoc";
@@ -14,8 +14,10 @@ const RedirectUser = () => {
   const fromCommand = useSelector((state) => state.command.fromCommand);
   const cart = useSelector((state) => state.cart);
   const connectedCart = useSelector(state => state.globalCart)
+  
 
   if (auth?.length !== 0) {
+    
     if (cart.length !== 0) {
       // use some instead of filter
       const userProductsInCart = connectedCart.some(cartItem => cartItem.addedBy === userId)

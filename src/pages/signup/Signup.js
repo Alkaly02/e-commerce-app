@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/img/logo-ecommerce.png";
 import { useAuth } from "../../hooks/useAuth";
@@ -6,17 +6,26 @@ import "./Signup.css";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import toast from "react-hot-toast";
+import { useModal } from "../../hooks/useModal";
+import { useSelector } from 'react-redux';
 
-const Signup = () => {
-  const { signup, currentUser } = useAuth();
+const Signup = ({ role }) => {
+
+  const { signup } = useAuth();
   const navigate = useNavigate();
+  const { setIsOpen } = useModal();
 
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
+  const [phone, setPhone] = useState('')
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const globalShop = useSelector(state => state.globalShop);
+  const shopId = globalShop[0]?.id;
+
+  useEffect(() => { setIsOpen(false) }, [])
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -26,7 +35,8 @@ const Signup = () => {
       lastname === "" ||
       email === "" ||
       password === "" ||
-      confirmpassword === ""
+      confirmpassword === "" ||
+      phone === ""
     ) {
       setLoading(false);
 
@@ -72,6 +82,7 @@ const Signup = () => {
         firstname,
         lastname,
         role: "user",
+        ownedShop: shopId,
         userId: userCred.user.uid
       });
       toast.success("Inscription reussi !", {
@@ -84,7 +95,7 @@ const Signup = () => {
         },
       });
       setTimeout(() => {
-        navigate("/login");
+        navigate(`/${globalShop[0]?.shopName.toLowerCase()}/login`);
       }, 2000);
       setLoading(false);
     } catch (err) {
@@ -102,14 +113,14 @@ const Signup = () => {
         });
       }
     }
-    
+
   };
 
   return (
     <div className="auth-container">
       <div className="auth__form__container">
         <div className="auth__form__head">
-          <img style={{width: '100px'}} src={logo} alt="E-commerce Logo" className="auth-logo" />
+          <img style={{ width: '100px' }} src={logo} alt="E-commerce Logo" className="auth-logo" />
           <h1 className="text-center">Créer un compte</h1>
           <p className="text-center">Remplissez tous les champs pour continuer</p>
         </div>
@@ -156,32 +167,47 @@ const Signup = () => {
               placeholder="exemple@gmail.com"
             />
           </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Mot de passe
-            </label>
-            <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              className="form__input"
-              id="password"
-              placeholder="******"
-            />
+          <div className="d-sm-flex justify-content-between">
+            <div className="mb-3 form__input--flex">
+              <label htmlFor="password" className="form-label">
+                Mot de passe
+              </label>
+              <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                className="form__input"
+                id="password"
+                placeholder="******"
+              />
+            </div>
+            <div className="mb-3 form__input--flex ps-sm-3 p-0">
+              <label htmlFor="confirmpassword" className="form-label">
+                Confirmer mot de passe
+              </label>
+              <input
+                value={confirmpassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                type="password"
+                className="form__input"
+                id="confirmpassword"
+                placeholder="******"
+              />
+            </div>
           </div>
           <div className="mb-3">
-            <label htmlFor="confirmpassword" className="form-label">
-              Confirmer mot de passe
-            </label>
-            <input
-              value={confirmpassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              type="password"
-              className="form__input"
-              id="confirmpassword"
-              placeholder="******"
-            />
-          </div>
+              <label htmlFor="confirmpassword" className="form-label">
+                Télephone
+              </label>
+              <input
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                type="phone"
+                className="form__input"
+                id="phone"
+                placeholder="777777777"
+              />
+            </div>
           <button type="submit" className="btn submit w-100 mt-3">
             {loading ? (
               <div className="text-center">
@@ -196,7 +222,7 @@ const Signup = () => {
         </form>
         <p className="text-center mt-4">
           Vous avez déjà un compte ?{" "}
-          <Link className="login-signup" to="/login">
+          <Link className="login-signup" to={`/${globalShop[0]?.shopName.toLowerCase()}/login`}>
             Connectez-vous
           </Link>
         </p>

@@ -31,6 +31,7 @@ function App() {
             <Route path="/:shopNameUrl/*" element={<Home />} />
             <Route path="/:shopNameUrl/panier" element={<Panier />} />
             <Route path="/:shopNameUrl/login" element={<LoginPage />} />
+            <Route path="/:shopNameUrl/signup" element={<Signup />} />
             <Route path="/redirect" element={<Redirect />} />
             <Route path="/redirectUser" element={<RedirectUser />} />
             <Route path="/adminShops" element={<AdminDashboard />} />

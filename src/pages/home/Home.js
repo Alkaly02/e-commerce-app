@@ -112,7 +112,7 @@ const Home = () => {
           </Routes>
         </div>
       </div>
-      <LoginModal title="Veuillez vous connecter pour ajouter des produits dans votre panier" />
+      <LoginModal role="user" title="Veuillez vous connecter pour ajouter des produits dans votre panier" />
     </>
   ) : (<div className="vh-100 w-100 d-flex justify-content-center align-items-center">Redirection..., attendez</div>)
 };
