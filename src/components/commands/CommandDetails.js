@@ -34,6 +34,8 @@ const CommandDetails = () => {
     const isConfirmed = selectedCommand.isConfirmed;
     updateDoc(doc(db, "commands", id), {
       isConfirmed: !isConfirmed,
+      beingDelivered: false,
+      beingProcessed: false
     });
     successMsg("Commande annulée");
     navigate("/admin/hijab/commands");
